@@ -62,6 +62,19 @@ void dq_cr_copy( dq_t out, dq_t in )
 }
 
 
+void dq_cr_conj( dq_t out, dq_t in )
+{
+   out[0] =  in[0];
+   out[1] = -in[1];
+   out[2] = -in[2];
+   out[3] = -in[3];
+   out[4] =  in[4];
+   out[5] = -in[5];
+   out[6] = -in[6];
+   out[7] = -in[7];
+}
+
+
 void dq_op_add( dq_t out, dq_t in_p, dq_t in_q )
 {
    int i;
@@ -95,7 +108,7 @@ void dq_op_f2g( dq_t ABA, dq_t A, dq_t B )
    dq_t tmp, Astar;
 
    dq_op_mul( tmp, A, B );
-   dq_cr_copy( Astar, A );
+   dq_cr_conj( Astar, A );
    dq_op_mul( ABA, tmp, Astar );
 }
 

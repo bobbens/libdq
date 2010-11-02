@@ -52,7 +52,7 @@ static int test_rotation (void)
    dq_t P, R, RP, PF;
 
    /* Create positions. */
-   a    = M_PI_2;
+   a    = M_PI;
    p[0] = 1.;
    p[1] = 1.;
    p[2] = 1.;

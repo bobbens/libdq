@@ -17,6 +17,7 @@ void dq_cr_rotation( dq_t out, double zita, double s[3], double c[3] );
 void dq_cr_translation( dq_t out, double t[3] );
 void dq_cr_point( dq_t out, double pos[3] );
 void dq_cr_copy( dq_t out, dq_t in );
+void dq_cr_conj( dq_t out, dq_t in );
 
 /* Operations. */
 void dq_op_add( dq_t out, dq_t in_p, dq_t in_q );
