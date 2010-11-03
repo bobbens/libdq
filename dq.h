@@ -54,7 +54,9 @@
 
 
 /**
- * @brief Using \f$C^{+}_{0,3,1}\f$ notation (McArthy).
+ * @brief A representation of a dual quaternion.
+ * 
+ * Uses \f$C^{+}_{0,3,1}\f$ notation (McArthy).
  *
  * \f[
  * \{ 1, e_{23}, e_{31}, e_{12}, e_{41}, e_{42}, e_{43}, e_{1234} \} = \{ 1, i, j, k, i\epsilon, j\epsilon, k\epsilon, \epsilon \}
@@ -95,6 +97,15 @@ void dq_cr_translation( dq_t O, const double t[3] );
  * @sa dq_op_f4g
  */
 void dq_cr_point( dq_t O, const double pos[3] );
+/**
+ * @brief Creates a line dual quaternion.
+ *
+ *    @param[out] O Dual quaternion created.
+ *    @param[in] s Direction vector of the line.
+ *    @param[in] c A point of the line.
+ * @sa dq_op_f2g
+ */
+void dq_cr_line( dq_t O, const double s[3], const double c[3] );
 /**
  * @brief Copies a dual quaternion.
  *

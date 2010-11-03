@@ -54,6 +54,20 @@ void dq_cr_point( dq_t O, const double pos[3] )
 }
 
 
+void dq_cr_line( dq_t O, const double s[3], const double c[3] )
+{
+   O[0] = 0.;
+   O[1] = s[0];
+   O[2] = s[1];
+   O[3] = s[2];
+   /* We do cross product with the line point and line vector to get the plucker coordinates. */
+   O[4] =  s[1]*c[2] - s[2]*c[1];
+   O[5] = -s[0]*c[2] + s[2]*c[0];
+   O[6] =  s[0]*c[1] - s[1]*c[0];
+   O[7] = 0.;
+}
+
+
 void dq_cr_copy( dq_t O, dq_t Q )
 {
    int i;
