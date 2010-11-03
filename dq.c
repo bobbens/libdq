@@ -85,6 +85,19 @@ void dq_op_add( dq_t out, dq_t in_p, dq_t in_q )
 
 void dq_op_mul( dq_t pq, dq_t p, dq_t q )
 {
+   /* Multiplication table:
+    *
+    *  Q1*Q2 | Q2.1  Q2.i  Q2.j  Q2.k  Q2.ei  Q2.ej  Q2.ek  Q2.e
+    *  ------+---------------------------------------------------
+    *  Q1.1  |   1     i     j     k    ei     ej     ek      e
+    *  Q1.i  |   i    -1     k    -j    -e     ek     -ej    ei
+    *  Q1.j  |   j    -k    -1     i    -ek    -e     ei     ej
+    *  Q1.k  |   k     j    -i    -1    ej     -ei    -e     ek
+    *  Q1.ei |  ei    -e    ek    -ej    0      0      0      0
+    *  Q1.ej |  ej    -ek   -e    ei     0      0      0      0
+    *  Q1.ek |  ek    ej    -ei   -e     0      0      0      0
+    *  Q1.e  |   e    ei     ej   ek     0      0      0      0
+    */
    /* Real quaternion. */
    pq[0] = p[0]*q[0] - p[1]*q[1] - p[2]*q[2] - p[3]*q[3];
    pq[1] = p[0]*q[1] + p[1]*q[0] + p[2]*q[3] - p[3]*q[2];
@@ -92,13 +105,13 @@ void dq_op_mul( dq_t pq, dq_t p, dq_t q )
    pq[3] = p[0]*q[3] + p[3]*q[0] + p[1]*q[2] - p[2]*q[1];
 
    /* Dual unit quaternion. */
-   pq[4] = p[0]*q[4] + p[4]*q[0] + p[1]*q[7] - p[7]*q[1] +
-           p[6]*q[2] - p[2]*q[6] + p[5]*q[3] - p[3]*q[5];
-   pq[5] = p[0]*q[5] + p[5]*q[0] - p[1]*q[6] + p[6]*q[1] -
-           p[7]*q[2] + p[2]*q[7] + p[5]*q[3] - p[3]*q[4];
-   pq[6] = p[0]*q[6] + p[6]*q[0] + p[1]*q[5] - p[5]*q[1] +
-           p[4]*q[2] - p[2]*q[4] + p[7]*q[3] - p[3]*q[7];
-   pq[7] = p[0]*q[7] + p[7]*q[0] - p[1]*q[4] - p[4]*q[1] -
+   pq[4] = p[4]*q[0] + p[0]*q[4] + p[7]*q[1] + p[1]*q[7] -
+           p[6]*q[2] + p[2]*q[6] + p[5]*q[3] - p[3]*q[5];
+   pq[5] = p[5]*q[0] + p[0]*q[5] + p[6]*q[1] - p[1]*q[6] +
+           p[7]*q[2] + p[2]*q[7] - p[4]*q[3] + p[3]*q[4];
+   pq[6] = p[6]*q[0] + p[0]*q[6] - p[5]*q[1] + p[1]*q[5] +
+           p[4]*q[2] - p[2]*q[4] + p[7]*q[3] + p[3]*q[7];
+   pq[7] = p[7]*q[0] + p[0]*q[7] - p[1]*q[4] - p[4]*q[1] -
            p[2]*q[5] - p[5]*q[2] - p[3]*q[6] - p[6]*q[3];
 }
 
@@ -152,10 +165,10 @@ void dq_print( dq_t dq )
 
 void dq_print_vert( dq_t dq )
 {
-   printf( "   %.2f   %.2f\n", dq[1], dq[4] );
-   printf( "   %.2f   %.2f\n", dq[2], dq[5] );
-   printf( "   %.2f + %.2f\n", dq[3], dq[6] );
-   printf( "   %.2f   %.2f\n", dq[0], dq[7] );
+   printf( "   % 2.2fi   % 2.2fi\n", dq[1], dq[4] );
+   printf( "   % 2.2fj   % 2.2fj\n", dq[2], dq[5] );
+   printf( "   % 2.2fk + % 2.2fk\n", dq[3], dq[6] );
+   printf( "   % 2.2f    % 2.2f\n",  dq[0], dq[7] );
 }
 
 
