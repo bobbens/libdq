@@ -77,7 +77,15 @@ void dq_cr_conj( dq_t out, dq_t in )
 
 double dq_op_norm( dq_t dq )
 {
-   return sqrt( dq[0]*dq[0] - dq[1]*dq[1] - dq[2]*dq[2] - dq[3]*dq[3] );
+   int i;
+   double acc;
+   dq_t tmp, dqstar;
+   dq_cr_conj( dqstar, dq );
+   dq_op_mul( tmp, dq, dqstar );
+   acc = 0.;
+   for (i=0; i<8; i++)
+      acc += tmp[i];
+   return sqrt( acc );
 }
 
 
@@ -172,17 +180,17 @@ int dq_cmp( dq_t p, dq_t q )
 
 void dq_print( dq_t dq )
 {
-   printf( "%.2f + %.2fi + %.2fj + %.2fk + %.2fie + %.2fje + %.2fke + %.2fe\n",
+   printf( "%.3f + %.3fi + %.3fj + %.3fk + %.3fie + %.3fje + %.3fke + %.3fe\n",
          dq[0], dq[1], dq[2], dq[3], dq[4], dq[5], dq[6], dq[7] );
 }
 
 
 void dq_print_vert( dq_t dq )
 {
-   printf( "   % 2.2fi   % 2.2fi\n", dq[1], dq[4] );
-   printf( "   % 2.2fj   % 2.2fj\n", dq[2], dq[5] );
-   printf( "   % 2.2fk + % 2.2fk\n", dq[3], dq[6] );
-   printf( "   % 2.2f    % 2.2f\n",  dq[0], dq[7] );
+   printf( "   % 3.3fi   % 3.3fi\n", dq[1], dq[4] );
+   printf( "   % 3.3fj   % 3.3fj\n", dq[2], dq[5] );
+   printf( "   % 3.3fk + % 3.3fk\n", dq[3], dq[6] );
+   printf( "   % 3.3f    % 3.3f\n",  dq[0], dq[7] );
 }
 
 

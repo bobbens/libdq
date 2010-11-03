@@ -52,6 +52,7 @@ static int test_rotation (void)
 {
    double a, p[3], s[3], c[3], pf[3];
    dq_t P, R, RP, PF;
+   double norm;
 
    /* Create positions. */
    a    = M_PI/2.;
@@ -73,6 +74,13 @@ static int test_rotation (void)
    dq_cr_rotation( R, a, s, c ); /* A */
    dq_op_f4g( RP, R, P ); /* ABA* */
    dq_cr_point( PF, pf );
+
+   /* Check norm. */
+   norm = dq_op_norm( R );
+   if (fabs(norm - 1.) > 1e-10) {
+      fprintf( stderr, "Rotation dual quaternion R is not a unit dual quaternion (has a norm of %.3f)\n", norm );
+      return 1;
+   }
 
    /* Results. */
    if (dq_cmp( PF, RP ) != 0) {

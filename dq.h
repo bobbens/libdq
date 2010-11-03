@@ -84,11 +84,14 @@ void dq_cr_conj( dq_t out, dq_t in );
  * @brief Gets the norm of a dual quaternion.
  *
  * \f[
- * \| \widehat{q} \| = \sqrt{\widehat{q} \widehat{q}^*}
+ * \| \widehat{Q} \| = \sqrt{\widehat{Q} \widehat{Q}^*}
  * \f]
+ *
+ * @note A norm of 1 indicates that the dual quaternion is a unit dual quaternion.
  *
  *    @param[in] dq Dual quaternion to get norm of.
  *    @return The norm of the dual quaternion.
+ * @sa dq_cr_conj
  */
 double dq_op_norm( dq_t dq );
 /**
