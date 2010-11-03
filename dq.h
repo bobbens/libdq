@@ -29,6 +29,18 @@
  *
  * This is a library for using and manipulating dual quaternions. Dual quaternions are useful for describing rigid body movements in screw theory.
  *
+ * The naming scheme used is more or less consistant and the following:
+ *  - Capital letters are for dual quaternions, they shall be denoted with a "hat" in the documentation as such: \f$\widehat{Q}\f$.
+ *  - Lowercase will be used for vectors or simple quaternions. In the case of simple quaternions they shall have a "hat" as such: \f$\widehat{q}\f$.
+ *  - Individual members of quaternions or dual quaternions are lowercase and will be indicated with subscripted index as such: \f$a_0\f$.
+ *
+ * For functions:
+ *  - Input dual quaternions should be called Q if there is one input or P and Q if there are two.
+ *  - Output dual quaternions should be called O or a combination of the input quaternions in the case it is multiplying or transforming like for example PQ.
+ *
+ * For notation and quaternion definition please refer to the documentation for the dual quaternion type @ref dq_t .
+ *
+ * @sa dq_t
  * @sa creation
  * @sa operations
  * @sa misc
@@ -62,45 +74,45 @@ typedef double dq_t[8];
 /**
  * @brief Creates a pure rotation dual quaternion.
  *
- *    @param[out] out Dual quaternion created.
+ *    @param[out] O Dual quaternion created.
  *    @param[in] zita Angle to ratet.
  *    @param[in] s Vector to rotate around.
  *    @param[in] c Any point of the vector (to create plucker coordinates).
  */
-void dq_cr_rotation( dq_t out, double zita, const double s[3], const double c[3] );
+void dq_cr_rotation( dq_t O, double zita, const double s[3], const double c[3] );
 /**
  * @brief Creates a pure translation dual quaternion.
  *
- *    @param[out] out Dual quaternion created.
+ *    @param[out] O Dual quaternion created.
  *    @param[in] t Vector to translate by.
  */
-void dq_cr_translation( dq_t out, const double t[3] );
+void dq_cr_translation( dq_t O, const double t[3] );
 /**
  * @brief Creates a point dual quaternion.
  *
- *    @param[out] out Dual quaternion created.
+ *    @param[out] O Dual quaternion created.
  *    @param[in] pos Position of the point.
  * @sa dq_op_f4g
  */
-void dq_cr_point( dq_t out, const double pos[3] );
+void dq_cr_point( dq_t O, const double pos[3] );
 /**
  * @brief Copies a dual quaternion.
  *
- *    @param[out] out Dual quaternion created.
- *    @param[in] in Dual quaternion to copy.
+ *    @param[out] O Dual quaternion created.
+ *    @param[in] Q Dual quaternion to copy.
  */
-void dq_cr_copy( dq_t out, dq_t in );
+void dq_cr_copy( dq_t O, dq_t Q );
 /**
  * @brief Conjugates a dual quaternion.
  *
  * \f[
- * \widehat{out} = \widehat{p}^* + \epsilon \widehat{q}^*
+ * \widehat{O} = \widehat{Q}^* = \widehat{q}^* + \epsilon \widehat{q}^*
  * \f]
  *
- *    @param[out] out Dual quaternion created (conjugated).
- *    @param[in] in Dual quaternion to conjugate.
+ *    @param[out] O Dual quaternion created (conjugated).
+ *    @param[in] Q Dual quaternion to conjugate.
  */
-void dq_cr_conj( dq_t out, dq_t in );
+void dq_cr_conj( dq_t O, dq_t Q );
 /* @} */
 
 /**
@@ -117,47 +129,47 @@ void dq_cr_conj( dq_t out, dq_t in );
  *
  * @note A norm of 1 indicates that the dual quaternion is a unit dual quaternion.
  *
- *    @param[in] dq Dual quaternion to get norm of.
+ *    @param[in] Q Dual quaternion to get norm of.
  *    @return The norm of the dual quaternion.
  * @sa dq_cr_conj
  */
-double dq_op_norm( dq_t dq );
+double dq_op_norm( dq_t Q );
 /**
  * @brief Adds two dual quaternions.
  *
  * \f[
- * \widehat{out} = \widehat{p} + \widehat{q}
+ * \widehat{O} = \widehat{P} - \widehat{Q}
  * \f]
  * 
- *    @param[out] out The result of the addition.
- *    @param[in] p First quaternion to add.
- *    @param[in] q Second quaternion to add.
+ *    @param[out] O The result of the addition.
+ *    @param[in] P First quaternion to add.
+ *    @param[in] Q Second quaternion to add.
  */
-void dq_op_add( dq_t out, dq_t p, dq_t q );
+void dq_op_add( dq_t O, dq_t P, dq_t Q );
 /**
  * @brief Subtracts two dual quaternions.
  *
  * \f[
- * \widehat{out} = \widehat{p} - \widehat{q}
+ * \widehat{O} = \widehat{P} - \widehat{Q}
  * \f]
  * 
- *    @param[out] out The result of the subtraction.
- *    @param[in] p Dual quaternion to subtract from.
- *    @param[in] q Dual quaternion to subtract.
+ *    @param[out] O The result of the subtraction.
+ *    @param[in] P Dual quaternion to subtract from.
+ *    @param[in] Q Dual quaternion to subtract.
  */
-void dq_op_sub( dq_t out, dq_t p, dq_t q );
+void dq_op_sub( dq_t O, dq_t P, dq_t Q );
 /**
  * @brief Multiplies to dual quaternions.
  *
  * \f[
- * \widehat{pq} = \widehat{p} \widehat{q}
+ * \widehat{PQ} = \widehat{P} \widehat{Q}
  * \f]
  *
- *    @param[out] pq Result of the multiplication.
- *    @param[in] p First dual quaternion to multiply.
- *    @param[in] q Second dual quaternion to multiply.
+ *    @param[out] PQ Result of the multiplication.
+ *    @param[in] P First dual quaternion to multiply.
+ *    @param[in] Q Second dual quaternion to multiply.
  */
-void dq_op_mul( dq_t pq, dq_t p, dq_t q );
+void dq_op_mul( dq_t PQ, dq_t P, dq_t Q );
 /**
  * @brief Clifford conjugation transformation of type \f$f_{1g}\f$ (Alba Perez notation).
  *
@@ -220,23 +232,23 @@ void dq_op_f4g( dq_t ABA, dq_t A, dq_t B );
 /**
  * @brief Compares two dual quaternions.
  *
- *    @param[in] p First dual quaternion to compare.
- *    @param[in] q Second dual quaternion to compare.
+ *    @param[in] P First dual quaternion to compare.
+ *    @param[in] Q Second dual quaternion to compare.
  *    @return 0 if they are equal.
  */
-int dq_cmp( dq_t p, dq_t q );
+int dq_cmp( dq_t P, dq_t Q );
 /**
  * @brief Prints a quaternion on a single line.
  * 
- *    @param[in] dq Dual quaternion to print.
+ *    @param[in] Q Dual quaternion to print.
  */
-void dq_print( dq_t dq );
+void dq_print( dq_t Q );
 /**
  * @brief Prints a dual quaternion vertically.
  * 
- *    @param[in] dq Dual quaternion to print.
+ *    @param[in] Q Dual quaternion to print.
  */
-void dq_print_vert( dq_t dq );
+void dq_print_vert( dq_t Q );
 /* @} */
 
 
