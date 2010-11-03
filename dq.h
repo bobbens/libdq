@@ -22,7 +22,7 @@ typedef double dq_t[8];
  * @brief Creates a pure rotation dual quaternion.
  *
  *    @param[out] out Dual quaternion created.
- *    @param zite Angle to ratet.
+ *    @param zita Angle to ratet.
  *    @param s Vector to rotate around.
  *    @param c Any point of the vector (to create plucker coordinates).
  */
@@ -63,9 +63,9 @@ void dq_cr_conj( dq_t out, dq_t in );
 /**
  * @brief Adds two dual quaternions.
  * 
- *    @param[out] The result of the addition.
- *    @param p First quaternion to add.
- *    @param q Second quaternion to add.
+ *    @param[out] out The result of the addition.
+ *    @param in_p First quaternion to add.
+ *    @param in_q Second quaternion to add.
  */
 void dq_op_add( dq_t out, dq_t in_p, dq_t in_q );
 /**
