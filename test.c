@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <math.h>
 
+#include <sys/time.h>
+
 
 static int test_translation (void)
 {
@@ -147,6 +149,53 @@ static int test_full (void)
 }
 
 
+static int test_benchmark (void)
+{
+   int i, N;
+   double a, p[3], s[3], c[3], pf[3];
+   dq_t P, R, RR, RP, PF;
+   struct timeval tstart, tend;
+   unsigned long elapsed;
+   double dt;
+
+   N = 1000000;
+
+   /* Create positions. */
+   a    = M_PI/2./(double)N;
+   p[0] = 1.;
+   p[1] = 1.;
+   p[2] = 1.;
+   s[0] = 0.;
+   s[1] = 0.;
+   s[2] = 1.;
+   c[0] = 0.;
+   c[1] = 0.;
+   c[2] = 0.;
+   pf[0] = -1.;
+   pf[1] = 1.;
+   pf[2] = 1.;
+
+   /* Calculate. */
+   dq_cr_point( P, p ); /* B */
+   dq_cr_rotation( R, a, s, c ); /* A */
+   dq_cr_copy( RR, R );
+   gettimeofday( &tstart, NULL );
+   for (i=0; i<N; i++)
+      dq_op_mul( RR, RR, R );
+   gettimeofday( &tend, NULL );
+   dq_cr_copy( R, RR );
+   dq_op_f4g( RP, R, P ); /* ABA* */
+   dq_cr_point( PF, pf );
+
+   /* Display elapsed time. */
+   elapsed = ((tend.tv_sec - tstart.tv_sec) * 1000000 + (tend.tv_usec - tstart.tv_usec));
+   dt      = ((double)elapsed) / 1e6;
+   fprintf( stdout, "Benchmarked %d multiplications in %.3f seconds (%.3e seconds/multiplication).\n", N, dt, dt/(double)N );
+
+   return 0;
+}
+
+
 int main( int argc, char *argv[] )
 {
    int ret;
@@ -159,6 +208,7 @@ int main( int argc, char *argv[] )
    ret += test_translation();
    ret += test_rotation();
    ret += test_full();
+   ret += test_benchmark();
 
    if (ret == 0) {
       fprintf( stdout, "All tests passed.\n" );
