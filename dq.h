@@ -29,7 +29,9 @@
  *
  * This is a library for using and manipulating dual quaternions. Dual quaternions are useful for describing rigid body movements in screw theory.
  *
- * @sa dq.h
+ * @sa creation
+ * @sa operations
+ * @sa misc
  */
 
 
