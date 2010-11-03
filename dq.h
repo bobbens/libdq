@@ -71,7 +71,7 @@ void dq_cr_copy( dq_t out, dq_t in );
  * @brief Conjugates a dual quaternion.
  *
  * \f[
- * p + q = p^* + \epsilon q^*
+ * \widehat{out} = \widehat{p}^* + \epsilon \widehat{q}^*
  * \f]
  *
  *    @param[out] out Dual quaternion created (conjugated).
@@ -81,10 +81,21 @@ void dq_cr_conj( dq_t out, dq_t in );
 
 /* Operations. */
 /**
+ * @brief Gets the norm of a dual quaternion.
+ *
+ * \f[
+ * \| \widehat{q} \| = \sqrt{\widehat{q} \widehat{q}^*}
+ * \f]
+ *
+ *    @param[in] dq Dual quaternion to get norm of.
+ *    @return The norm of the dual quaternion.
+ */
+double dq_op_norm( dq_t dq );
+/**
  * @brief Adds two dual quaternions.
  *
  * \f[
- * out = p + q
+ * \widehat{out} = \widehat{p} + \widehat{q}
  * \f]
  * 
  *    @param[out] out The result of the addition.
@@ -96,7 +107,7 @@ void dq_op_add( dq_t out, dq_t p, dq_t q );
  * @brief Subtracts two dual quaternions.
  *
  * \f[
- * out = p - q
+ * \widehat{out} = \widehat{p} - \widehat{q}
  * \f]
  * 
  *    @param[out] out The result of the subtraction.
@@ -108,7 +119,7 @@ void dq_op_sub( dq_t out, dq_t p, dq_t q );
  * @brief Multiplies to dual quaternions.
  *
  * \f[
- * pq = p * q
+ * \widehat{pq} = \widehat{p} \widehat{q}
  * \f]
  *
  *    @param[out] pq Result of the multiplication.

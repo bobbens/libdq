@@ -75,6 +75,12 @@ void dq_cr_conj( dq_t out, dq_t in )
 }
 
 
+double dq_op_norm( dq_t dq )
+{
+   return sqrt( dq[0]*dq[0] - dq[1]*dq[1] - dq[2]*dq[2] - dq[3]*dq[3] );
+}
+
+
 void dq_op_add( dq_t out, dq_t p, dq_t q )
 {
    int i;
