@@ -187,21 +187,21 @@ void dq_op_f4g( dq_t ABA, dq_t A, dq_t B );
 /**
  * @brief Compares two dual quaternions.
  *
- *    @param p First dual quaternion to compare.
- *    @param q Second dual quaternion to compare.
+ *    @param[in] p First dual quaternion to compare.
+ *    @param[in] q Second dual quaternion to compare.
  *    @return 0 if they are equal.
  */
 int dq_cmp( dq_t p, dq_t q );
 /**
  * @brief Prints a quaternion on a single line.
  * 
- *    @param dq Dual quaternion to print.
+ *    @param[in] dq Dual quaternion to print.
  */
 void dq_print( dq_t dq );
 /**
  * @brief Prints a dual quaternion vertically.
  * 
- *    @param dq Dual quaternion to print.
+ *    @param[in] dq Dual quaternion to print.
  */
 void dq_print_vert( dq_t dq );
 
