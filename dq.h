@@ -5,15 +5,33 @@
 
 
 /**
+ * @mainpage libdq doxygen documentation
+ * @author Edgar Simo <bobbens@gmail.com>
+ * @version 0.1
+ * @date 2010
+ *
+ * This is a library for using and manipulating dual quaternions. Dual quaternions are useful for describing rigid body movements in screw theory.
+ *
+ * @sa dq.h
+ */
+
+
+/**
  * @file dq.h
+ * @brief The include for the libdq dual quaternion library.
  */
 
 
 /**
  * @brief Using \f$C^{+}_{0,3,1}\f$ notation (McArthy).
  *
- *    0  1  2  3  4  5  6  7
- *    1  i  j  k ei ej ek  e
+ * \f[
+ * \{ 1, e_{23}, e_{31}, e_{12}, e_{41}, e_{42}, e_{43}, e_{1234} \} = \{ 1, i, j, k, i\epsilon, j\epsilon, k\epsilon, \epsilon \}
+ * \f]
+ *
+ * \f[
+ * Q = (q_0 + q_1 i + q_2 j + q_3 k ) + \epsilon ( q_7 + q_4 i + q_5 j + q_6 k ) = \widehat{q} + \epsilon \widehat{q}^0
+ * \f]
  */
 typedef double dq_t[8];
 
@@ -22,40 +40,42 @@ typedef double dq_t[8];
  * @brief Creates a pure rotation dual quaternion.
  *
  *    @param[out] out Dual quaternion created.
- *    @param zita Angle to ratet.
- *    @param s Vector to rotate around.
- *    @param c Any point of the vector (to create plucker coordinates).
+ *    @param[in] zita Angle to ratet.
+ *    @param[in] s Vector to rotate around.
+ *    @param[in] c Any point of the vector (to create plucker coordinates).
  */
-void dq_cr_rotation( dq_t out, double zita, double s[3], double c[3] );
+void dq_cr_rotation( dq_t out, double zita, const double s[3], const double c[3] );
 /**
  * @brief Creates a pure translation dual quaternion.
  *
  *    @param[out] out Dual quaternion created.
- *    @param t Vector to translate by.
+ *    @param[in] t Vector to translate by.
  */
-void dq_cr_translation( dq_t out, double t[3] );
+void dq_cr_translation( dq_t out, const double t[3] );
 /**
  * @brief Creates a point dual quaternion.
  *
  *    @param[out] out Dual quaternion created.
- *    @param pos Position of the point.
+ *    @param[in] pos Position of the point.
  * @sa dq_op_f4g
  */
-void dq_cr_point( dq_t out, double pos[3] );
+void dq_cr_point( dq_t out, const double pos[3] );
 /**
  * @brief Copies a dual quaternion.
  *
  *    @param[out] out Dual quaternion created.
- *    @param in Dual quaternion to copy.
+ *    @param[in] in Dual quaternion to copy.
  */
 void dq_cr_copy( dq_t out, dq_t in );
 /**
  * @brief Conjugates a dual quaternion.
  *
- * p+eq = p*+eq*
+ * \f[
+ * p + q = p^* + \epsilon q^*
+ * \f]
  *
  *    @param[out] out Dual quaternion created (conjugated).
- *    @param in Dual quaternion to conjugate.
+ *    @param[in] in Dual quaternion to conjugate.
  */
 void dq_cr_conj( dq_t out, dq_t in );
 
@@ -64,46 +84,46 @@ void dq_cr_conj( dq_t out, dq_t in );
  * @brief Adds two dual quaternions.
  * 
  *    @param[out] out The result of the addition.
- *    @param in_p First quaternion to add.
- *    @param in_q Second quaternion to add.
+ *    @param[in] p First quaternion to add.
+ *    @param[in] q Second quaternion to add.
  */
-void dq_op_add( dq_t out, dq_t in_p, dq_t in_q );
+void dq_op_add( dq_t out, dq_t p, dq_t q );
 /**
  * @brief Multiplies to dual quaternions.
  *
  * pq = p * q
  *
- *    @param pq Result of the multiplication.
- *    @param p First quaternion to multiply.
- *    @param q Second quaternion to multiply.
+ *    @param[out] pq Result of the multiplication.
+ *    @param[in] p First quaternion to multiply.
+ *    @param[in] q Second quaternion to multiply.
  */
 void dq_op_mul( dq_t pq, dq_t p, dq_t q );
 /**
  * @brief Clifford conjugation transformation of type f2g (Alba Perez notation).
  *
  * \f[
- * A |----> ABA*
+ * A : B \longmapsto ABA^*
  * \f]
  *
  * This transformation is useful for lines.
  *
- *    @param ABA Result of the transformation.
- *    @param A Dual quaternion representing the transformation.
- *    @param B Dual quaternion being transformated.
+ *    @param[out] ABA Result of the transformation.
+ *    @param[in] A Dual quaternion representing the transformation.
+ *    @param[in] B Dual quaternion being transformated.
  */
 void dq_op_f2g( dq_t ABA, dq_t A, dq_t B );
 /**
  * @brief Clifford conjugation transformation of type f4g (Alba Perez notation).
  *
  * \f[
- * A |----> AB(a0 - a1 - a2 - a3 + e( a4 + a5 + a6 - a7 )
+ * A : B \longmapsto AB(a_0 - a + \epsilon ( a^0 - a_7 ))
  * \f]
  *
  * This transformation is useful for points.
  *
- *    @param ABA Result of the transformation.
- *    @param A Dual quaternion representing the transformation.
- *    @param B Dual quaternion being transformated.
+ *    @param[out] ABA Result of the transformation.
+ *    @param[in] A Dual quaternion representing the transformation.
+ *    @param[in] B Dual quaternion being transformated.
  */
 void dq_op_f4g( dq_t ABA, dq_t A, dq_t B );
 

@@ -8,7 +8,7 @@
 #include <string.h>
 
 
-void dq_cr_rotation( dq_t out, double zita, double s[3], double c[3] )
+void dq_cr_rotation( dq_t out, double zita, const double s[3], const double c[3] )
 {
    double ss, cs;
 
@@ -28,7 +28,7 @@ void dq_cr_rotation( dq_t out, double zita, double s[3], double c[3] )
 }
 
 
-void dq_cr_translation( dq_t out, double t[3] )
+void dq_cr_translation( dq_t out, const double t[3] )
 {
    out[0] = 1.;
    out[1] = 0.;
@@ -41,7 +41,7 @@ void dq_cr_translation( dq_t out, double t[3] )
 }
 
 
-void dq_cr_point( dq_t out, double pos[3] )
+void dq_cr_point( dq_t out, const double pos[3] )
 {
    out[0] = 1.;
    out[1] = 0.;
@@ -75,11 +75,11 @@ void dq_cr_conj( dq_t out, dq_t in )
 }
 
 
-void dq_op_add( dq_t out, dq_t in_p, dq_t in_q )
+void dq_op_add( dq_t out, dq_t p, dq_t q )
 {
    int i;
    for (i=0; i<8; i++)
-      out[i] = in_p[i] + in_q[i];
+      out[i] = p[i] + q[i];
 }
 
 
