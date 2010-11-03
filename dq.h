@@ -82,6 +82,10 @@ void dq_cr_conj( dq_t out, dq_t in );
 /* Operations. */
 /**
  * @brief Adds two dual quaternions.
+ *
+ * \f[
+ * out = p + q
+ * \f]
  * 
  *    @param[out] out The result of the addition.
  *    @param[in] p First quaternion to add.
@@ -89,13 +93,27 @@ void dq_cr_conj( dq_t out, dq_t in );
  */
 void dq_op_add( dq_t out, dq_t p, dq_t q );
 /**
+ * @brief Subtracts two dual quaternions.
+ *
+ * \f[
+ * out = p - q
+ * \f]
+ * 
+ *    @param[out] out The result of the subtraction.
+ *    @param[in] p Dual quaternion to subtract from.
+ *    @param[in] q Dual quaternion to subtract.
+ */
+void dq_op_sub( dq_t out, dq_t p, dq_t q );
+/**
  * @brief Multiplies to dual quaternions.
  *
+ * \f[
  * pq = p * q
+ * \f]
  *
  *    @param[out] pq Result of the multiplication.
- *    @param[in] p First quaternion to multiply.
- *    @param[in] q Second quaternion to multiply.
+ *    @param[in] p First dual quaternion to multiply.
+ *    @param[in] q Second dual quaternion to multiply.
  */
 void dq_op_mul( dq_t pq, dq_t p, dq_t q );
 /**

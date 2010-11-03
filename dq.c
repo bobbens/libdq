@@ -83,6 +83,14 @@ void dq_op_add( dq_t out, dq_t p, dq_t q )
 }
 
 
+void dq_op_sub( dq_t out, dq_t p, dq_t q )
+{
+   int i;
+   for (i=0; i<8; i++)
+      out[i] = p[i] - q[i];
+}
+
+
 void dq_op_mul( dq_t pq, dq_t p, dq_t q )
 {
    /* Multiplication table:
