@@ -10,6 +10,23 @@
  * @version 0.1
  * @date 2010
  *
+ @verbatim
+    Copyright 2010 Edgar Simo
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ @endverbatim
+ *
  * This is a library for using and manipulating dual quaternions. Dual quaternions are useful for describing rigid body movements in screw theory.
  *
  * @sa dq.h
@@ -35,7 +52,11 @@
  */
 typedef double dq_t[8];
 
-/* Creation. */
+/**
+ * @defgroup creation Dual Quaternion Creation Functions
+ * @brief Set of functions to create dual quaternions.
+ */
+/* @{ */
 /**
  * @brief Creates a pure rotation dual quaternion.
  *
@@ -78,8 +99,13 @@ void dq_cr_copy( dq_t out, dq_t in );
  *    @param[in] in Dual quaternion to conjugate.
  */
 void dq_cr_conj( dq_t out, dq_t in );
+/* @} */
 
-/* Operations. */
+/**
+ * @defgroup operations Dual Quaternion Operations
+ * @brief Functions for operation on dual quaternions.
+ */
+/* @{ */
 /**
  * @brief Gets the norm of a dual quaternion.
  *
@@ -182,8 +208,13 @@ void dq_op_f3g( dq_t ABA, dq_t A, dq_t B );
  *    @param[in] B Dual quaternion being transformated.
  */
 void dq_op_f4g( dq_t ABA, dq_t A, dq_t B );
+/* @} */
 
-/* Misc. */
+/**
+ * @defgroup misc Dual Quaternion Miscellaneous Functions
+ * @brief Assorted functions related to dual quaternions that don't fit elsewhere.
+ */
+/* @{ */
 /**
  * @brief Compares two dual quaternions.
  *
@@ -204,6 +235,7 @@ void dq_print( dq_t dq );
  *    @param[in] dq Dual quaternion to print.
  */
 void dq_print_vert( dq_t dq );
+/* @} */
 
 
 #endif /* _DQ_H */
