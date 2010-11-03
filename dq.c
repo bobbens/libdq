@@ -8,7 +8,7 @@
 #include <string.h>
 
 
-void dq_cr_rotation( dq_t out, double zita, const double s[3], const double c[3] )
+void dq_cr_rotation( dq_t O, double zita, const double s[3], const double c[3] )
 {
    double ss, cs;
 
@@ -16,96 +16,96 @@ void dq_cr_rotation( dq_t out, double zita, const double s[3], const double c[3]
    ss = sin( zita/2. );
    cs = cos( zita/2. );
 
-   out[0] = cs;
-   out[1] = ss*s[0];
-   out[2] = ss*s[1];
-   out[3] = ss*s[2];
+   O[0] = cs;
+   O[1] = ss*s[0];
+   O[2] = ss*s[1];
+   O[3] = ss*s[2];
    /* We do cross product with the line point and line vector to get the plucker coordinates. */
-   out[4] = ss*(  s[1]*c[2] - s[2]*c[1] );
-   out[5] = ss*( -s[0]*c[2] + s[2]*c[0] );
-   out[6] = ss*(  s[0]*c[1] - s[1]*c[0] );
-   out[7] = 0.;
+   O[4] = ss*(  s[1]*c[2] - s[2]*c[1] );
+   O[5] = ss*( -s[0]*c[2] + s[2]*c[0] );
+   O[6] = ss*(  s[0]*c[1] - s[1]*c[0] );
+   O[7] = 0.;
 }
 
 
-void dq_cr_translation( dq_t out, const double t[3] )
+void dq_cr_translation( dq_t O, const double t[3] )
 {
-   out[0] = 1.;
-   out[1] = 0.;
-   out[2] = 0.;
-   out[3] = 0.;
-   out[4] = t[0] / 2.;
-   out[5] = t[1] / 2.;
-   out[6] = t[2] / 2.;
-   out[7] = 0.;
+   O[0] = 1.;
+   O[1] = 0.;
+   O[2] = 0.;
+   O[3] = 0.;
+   O[4] = t[0] / 2.;
+   O[5] = t[1] / 2.;
+   O[6] = t[2] / 2.;
+   O[7] = 0.;
 }
 
 
-void dq_cr_point( dq_t out, const double pos[3] )
+void dq_cr_point( dq_t O, const double pos[3] )
 {
-   out[0] = 1.;
-   out[1] = 0.;
-   out[2] = 0.;
-   out[3] = 0.;
-   out[4] = pos[0];
-   out[5] = pos[1];
-   out[6] = pos[2];
-   out[7] = 0.;
+   O[0] = 1.;
+   O[1] = 0.;
+   O[2] = 0.;
+   O[3] = 0.;
+   O[4] = pos[0];
+   O[5] = pos[1];
+   O[6] = pos[2];
+   O[7] = 0.;
 }
 
 
-void dq_cr_copy( dq_t out, dq_t in )
+void dq_cr_copy( dq_t O, dq_t Q )
 {
    int i;
    for (i=0; i<8; i++)
-      out[i] = in[i];
+      O[i] = Q[i];
 }
 
 
-void dq_cr_conj( dq_t out, dq_t in )
+void dq_cr_conj( dq_t O, dq_t Q )
 {
-   out[0] =  in[0];
-   out[1] = -in[1];
-   out[2] = -in[2];
-   out[3] = -in[3];
-   out[4] =  in[4];
-   out[5] = -in[5];
-   out[6] = -in[6];
-   out[7] = -in[7];
+   O[0] =  Q[0];
+   O[1] = -Q[1];
+   O[2] = -Q[2];
+   O[3] = -Q[3];
+   O[4] =  Q[4];
+   O[5] = -Q[5];
+   O[6] = -Q[6];
+   O[7] = -Q[7];
 }
 
 
-double dq_op_norm( dq_t dq )
+double dq_op_norm( dq_t Q )
 {
    int i;
    double acc;
-   dq_t tmp, dqstar;
-   dq_cr_conj( dqstar, dq );
-   dq_op_mul( tmp, dq, dqstar );
+   dq_t T, Qstar;
+   dq_cr_conj( Qstar, Q );
+   dq_op_mul( T, Q, Qstar );
    acc = 0.;
    for (i=0; i<8; i++)
-      acc += tmp[i];
+      acc += T[i];
    return sqrt( acc );
 }
 
 
-void dq_op_add( dq_t out, dq_t p, dq_t q )
+void dq_op_add( dq_t O, dq_t P, dq_t Q )
 {
    int i;
    for (i=0; i<8; i++)
-      out[i] = p[i] + q[i];
+      O[i] = P[i] + Q[i];
 }
 
 
-void dq_op_sub( dq_t out, dq_t p, dq_t q )
+void dq_op_sub( dq_t O, dq_t P, dq_t Q )
 {
    int i;
    for (i=0; i<8; i++)
-      out[i] = p[i] - q[i];
+      O[i] = P[i] - Q[i];
 }
 
 
-void dq_op_mul( dq_t pq, dq_t p, dq_t q )
+void dq_op_mul( dq_t PQ, dq_t P, dq_t Q )
 {
    /* Multiplication table:
     *
@@ -121,20 +121,20 @@ void dq_op_mul( dq_t pq, dq_t p, dq_t q )
     *  Q1.e  |   e    ei     ej   ek     0      0      0      0
     */
    /* Real quaternion. */
-   pq[0] = p[0]*q[0] - p[1]*q[1] - p[2]*q[2] - p[3]*q[3];
-   pq[1] = p[0]*q[1] + p[1]*q[0] + p[2]*q[3] - p[3]*q[2];
-   pq[2] = p[0]*q[2] + p[2]*q[0] + p[1]*q[3] - p[3]*q[1];
-   pq[3] = p[0]*q[3] + p[3]*q[0] + p[1]*q[2] - p[2]*q[1];
+   PQ[0] = P[0]*Q[0] - P[1]*Q[1] - P[2]*Q[2] - P[3]*Q[3];
+   PQ[1] = P[0]*Q[1] + P[1]*Q[0] + P[2]*Q[3] - P[3]*Q[2];
+   PQ[2] = P[0]*Q[2] + P[2]*Q[0] + P[1]*Q[3] - P[3]*Q[1];
+   PQ[3] = P[0]*Q[3] + P[3]*Q[0] + P[1]*Q[2] - P[2]*Q[1];
 
-   /* Dual unit quaternion. */
-   pq[4] = p[4]*q[0] + p[0]*q[4] + p[7]*q[1] + p[1]*q[7] -
-           p[6]*q[2] + p[2]*q[6] + p[5]*q[3] - p[3]*q[5];
-   pq[5] = p[5]*q[0] + p[0]*q[5] + p[6]*q[1] - p[1]*q[6] +
-           p[7]*q[2] + p[2]*q[7] - p[4]*q[3] + p[3]*q[4];
-   pq[6] = p[6]*q[0] + p[0]*q[6] - p[5]*q[1] + p[1]*q[5] +
-           p[4]*q[2] - p[2]*q[4] + p[7]*q[3] + p[3]*q[7];
-   pq[7] = p[7]*q[0] + p[0]*q[7] - p[1]*q[4] - p[4]*q[1] -
-           p[2]*q[5] - p[5]*q[2] - p[3]*q[6] - p[6]*q[3];
+   /* Dual unit Quaternion. */
+   PQ[4] = P[4]*Q[0] + P[0]*Q[4] + P[7]*Q[1] + P[1]*Q[7] -
+           P[6]*Q[2] + P[2]*Q[6] + P[5]*Q[3] - P[3]*Q[5];
+   PQ[5] = P[5]*Q[0] + P[0]*Q[5] + P[6]*Q[1] - P[1]*Q[6] +
+           P[7]*Q[2] + P[2]*Q[7] - P[4]*Q[3] + P[3]*Q[4];
+   PQ[6] = P[6]*Q[0] + P[0]*Q[6] - P[5]*Q[1] + P[1]*Q[5] +
+           P[4]*Q[2] - P[2]*Q[4] + P[7]*Q[3] + P[3]*Q[7];
+   PQ[7] = P[7]*Q[0] + P[0]*Q[7] - P[1]*Q[4] - P[4]*Q[1] -
+           P[2]*Q[5] - P[5]*Q[2] - P[3]*Q[6] - P[6]*Q[3];
 }
 
 
@@ -190,32 +190,32 @@ void dq_op_f4g( dq_t ABA, dq_t A, dq_t B )
 }
 
 
-int dq_cmp( dq_t p, dq_t q )
+int dq_cmp( dq_t P, dq_t Q )
 {
    int i, ret;
    
    ret = 0;
    for (i=0; i<8; i++)
-      if (fabs(p[i]-q[i]) > 1e-10)
+      if (fabs(P[i]-Q[i]) > 1e-10)
          ret++;
 
    return ret;
 }
 
 
-void dq_print( dq_t dq )
+void dq_print( dq_t Q )
 {
    printf( "%.3f + %.3fi + %.3fj + %.3fk + %.3fie + %.3fje + %.3fke + %.3fe\n",
-         dq[0], dq[1], dq[2], dq[3], dq[4], dq[5], dq[6], dq[7] );
+         Q[0], Q[1], Q[2], Q[3], Q[4], Q[5], Q[6], Q[7] );
 }
 
 
-void dq_print_vert( dq_t dq )
+void dq_print_vert( dq_t Q )
 {
-   printf( "   % 3.3fi   % 3.3fi\n", dq[1], dq[4] );
-   printf( "   % 3.3fj   % 3.3fj\n", dq[2], dq[5] );
-   printf( "   % 3.3fk + % 3.3fk\n", dq[3], dq[6] );
-   printf( "   % 3.3f    % 3.3f\n",  dq[0], dq[7] );
+   printf( "   % 3.3fi   % 3.3fi\n", Q[1], Q[4] );
+   printf( "   % 3.3fj   % 3.3fj\n", Q[2], Q[5] );
+   printf( "   % 3.3fk + % 3.3fk\n", Q[3], Q[6] );
+   printf( "   % 3.3f    % 3.3f\n",  Q[0], Q[7] );
 }
 
 
