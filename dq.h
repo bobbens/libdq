@@ -131,7 +131,19 @@ void dq_op_sub( dq_t out, dq_t p, dq_t q );
  */
 void dq_op_mul( dq_t pq, dq_t p, dq_t q );
 /**
- * @brief Clifford conjugation transformation of type f2g (Alba Perez notation).
+ * @brief Clifford conjugation transformation of type \f$f_{1g}\f$ (Alba Perez notation).
+ *
+ * \f[
+ * A : B \longmapsto ABA
+ * \f]
+ *
+ *    @param[out] ABA Result of the transformation.
+ *    @param[in] A Dual quaternion representing the transformation.
+ *    @param[in] B Dual quaternion being transformated.
+ */
+void dq_op_f1g( dq_t ABA, dq_t A, dq_t B );
+/**
+ * @brief Clifford conjugation transformation of type \f$f_{2g}\f$ (Alba Perez notation).
  *
  * \f[
  * A : B \longmapsto ABA^*
@@ -145,7 +157,19 @@ void dq_op_mul( dq_t pq, dq_t p, dq_t q );
  */
 void dq_op_f2g( dq_t ABA, dq_t A, dq_t B );
 /**
- * @brief Clifford conjugation transformation of type f4g (Alba Perez notation).
+ * @brief Clifford conjugation transformation of type \f$f_{3g}\f$ (Alba Perez notation).
+ *
+ * \f[
+ * A : B \longmapsto AB(a_0 + a - \epsilon ( a^0 + a_7 ))
+ * \f]
+ *
+ *    @param[out] ABA Result of the transformation.
+ *    @param[in] A Dual quaternion representing the transformation.
+ *    @param[in] B Dual quaternion being transformated.
+ */
+void dq_op_f3g( dq_t ABA, dq_t A, dq_t B );
+/**
+ * @brief Clifford conjugation transformation of type \f$f_{4g}\f$ (Alba Perez notation).
  *
  * \f[
  * A : B \longmapsto AB(a_0 - a + \epsilon ( a^0 - a_7 ))

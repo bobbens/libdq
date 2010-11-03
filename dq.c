@@ -138,12 +138,37 @@ void dq_op_mul( dq_t pq, dq_t p, dq_t q )
 }
 
 
+void dq_op_f1g( dq_t ABA, dq_t A, dq_t B )
+{
+   dq_t tmp;
+
+   dq_op_mul( tmp, A, B );
+   dq_op_mul( ABA, tmp, A );
+}
+
+
 void dq_op_f2g( dq_t ABA, dq_t A, dq_t B )
 {
    dq_t tmp, Astar;
 
    dq_op_mul( tmp, A, B );
    dq_cr_conj( Astar, A );
+   dq_op_mul( ABA, tmp, Astar );
+}
+
+void dq_op_f3g( dq_t ABA, dq_t A, dq_t B )
+{
+   dq_t tmp, Astar;
+
+   dq_op_mul( tmp, A, B );
+   Astar[0] =  A[0];
+   Astar[1] =  A[1];
+   Astar[2] =  A[2];
+   Astar[3] =  A[3];
+   Astar[4] = -A[4];
+   Astar[5] = -A[5];
+   Astar[6] = -A[6];
+   Astar[7] = -A[7];
    dq_op_mul( ABA, tmp, Astar );
 }
 
