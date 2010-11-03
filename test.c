@@ -116,7 +116,6 @@ static int test_full (void)
    for (i=0; i<3; i++)
       pf[i] = pf[i] + t[i];
 
-
    /* Calculate. */
    dq_cr_point( P, p ); /* B */
    dq_cr_rotation( R, a, s, c );

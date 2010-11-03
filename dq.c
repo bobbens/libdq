@@ -172,4 +172,3 @@ void dq_print_vert( dq_t dq )
 }
 
 
-
