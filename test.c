@@ -203,17 +203,14 @@ static int test_movement (void)
 
 static int test_homo (void)
 {
-   /*
    dq_t Q;
-   double R[3][3], d[3];
-
-   mat3_eye( R );
-   d[0] = 1.;
-   d[1] = 2.;
-   d[2] = 3.;
+   double R[3][3] = { { 0.36, 0.48, -0.8 },
+                      { -0.8, 0.6, 0. },
+                      { 0.48, 0.64, 0.6 } };
+   double d[3] = { 1., 2., 3. };
 
    dq_cr_homo( Q, R, d );
-   */
+
    return 0;
 }
 

@@ -83,6 +83,13 @@ typedef double dq_t[8];
  */
 void dq_cr_rotation( dq_t O, double zita, const double s[3], const double c[3] );
 /**
+ * @brief Creates a pure rotation dual quaternion from a rotation matrix.
+ *
+ *    @param[out] O Dual quaternion created.
+ *    @param[in] R 3x3 Rotation matrix.
+ */
+void dq_cr_rotation_matrix( dq_t O, double R[3][3] );
+/**
  * @brief Creates a pure translation dual quaternion.
  *
  *    @param[out] O Dual quaternion created.
@@ -106,6 +113,14 @@ void dq_cr_point( dq_t O, const double pos[3] );
  * @sa dq_op_f2g
  */
 void dq_cr_line( dq_t O, const double s[3], const double c[3] );
+/**
+ * @brief Creates a dual quaternion from a homogeneous transformation matrix.
+ *
+ *    @param[out] O Dual quaternion created.
+ *    @param[in] R Rotation matrix.
+ *    @param[in] d Translation vector.
+ */
+void dq_cr_homo( dq_t O, double R[3][3], const double d[3] );
 /**
  * @brief Copies a dual quaternion.
  *
