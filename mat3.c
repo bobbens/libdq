@@ -31,6 +31,28 @@ double mat3_det( double M[3][3] )
 }
 
 
+void mat3_add( double out[3][3], double A[3][3], double B[3][3] )
+{
+   int c,r;
+   for (c=0; c<3; c++) {
+      for (r=0; r<3; r++) {
+         out[r][c] = A[r][c] + B[r][c];
+      }
+   }
+}
+
+
+void mat3_sub( double out[3][3], double A[3][3], double B[3][3] )
+{
+   int c,r;
+   for (c=0; c<3; c++) {
+      for (r=0; r<3; r++) {
+         out[r][c] = A[r][c] - B[r][c];
+      }
+   }
+}
+
+
 void mat3_inv( double out[3][3], double in[3][3] )
 {
    double det;
@@ -57,6 +79,14 @@ void mat3_mul( double AB[3][3], double A[3][3], double B[3][3] )
          AB[r][c] = A[r][0]*B[0][c] + A[r][1]*B[1][c] + A[r][2]*B[2][c];
       }
    }
+}
+
+
+void mat3_mul_vec( double out[3], double M[3][3], const double v[3] )
+{
+   out[0] = M[0][0]*v[0] + M[0][1]*v[1] + M[0][2]*v[2];
+   out[1] = M[1][0]*v[0] + M[1][1]*v[1] + M[1][2]*v[2];
+   out[2] = M[2][0]*v[0] + M[2][1]*v[1] + M[2][2]*v[2];
 }
 
 
