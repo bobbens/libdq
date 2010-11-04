@@ -161,10 +161,11 @@ static int test_benchmark (void)
 {
    int i, N;
    double a, p[3], s[3], c[3], pf[3];
-   dq_t P, R, RR, RP, PF;
+   dq_t P, R, RR, RP, PF, PS, PA;
    struct timeval tstart, tend;
    unsigned long elapsed;
    double dt;
+   double n, na, ns;
 
    N = 1000000;
 
@@ -199,6 +200,17 @@ static int test_benchmark (void)
    elapsed = ((tend.tv_sec - tstart.tv_sec) * 1000000 + (tend.tv_usec - tstart.tv_usec));
    dt      = ((double)elapsed) / 1e6;
    fprintf( stdout, "Benchmarked %d multiplications in %.3f seconds (%.3e seconds/multiplication).\n", N, dt, dt/(double)N );
+
+   /* Compare result. */
+   dq_op_add( PA, PF, P );
+   dq_op_sub( PS, PF, P );
+   na = dq_op_norm( PA );
+   ns = dq_op_norm( PS );
+   n = (na > ns) ? ns : na;
+   if (n > 1e-10) {
+      fprintf( stderr, "Error with %d multiplications is above 1e-10: %.3e\n", N, n );
+      return -1;
+   }
 
    return 0;
 }
