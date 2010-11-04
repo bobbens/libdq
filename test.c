@@ -1,11 +1,55 @@
 
 
 #include "dq.h"
+#include "mat3.h"
 
 #include <stdio.h>
 #include <math.h>
 
 #include <sys/time.h>
+
+
+static int test_matrix (void)
+{
+   double M[3][3] = { { 1., 3., 1. },
+                      { 1., 1., 2. },
+                      { 2., 3., 4. } };
+   double comp[3][3] = { { 2., 9., -5. },
+                         { 0., -2., 1. },
+                         { -1., -3., 2. } };
+   double eye[3][3] = { { 1., 0., 0. },
+                        { 0., 1., 0. },
+                        { 0., 0., 1. } };
+   double det, inv[3][3], mmul[3][3];
+
+   det = mat3_det( M );
+   if (fabs(det+1.) > 1e-10) {
+      fprintf( stderr, "Error with determinant, got %.3e expected -1.\n", det );
+      return -1;
+   }
+
+   mat3_inv( inv, M );
+   if (mat3_comp( inv, comp ) != 0) {
+      fprintf( stderr, "Error with matrix inversion!\n" );
+      printf( "Got:\n" );
+      mat3_print( inv );
+      printf( "Expected:\n" );
+      mat3_print( comp );
+      return -1;
+   }
+
+   mat3_mul( mmul, M, inv );
+   if (mat3_comp( mmul, eye ) != 0) {
+      fprintf( stderr, "Error with matrix multiplication!\n" );
+      printf( "Got:\n" );
+      mat3_print( mmul );
+      printf( "Expected:\n" );
+      mat3_print( eye );
+      return -1;
+   }
+
+   return 0;
+}
 
 
 static int test_translation (void)
@@ -100,7 +144,7 @@ static int test_rotation (void)
 }
 
 
-static int test_full (void)
+static int test_movement (void)
 {
    int i;
    double a, p[3], t[3], s[3], c[3], pf[3];
@@ -153,6 +197,23 @@ static int test_full (void)
       return -1;
    }
 
+   return 0;
+}
+
+
+static int test_homo (void)
+{
+   /*
+   dq_t Q;
+   double R[3][3], d[3];
+
+   mat3_eye( R );
+   d[0] = 1.;
+   d[1] = 2.;
+   d[2] = 3.;
+
+   dq_cr_homo( Q, R, d );
+   */
    return 0;
 }
 
@@ -225,9 +286,11 @@ int main( int argc, char *argv[] )
    (void) argv;
 
    ret  = 0;
+   ret += test_matrix();
    ret += test_translation();
    ret += test_rotation();
-   ret += test_full();
+   ret += test_movement();
+   ret += test_homo();
    ret += test_benchmark();
 
    if (ret == 0) {

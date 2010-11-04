@@ -1,6 +1,6 @@
 
 
-SRC		:= test.c dq.c
+SRC		:= test.c dq.c mat3.c
 
 CFLAGS	:= -g -W -Wall -Wextra -pedantic -ansi -D_GNU_SOURCE
 LDFLAGS	:= -lm
