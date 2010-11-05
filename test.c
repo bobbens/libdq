@@ -70,7 +70,7 @@ static int test_translation (void)
 
    /* Calculate. */
    dq_cr_point( P, p );
-   dq_cr_translation( T, t ); 
+   dq_cr_translation_vector( T, t ); 
    dq_op_f4g( TP, T, P );
    dq_cr_point( PF, pf );
 
@@ -173,7 +173,7 @@ static int test_movement (void)
    /* Calculate. */
    dq_cr_point( P, p ); /* B */
    dq_cr_rotation( R, a, s, c );
-   dq_cr_translation( T, t );
+   dq_cr_translation_vector( T, t );
    dq_op_mul( TR, T, R ); /* A */
    dq_op_f4g( TRP, R, P );
    dq_op_f4g( TRP, TR, P ); /* ABA* */
@@ -210,7 +210,65 @@ static int test_homo (void)
    double d[3] = { 1., 2., 3. };
 
    dq_cr_homo( Q, R, d );
+   dq_print_vert( Q );
 
+   return 0;
+}
+
+
+static int test_scara (void)
+{
+   int i;
+   double s1[3] = { 0., 0., 1. };
+   double c1[3] = { 0., 0., 0. };
+   double s2[3] = { 0., 0., 1. };
+   double c2[3] = { 0., -300., 0. };
+   double s3[3] = { 0., 0., 1. };
+   double c3[3] = { 0., -650., 0. };
+   double s4[3] = { 0., 0., -1. };
+   double a1, a2, a3, t4;
+   dq_t S1, S2, S3, S4;
+   dq_t S12, S123, S1234;
+   dq_t St;
+
+   /* Example taken form Alba Perez.
+    *
+    * SCARA robot Epson E2L65
+    */
+   for (i=0; i<10; i++) {
+      /* Parameters. */
+      a1 = 0.5+3.0*(10./(double)(i));
+      a2 = 1.0-1.0*(10./(double)(i));
+      a3 = 0.0+1.5*(10./(double)(i));
+      t4 = (double)(i);
+      /* Create individual rotations. */
+      dq_cr_rotation_plucker( S1, a1, s1, c1 );
+      dq_cr_rotation_plucker( S2, a2, s2, c2 );
+      dq_cr_rotation_plucker( S3, a3, s3, c3 );
+      dq_cr_translation( S4, t4, s4 );
+      /* Create movement. */
+      dq_op_mul( S12, S1, S2 );
+      dq_op_mul( S123, S12, S3 );
+      dq_op_mul( S1234, S123, S4 );
+      /* Calculate movement as per the document. */
+      St[0] = cos( (a1+a2+a3)/2. );
+      St[1] = 0.;
+      St[2] = 0.;
+      St[3] = sin( (a1+a2+a3)/2. );
+      St[4] = 25.*( 6.*cos((a1-a2-a3)/2.) + 7.*cos((a1+a2-a3)/2.) - 13.*cos((a1+a2+a3)/2.));
+      St[5] = 25.*( 6.*sin((a1-a2-a3)/2.) + 7.*sin((a1+a2-a3)/2.) - 13.*sin((a1+a2+a3)/2.));
+      St[6] = -t4/2.*cos((a1+a2+a3)/2.);
+      St[7] =  t4/2.*sin((a1+a2+a3)/2.);
+      /* Compare with real movement. */
+      if (dq_cmp( S1234, St ) != 0) {
+         fprintf( stderr, "Scara test failed!\n" );
+         printf( "Got:\n" );
+         dq_print_vert( S1234 );
+         printf( "Expected:\n" );
+         dq_print_vert( St );
+         return -1;
+      }
+   }
    return 0;
 }
 
@@ -288,6 +346,7 @@ int main( int argc, char *argv[] )
    ret += test_rotation();
    ret += test_movement();
    ret += test_homo();
+   ret += test_scara();
    ret += test_benchmark();
 
    if (ret == 0) {
