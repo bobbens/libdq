@@ -203,15 +203,35 @@ static int test_movement (void)
 
 static int test_homo (void)
 {
-   dq_t Q;
+   dq_t E, P, Q, PF;
    double R[3][3] = { { 0.36, 0.48, -0.8 },
                       { -0.8, 0.6, 0. },
                       { 0.48, 0.64, 0.6 } };
    double d[3] = { 1., 2., 3. };
+   double p[3] = { 4., 5., 6. };
+   double pf[3];
 
+   /* Calculations with vector math. */
+   mat3_mul_vec( pf, R, p );
+   pf[0] += d[0];
+   pf[1] += d[1];
+   pf[2] += d[2];
+   dq_cr_point( PF, pf );
+
+   /* Calculations with quaternions. */
    dq_cr_homo( Q, R, d );
-   dq_print_vert( Q );
+   dq_cr_point( P, p );
+   dq_op_f4g( E, Q, P );
 
+   /* Comparison. */
+   if (dq_cmp( PF, E ) != 0) {
+         fprintf( stderr, "Homogeneous matrix test failed!\n" );
+         printf( "Got:\n" );
+         dq_print_vert( E );
+         printf( "Expected:\n" );
+         dq_print_vert( PF );
+         return -1;
+   }
    return 0;
 }
 
