@@ -4,6 +4,11 @@
 #  define _MAT3_H
 
 
+double vec3_dot( const double u[3], const double v[3] );
+void vec3_cross( double o[3], const double u[3], const double v[3] );
+double vec3_norm( const double v[3] );
+
+
 void mat3_eye( double M[3][3] );
 double mat3_det( double M[3][3] );
 void mat3_add( double out[3][3], double A[3][3], double B[3][3] );

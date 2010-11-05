@@ -5,6 +5,25 @@
 #include <stdio.h>
 #include <math.h>
 
+double vec3_dot( const double u[3], const double v[3] )
+{
+   return u[0]*v[0] + u[1]*v[1] + u[2]*v[2];
+}
+
+
+void vec3_cross( double o[3], const double u[3], const double v[3] )
+{
+   o[0] =  u[1]*v[2] - u[2]*v[1];
+   o[1] = -u[0]*v[2] + u[2]*v[0];
+   o[2] =  u[0]*v[1] - u[1]*v[0];
+}
+
+
+double vec3_norm( const double v[3] )
+{
+   return sqrt( v[0]*v[0] + v[1]*v[1] + v[2]*v[2] );
+}
+
 
 void mat3_eye( double M[3][3] )
 {

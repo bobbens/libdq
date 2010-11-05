@@ -12,7 +12,7 @@
 
 void dq_cr_rotation( dq_t O, double zita, const double s[3], const double c[3] )
 {
-   double ss, cs;
+   double ss, cs, o[3];
 
    /* Store sin and cos values to speed up calculations. */
    ss = sin( zita/2. );
@@ -23,9 +23,10 @@ void dq_cr_rotation( dq_t O, double zita, const double s[3], const double c[3] )
    O[2] = ss*s[1];
    O[3] = ss*s[2];
    /* We do cross product with the line point and line vector to get the plucker coordinates. */
-   O[4] = ss*(  s[1]*c[2] - s[2]*c[1] );
-   O[5] = ss*( -s[0]*c[2] + s[2]*c[0] );
-   O[6] = ss*(  s[0]*c[1] - s[1]*c[0] );
+   vec3_cross( o, s, c );
+   O[4] = ss*o[0];
+   O[5] = ss*o[1];
+   O[6] = ss*o[2];
    O[7] = 0.;
 }
 
@@ -56,7 +57,7 @@ void dq_cr_rotation_matrix( dq_t O, double R[3][3] )
    s[0] = B[2][1];
    s[1] = B[1][0];
    s[2] = B[0][2];
-   tz   = sqrt( s[0]*s[0] + s[1]*s[1] + s[2]*s[2] );
+   tz   = vec3_norm( s );
    s[0] /= tz;
    s[1] /= tz;
    s[2] /= tz;
@@ -107,26 +108,33 @@ void dq_cr_point( dq_t O, const double pos[3] )
 
 void dq_cr_line( dq_t O, const double s[3], const double c[3] )
 {
+   double v[3];
+   /* We do cross product with the line point and line vector to get the plucker coordinates. */
+   vec3_cross( v, s, c );
+   dq_cr_line_plucker( O, s, v );
+}
+
+
+void dq_cr_line_plucker( dq_t O, const double s[3], const double c[3] )
+{
    O[0] = 0.;
    O[1] = s[0];
    O[2] = s[1];
    O[3] = s[2];
-   /* We do cross product with the line point and line vector to get the plucker coordinates. */
-   O[4] =  s[1]*c[2] - s[2]*c[1];
-   O[5] = -s[0]*c[2] + s[2]*c[0];
-   O[6] =  s[0]*c[1] - s[1]*c[0];
+   O[4] = c[0];
+   O[5] = c[1];
+   O[6] = c[2];
    O[7] = 0.;
 }
 
 
 void dq_cr_homo( dq_t O, double R[3][3], const double d[3] )
 {
-   dq_t P, Q;
    double Rminus[3][3], Rplus[3][3], Rinv[3][3], B[3][3], eye[3][3];
    double T[3][3], T2[3][3], T3[3][3];
    double v[3];
    double s[3], zita;
-   double n, z2, tz, sz, cz;
+   double n, z2, t2, tz, sz, cz;
 
    /* B = (R-I)(R+I)^{-1} */
    mat3_eye( eye );
@@ -148,7 +156,7 @@ void dq_cr_homo( dq_t O, double R[3][3], const double d[3] )
    s[0] = B[2][1];
    s[1] = B[1][0];
    s[2] = B[0][2];
-   tz   = sqrt( s[0]*s[0] + s[1]*s[1] + s[2]*s[2] );
+   tz   = vec3_norm( s );
    s[0] /= tz;
    s[1] /= tz;
    s[2] /= tz;
@@ -168,28 +176,28 @@ void dq_cr_homo( dq_t O, double R[3][3], const double d[3] )
    v[2] /= n;
 
    /*
+    * Calculate the translation part.
+    *
+    * d = d* + t s
+    * d.s = d*.s + t
+    * d*.s = 0
+    * t = d.s
+    */
+   t2 = vec3_dot( d, s ) / 2.;
+
+   /*
     * Build the rotational part.
     */
    sz = sin( z2 );
    cz = cos( z2 );
-   P[0] = cz;
-   P[1] = sz*s[0];
-   P[2] = sz*s[1];
-   P[3] = sz*s[2];
-   P[4] = sz*v[0];
-   P[5] = sz*v[1];
-   P[6] = sz*v[2];
-   P[7] = 0.;
-
-   /*
-    * Create translation.
-    */
-   dq_cr_translation( Q, d );
-
-   /*
-    * Compose the movement.
-    */
-   dq_op_mul( O, Q, P );
+   O[0] = cz;
+   O[1] = sz*s[0];
+   O[2] = sz*s[1];
+   O[3] = sz*s[2];
+   O[4] = sz*v[0] + t2*s[0]*cz;
+   O[5] = sz*v[1] + t2*s[1]*cz;
+   O[6] = sz*v[2] + t2*s[2]*cz;
+   O[7] = -t2*sz;
 }
 
 
