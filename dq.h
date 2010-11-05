@@ -77,11 +77,20 @@ typedef double dq_t[8];
  * @brief Creates a pure rotation dual quaternion.
  *
  *    @param[out] O Dual quaternion created.
- *    @param[in] zita Angle to ratet.
- *    @param[in] s Vector to rotate around.
+ *    @param[in] zita Angle to rotate.
+ *    @param[in] s Vector to rotate around (normalized).
  *    @param[in] c Any point of the vector (to create plucker coordinates).
  */
 void dq_cr_rotation( dq_t O, double zita, const double s[3], const double c[3] );
+/**
+ * @brief Creates a pure rotation dual quaternion using plucker coordinates.
+ *
+ *    @param[out] O Dual quaternion created.
+ *    @param[in] zita Angle to rotate.
+ *    @param[in] s Vector to rotate around (normalized).
+ *    @param[in] c Moment of the vector.
+ */
+void dq_cr_rotation_plucker( dq_t O, double zita, const double s[3], const double c[3] );
 /**
  * @brief Creates a pure rotation dual quaternion from a rotation matrix.
  *
@@ -93,9 +102,17 @@ void dq_cr_rotation_matrix( dq_t O, double R[3][3] );
  * @brief Creates a pure translation dual quaternion.
  *
  *    @param[out] O Dual quaternion created.
- *    @param[in] t Vector to translate by.
+ *    @param[in] t Translation amount.
+ *    @param[in] s Translation vector (normalized).
  */
-void dq_cr_translation( dq_t O, const double t[3] );
+void dq_cr_translation( dq_t O, double t, const double s[3] );
+/**
+ * @brief Creates a pure translation dual quaternion from a traslation vector.
+ *
+ *    @param[out] O Dual quaternion created.
+ *    @param[in] t Traslation vector.
+ */
+ void dq_cr_translation_vector( dq_t O, const double t[3] );
 /**
  * @brief Creates a point dual quaternion.
  *

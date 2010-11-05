@@ -31,6 +31,25 @@ void dq_cr_rotation( dq_t O, double zita, const double s[3], const double c[3] )
 }
 
 
+void dq_cr_rotation_plucker( dq_t O, double zita, const double s[3], const double c[3] )
+{
+   double ss, cs;
+
+   /* Store sin and cos values to speed up calculations. */
+   ss = sin( zita/2. );
+   cs = cos( zita/2. );
+
+   O[0] = cs;
+   O[1] = ss*s[0];
+   O[2] = ss*s[1];
+   O[3] = ss*s[2];
+   O[4] = ss*c[0];
+   O[5] = ss*c[1];
+   O[6] = ss*c[2];
+   O[7] = 0.;
+}
+
+
 void dq_cr_rotation_matrix( dq_t O, double R[3][3] )
 {
    double Rminus[3][3], Rplus[3][3], Rinv[3][3], B[3][3], eye[3][3];
@@ -80,7 +99,20 @@ void dq_cr_rotation_matrix( dq_t O, double R[3][3] )
 }
 
 
-void dq_cr_translation( dq_t O, const double t[3] )
+void dq_cr_translation( dq_t O, double t, const double s[3] )
+{
+   O[0] = 1.;
+   O[1] = 0.;
+   O[2] = 0.;
+   O[3] = 0.;
+   O[4] = t*s[0] / 2.;
+   O[5] = t*s[1] / 2.;
+   O[6] = t*s[2] / 2.;
+   O[7] = 0.;
+}
+
+
+void dq_cr_translation_vector( dq_t O, const double t[3] )
 {
    O[0] = 1.;
    O[1] = 0.;
