@@ -162,6 +162,11 @@ void dq_cr_line_plucker( dq_t O, const double s[3], const double c[3] )
 
 void dq_cr_homo( dq_t O, double R[3][3], const double d[3] )
 {
+   dq_t QR, QT;
+   dq_cr_rotation_matrix( QR, R );
+   dq_cr_translation_vector( QT, d );
+   dq_op_mul( O, QT, QR );
+#if 0
    double Rminus[3][3], Rplus[3][3], Rinv[3][3], B[3][3], eye[3][3];
    double T[3][3], T2[3][3], T3[3][3];
    double v[3];
@@ -230,6 +235,7 @@ void dq_cr_homo( dq_t O, double R[3][3], const double d[3] )
    O[5] = sz*v[1] + t2*s[1]*cz;
    O[6] = sz*v[2] + t2*s[2]*cz;
    O[7] = -t2*sz;
+#endif
 }
 
 
