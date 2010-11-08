@@ -248,7 +248,7 @@ static int test_scara (void)
    double s4[3] = { 0., 0., -1. };
    double a1, a2, a3, t4;
    dq_t S1, S2, S3, S4;
-   dq_t S12, S123, S1234;
+   dq_t S1234;
    dq_t St;
 
    /* Example taken form Alba Perez.
@@ -267,9 +267,9 @@ static int test_scara (void)
       dq_cr_rotation_plucker( S3, a3, s3, c3 );
       dq_cr_translation( S4, t4, s4 );
       /* Create movement. */
-      dq_op_mul( S12, S1, S2 );
-      dq_op_mul( S123, S12, S3 );
-      dq_op_mul( S1234, S123, S4 );
+      dq_op_mul( S1234, S1, S2 );
+      dq_op_mul( S1234, S1234, S3 );
+      dq_op_mul( S1234, S1234, S4 );
       /* Calculate movement as per the document. */
       St[0] = cos( (a1+a2+a3)/2. );
       St[1] = 0.;
