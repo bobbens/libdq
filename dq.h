@@ -51,6 +51,32 @@
  * For notation and quaternion definition please refer to the documentation for the dual quaternion type @ref dq_t .
  *
  *
+ * @section Usage
+ *
+ * To use dual quaternion library you need to include it as <dq.h>. When linking you should pass -ldq. A simple example would be:
+ *
+ * @code
+ * #include <dq.h>
+ *
+ * int main( int argc, char *argv[] )
+ * {
+ *    dq_t Q;
+ *    double t[3] = { 1.0, 2.0, 3.0 };
+ *
+ *    dq_cr_point( Q, t );
+ *    dq_print_vert( Q );
+ *
+ *    return 0;
+ * }
+ * @endcode
+ *
+ * The example would just create a point dual quaternion and display it. To compile you would have to use:
+ *
+ * @code
+ * $ gcc -ldq dq_test.c -o dq_test
+ * @endcode
+ *
+ *
  * @section Changelog
  *
  *  - Version 1.0, November 2010
