@@ -8,7 +8,7 @@
  * @mainpage libdq doxygen documentation
  * @author Edgar Simo <bobbens@gmail.com>
  * @version 0.1
- * @date 2010
+ * @date November 2010
  *
  @verbatim
     Copyright 2010 Edgar Simo
