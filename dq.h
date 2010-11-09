@@ -10,6 +10,8 @@
  * @version 1.0
  * @date November 2010
  *
+ * @section License
+ *
  @verbatim
     Copyright 2010 Edgar Simo
 
@@ -27,7 +29,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  @endverbatim
  *
+ *
+ * @section Overview
+ *
  * This is a library for using and manipulating dual quaternions. Dual quaternions are useful for describing rigid body movements in screw theory.
+ *
+ *
+ * @section Notation
  *
  * The naming scheme used is more or less consistant and the following:
  *  - Capital letters are for dual quaternions, they shall be denoted with a "hat" in the documentation as such: \f$\widehat{Q}\f$.
@@ -40,7 +48,8 @@
  *
  * For notation and quaternion definition please refer to the documentation for the dual quaternion type @ref dq_t .
  *
- * Changelog:
+ *
+ * @section Changelog
  *
  *  - Version 1.0, November 2010
  *    - Initial Revision
