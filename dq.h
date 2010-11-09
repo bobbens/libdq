@@ -32,7 +32,7 @@
  *
  * @section Overview
  *
- * This is a library for using and manipulating dual quaternions. Dual quaternions are useful for describing rigid body movements in screw theory.
+ * This is a library for using and manipulating dual quaternions. Dual quaternions are useful for describing rigid body movements using screw theory.
  *
  * If you use this library please reference it.
  *
