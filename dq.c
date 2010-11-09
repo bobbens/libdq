@@ -241,9 +241,7 @@ void dq_cr_homo( dq_t O, double R[3][3], const double d[3] )
 
 void dq_cr_copy( dq_t O, dq_t Q )
 {
-   int i;
-   for (i=0; i<8; i++)
-      O[i] = Q[i];
+   memcpy( O, Q, sizeof(dq_t) );
 }
 
 
@@ -262,32 +260,59 @@ void dq_cr_conj( dq_t O, dq_t Q )
 
 void dq_cr_inv( dq_t O, dq_t Q )
 {
-   int i;
+   double real, dual;
    dq_t T;
-   double n;
 
-   dq_cr_conj( T, Q );
-   n = dq_op_norm( Q );
-   n = pow( n, 2. );
-      for (i=0; i<8; i++)
-      T[i] /= n;
+   /* Get the dual number of t he norm. */
+   dq_op_norm2( &real, &dual, Q );
+  
+   /* Set the values. */
+   T[0] =  Q[0]*real;
+   T[1] = -Q[1]*real;
+   T[2] = -Q[2]*real;
+   T[3] = -Q[3]*real;
+   T[4] =  Q[4]*(dual-real);
+   T[5] =  Q[5]*(dual-real);
+   T[6] =  Q[6]*(dual-real);
+   T[7] =  Q[7]*(real-dual);
 
-   /* Copy over the results. */
+   /* Copy over the dual quaternion. */
    memcpy( O, T, sizeof(dq_t) );
 }
 
 
 double dq_op_norm( dq_t Q )
 {
+   double real, dual;
+
+   dq_op_norm2( &real, &dual, Q );
+
+   return sqrt(real);
+}
+
+
+void dq_op_norm2( double *real, double *dual, dq_t Q )
+{
+   /*
    int i;
    double acc;
    dq_t T, Qstar;
+   double real2, dual2;
+
    dq_cr_conj( Qstar, Q );
    dq_op_mul( T, Q, Qstar );
    acc = 0.;
-   for (i=0; i<8; i++)
+   for (i=0; i<4; i++)
       acc += T[i];
-   return sqrt( acc );
+   *real = acc;
+   acc = 0.;
+   for (   ; i<8; i++)
+      acc += T[i];
+   *dual = acc;
+   */
+
+   *real =     Q[0]*Q[0] + Q[1]*Q[1] + Q[2]*Q[2] + Q[3]*Q[3];
+   *dual = 2.*(Q[0]*Q[7] + Q[1]*Q[4] + Q[2]*Q[5] + Q[3]*Q[6]);
 }
 
 

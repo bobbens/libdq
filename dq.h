@@ -215,13 +215,38 @@ void dq_cr_inv( dq_t O, dq_t Q );
  * \| \widehat{Q} \| = \sqrt{\widehat{Q} \widehat{Q}^*}
  * \f]
  *
- * @note A norm of 1 indicates that the dual quaternion is a unit dual quaternion.
- *
  *    @param[in] Q Dual quaternion to get norm of.
  *    @return The norm of the dual quaternion.
- * @sa dq_cr_conj
  */
 double dq_op_norm( dq_t Q );
+/**
+ * @brief Gets the square of the norm of a dual quaternion.
+ *
+ * \f[
+ * \| \widehat{Q} \|^2 = \widehat{Q} \widehat{Q}^*
+ * \f]
+ *
+ * The square of the norm is a dual number.
+ *
+ * \f[
+ * \widehat{Q} \widehat{Q}^* = (\widehat{q_0} + Q)(\widehat{q_0} - Q) = \widehat{q_0}^2 + Q \cdot Q
+ * \f]
+ *
+ * If we denote the dual quaternion as \f$ Q = q + \epsilon q' \f$ with \f$ q \f$ being the pure real quaternion
+ *  and \f$ q' \f$ being the pure dual quaternion we can use the following notation to describe the product:
+ *
+ * \f[
+ * \widehat{Q} \widehat{Q}^* = q \cdot q^* + \epsilon (q \cdot q'^* + q' \cdot q^*)
+ * \f]
+ *
+ * @note A norm of 1 indicates that the dual quaternion is a unit dual quaternion.
+ *
+ *    @param[out] real The real part of the norm of the dual quaternion.
+ *    @param[out] dual The dual port of the norm of the dual quaternion.
+ *    @param[in] Q Dual quaternion to get square of norm of.
+ * @sa dq_cr_conj
+ */
+void dq_op_norm2( double *real, double *dual, dq_t Q );
 /**
  * @brief Adds two dual quaternions.
  *

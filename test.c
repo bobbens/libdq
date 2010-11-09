@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 
 #include <sys/time.h>
 
@@ -407,32 +408,23 @@ static int test_inversion (void)
    dq_t Q, Qinv, M, I;
    double a, s[3], c[3], z[3] = { 0., 0., 0. };
 
-   a    = M_PI_2;
+   /* Normalize vector and set up coordinates. */
+   a    = 1.2;
    s[0] = 1.;
    s[1] = 1.;
    s[2] = 1.;
    vec3_normalize( s );
-   c[0] = 2.;
-   c[1] = 3.;
-   c[2] = 4.;
+   c[0] = 3.;
+   c[1] = 7.;
+   c[2] = 14.;
 
+   /* Create the dual quaternions. */
    dq_cr_rotation( Q, a, s, c );
    dq_cr_inv( Qinv, Q );
    dq_op_mul( M, Q, Qinv );
    dq_cr_translation_vector( I, z );
 
-   printf("normQ:    %f\n", dq_op_norm(Q) );
-   printf("normQinv: %f\n", dq_op_norm(Qinv) );
-   printf("normM:    %f\n", dq_op_norm(M) );
-   printf("Q:\n");
-   dq_print_vert( Q );
-   printf("Qinv:\n");
-   dq_print_vert( Qinv );
-   printf("I:\n");
-   dq_print_vert( I );
-   printf("M:\n");
-   dq_print_vert( M );
-
+   /* Make sure the result is the identity. */
    if (dq_cmp( M, I ) != 0) {
       fprintf( stderr, "Failed dual quaternion inversion test!\n" );
       printf( "Got:\n" );
