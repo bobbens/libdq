@@ -1,0 +1,36 @@
+LICENSE
+
+   Copyright 2010 Edgar Simo
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+OVERVIEW
+
+This is a library for using and manipulating dual quaternions. Dual quaternions
+ are useful for describing rigid body movements in screw theory.
+
+If you use this library please reference it.
+
+
+CHANGELOG
+
+ - Version 1.0, November 2010
+   - Initial Revision
+
+
+ACKNOWLEDGEMENTS
+
+A big thanks to Alba Perez for having the patience to deal with my repetitive
+boring dual quaternion questions and for lending me her notes.
