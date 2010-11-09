@@ -65,6 +65,32 @@
  * \f[
  * Q = (q_0 + q_1 i + q_2 j + q_3 k ) + \epsilon ( q_7 + q_4 i + q_5 j + q_6 k ) = \widehat{q} + \epsilon \widehat{q}^0
  * \f]
+ *
+ * In vertical notation we have the following:
+ *
+ * \f[
+ * Q = \left\{\begin{array}{c}
+ *   e_{23} \\
+ *   e_{31} \\
+ *   e_{12} \\
+ *   1
+ * \end{array}\right\} + \left\{\begin{array}{c}
+ *   e_{41} \\
+ *   e_{42} \\
+ *   e_{43} \\
+ *   e_{1234}
+ * \end{array}\right\} = \left\{\begin{array}{c}
+ *   i \\
+ *   j \\
+ *   k \\
+ *   1
+ * \end{array}\right\} + \epsilon \left\{\begin{array}{c}
+ *   i \\
+ *   j \\
+ *   k \\
+ *   1
+ * \end{array}\right\}
+ * \f]
  */
 typedef double dq_t[8];
 
@@ -88,9 +114,9 @@ void dq_cr_rotation( dq_t O, double zita, const double s[3], const double c[3] )
  *    @param[out] O Dual quaternion created.
  *    @param[in] zita Angle to rotate.
  *    @param[in] s Vector to rotate around (normalized).
- *    @param[in] c Moment of the vector.
+ *    @param[in] s0 Moment of the vector.
  */
-void dq_cr_rotation_plucker( dq_t O, double zita, const double s[3], const double c[3] );
+void dq_cr_rotation_plucker( dq_t O, double zita, const double s[3], const double s0[3] );
 /**
  * @brief Creates a pure rotation dual quaternion from a rotation matrix.
  *
@@ -165,6 +191,16 @@ void dq_cr_copy( dq_t O, dq_t Q );
  *    @param[in] Q Dual quaternion to conjugate.
  */
 void dq_cr_conj( dq_t O, dq_t Q );
+/**
+ * @brief Inverts a dual quaternion.
+ *
+ * \f[
+ * \widehat{O} = \widehat{Q}^{-1} = \frac{ \widehat{Q}^* }{ \widehat{Q}^2 }
+ * \f]
+ *    @param[out] O Dual quaternion created (inverted).
+ *    @param[in] Q Dual quaternion to invert.
+ */
+void dq_cr_inv( dq_t O, dq_t Q );
 /* @} */
 
 /**
