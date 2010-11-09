@@ -12,7 +12,7 @@
 
 void dq_cr_rotation( dq_t O, double zita, const double s[3], const double c[3] )
 {
-   double ss, cs, o[3];
+   double ss, cs, s0[3];
 
    /* Store sin and cos values to speed up calculations. */
    ss = sin( zita/2. );
@@ -23,15 +23,15 @@ void dq_cr_rotation( dq_t O, double zita, const double s[3], const double c[3] )
    O[2] = ss*s[1];
    O[3] = ss*s[2];
    /* We do cross product with the line point and line vector to get the plucker coordinates. */
-   vec3_cross( o, s, c );
-   O[4] = ss*o[0];
-   O[5] = ss*o[1];
-   O[6] = ss*o[2];
+   vec3_cross( s0, c, s );
+   O[4] = ss*s0[0];
+   O[5] = ss*s0[1];
+   O[6] = ss*s0[2];
    O[7] = 0.;
 }
 
 
-void dq_cr_rotation_plucker( dq_t O, double zita, const double s[3], const double c[3] )
+void dq_cr_rotation_plucker( dq_t O, double zita, const double s[3], const double s0[3] )
 {
    double ss, cs;
 
@@ -43,9 +43,9 @@ void dq_cr_rotation_plucker( dq_t O, double zita, const double s[3], const doubl
    O[1] = ss*s[0];
    O[2] = ss*s[1];
    O[3] = ss*s[2];
-   O[4] = ss*c[0];
-   O[5] = ss*c[1];
-   O[6] = ss*c[2];
+   O[4] = ss*s0[0];
+   O[5] = ss*s0[1];
+   O[6] = ss*s0[2];
    O[7] = 0.;
 }
 
@@ -142,7 +142,7 @@ void dq_cr_line( dq_t O, const double s[3], const double c[3] )
 {
    double v[3];
    /* We do cross product with the line point and line vector to get the plucker coordinates. */
-   vec3_cross( v, s, c );
+   vec3_cross( v, c, s );
    dq_cr_line_plucker( O, s, v );
 }
 
@@ -257,6 +257,23 @@ void dq_cr_conj( dq_t O, dq_t Q )
    O[5] = -Q[5];
    O[6] = -Q[6];
    O[7] = -Q[7];
+}
+
+
+void dq_cr_inv( dq_t O, dq_t Q )
+{
+   int i;
+   dq_t T;
+   double n;
+
+   dq_cr_conj( T, Q );
+   n = dq_op_norm( Q );
+   n = pow( n, 2. );
+      for (i=0; i<8; i++)
+      T[i] /= n;
+
+   /* Copy over the results. */
+   memcpy( O, T, sizeof(dq_t) );
 }
 
 

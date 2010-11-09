@@ -4,6 +4,8 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
+
 
 double vec3_dot( const double u[3], const double v[3] )
 {
@@ -13,15 +15,43 @@ double vec3_dot( const double u[3], const double v[3] )
 
 void vec3_cross( double o[3], const double u[3], const double v[3] )
 {
-   o[0] =  u[1]*v[2] - u[2]*v[1];
-   o[1] = -u[0]*v[2] + u[2]*v[0];
-   o[2] =  u[0]*v[1] - u[1]*v[0];
+   double t[3];
+   t[0] =  u[1]*v[2] - u[2]*v[1];
+   t[1] = -u[0]*v[2] + u[2]*v[0];
+   t[2] =  u[0]*v[1] - u[1]*v[0];
+   memcpy( o, t, sizeof(double)*3 );
 }
 
 
 double vec3_norm( const double v[3] )
 {
    return sqrt( v[0]*v[0] + v[1]*v[1] + v[2]*v[2] );
+}
+
+
+void vec3_normalize( double v[3] )
+{
+   double n = vec3_norm( v );
+   v[0] /= n;
+   v[1] /= n;
+   v[2] /= n;
+}
+
+
+int vec3_cmp( const double u[3], const double v[3] )
+{
+   int ret, i;
+   ret = 0;
+   for (i=0; i<3; i++)
+      if (fabs(u[i]-v[i]) > 1e-10)
+         ret = ret + 1;
+   return ret;
+}
+
+
+void vec3_print( const double v[3] )
+{
+   printf( "   %.3f, %.3f, %.3f\n", v[0], v[1], v[2] );
 }
 
 
@@ -103,13 +133,15 @@ void mat3_mul( double AB[3][3], double A[3][3], double B[3][3] )
 
 void mat3_mul_vec( double out[3], double M[3][3], const double v[3] )
 {
-   out[0] = M[0][0]*v[0] + M[0][1]*v[1] + M[0][2]*v[2];
-   out[1] = M[1][0]*v[0] + M[1][1]*v[1] + M[1][2]*v[2];
-   out[2] = M[2][0]*v[0] + M[2][1]*v[1] + M[2][2]*v[2];
+   double t[3];
+   t[0] = M[0][0]*v[0] + M[0][1]*v[1] + M[0][2]*v[2];
+   t[1] = M[1][0]*v[0] + M[1][1]*v[1] + M[1][2]*v[2];
+   t[2] = M[2][0]*v[0] + M[2][1]*v[1] + M[2][2]*v[2];
+   memcpy( out, t, sizeof(double)*3 );
 }
 
 
-int mat3_comp( double A[3][3], double B[3][3] )
+int mat3_cmp( double A[3][3], double B[3][3] )
 {
    int c,r, ret;
    ret = 0;
