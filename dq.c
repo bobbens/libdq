@@ -53,7 +53,7 @@ void dq_cr_rotation_plucker( dq_t O, double theta, const double s[3], const doub
 void dq_cr_rotation_matrix( dq_t O, double R[3][3] )
 {
    double Rminus[3][3], Rplus[3][3], Rinv[3][3], B[3][3], eye[3][3];
-   double s[3], zita;
+   double s[3];
    double z2, tz, sz, cz;
 
    /* B = (R-I)(R+I)^{-1} */
@@ -71,7 +71,7 @@ void dq_cr_rotation_matrix( dq_t O, double R[3][3] )
     * b = { b_x b_y b_z }
     *
     * s           = b / ||b||
-    * tan(zita/2) = ||b||
+    * tan(theta/2) = ||b||
     */
    s[0] = B[2][1];
    s[1] = B[1][0];
@@ -81,7 +81,6 @@ void dq_cr_rotation_matrix( dq_t O, double R[3][3] )
    s[1] /= tz;
    s[2] /= tz;
    z2   = atan(tz);
-   zita = 2.*z2;
 
     /*
      * Build the rotational part.
