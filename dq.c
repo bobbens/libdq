@@ -10,13 +10,13 @@
 #include "mat3.h"
 
 
-void dq_cr_rotation( dq_t O, double zita, const double s[3], const double c[3] )
+void dq_cr_rotation( dq_t O, double theta, const double s[3], const double c[3] )
 {
    double ss, cs, s0[3];
 
    /* Store sin and cos values to speed up calculations. */
-   ss = sin( zita/2. );
-   cs = cos( zita/2. );
+   ss = sin( theta/2. );
+   cs = cos( theta/2. );
 
    O[0] = cs;
    O[1] = ss*s[0];
@@ -31,13 +31,13 @@ void dq_cr_rotation( dq_t O, double zita, const double s[3], const double c[3] )
 }
 
 
-void dq_cr_rotation_plucker( dq_t O, double zita, const double s[3], const double s0[3] )
+void dq_cr_rotation_plucker( dq_t O, double theta, const double s[3], const double s0[3] )
 {
    double ss, cs;
 
    /* Store sin and cos values to speed up calculations. */
-   ss = sin( zita/2. );
-   cs = cos( zita/2. );
+   ss = sin( theta/2. );
+   cs = cos( theta/2. );
 
    O[0] = cs;
    O[1] = ss*s[0];
@@ -239,13 +239,13 @@ void dq_cr_homo( dq_t O, double R[3][3], const double d[3] )
 }
 
 
-void dq_cr_copy( dq_t O, dq_t Q )
+void dq_cr_copy( dq_t O, const dq_t Q )
 {
    memcpy( O, Q, sizeof(dq_t) );
 }
 
 
-void dq_cr_conj( dq_t O, dq_t Q )
+void dq_cr_conj( dq_t O, const dq_t Q )
 {
    O[0] =  Q[0];
    O[1] = -Q[1];
@@ -258,7 +258,7 @@ void dq_cr_conj( dq_t O, dq_t Q )
 }
 
 
-void dq_cr_inv( dq_t O, dq_t Q )
+void dq_cr_inv( dq_t O, const dq_t Q )
 {
    double real, dual;
    dq_t T;
@@ -281,42 +281,14 @@ void dq_cr_inv( dq_t O, dq_t Q )
 }
 
 
-double dq_op_norm( dq_t Q )
+void dq_op_norm2( double *real, double *dual, const dq_t Q )
 {
-   double real, dual;
-
-   dq_op_norm2( &real, &dual, Q );
-
-   return sqrt(real);
-}
-
-
-void dq_op_norm2( double *real, double *dual, dq_t Q )
-{
-   /*
-   int i;
-   double acc;
-   dq_t T, Qstar;
-   double real2, dual2;
-
-   dq_cr_conj( Qstar, Q );
-   dq_op_mul( T, Q, Qstar );
-   acc = 0.;
-   for (i=0; i<4; i++)
-      acc += T[i];
-   *real = acc;
-   acc = 0.;
-   for (   ; i<8; i++)
-      acc += T[i];
-   *dual = acc;
-   */
-
    *real =     Q[0]*Q[0] + Q[1]*Q[1] + Q[2]*Q[2] + Q[3]*Q[3];
    *dual = 2.*(Q[0]*Q[7] + Q[1]*Q[4] + Q[2]*Q[5] + Q[3]*Q[6]);
 }
 
 
-void dq_op_add( dq_t O, dq_t P, dq_t Q )
+void dq_op_add( dq_t O, const dq_t P, const dq_t Q )
 {
    int i;
    for (i=0; i<8; i++)
@@ -324,7 +296,7 @@ void dq_op_add( dq_t O, dq_t P, dq_t Q )
 }
 
 
-void dq_op_sub( dq_t O, dq_t P, dq_t Q )
+void dq_op_sub( dq_t O, const dq_t P, const dq_t Q )
 {
    int i;
    for (i=0; i<8; i++)
@@ -332,7 +304,7 @@ void dq_op_sub( dq_t O, dq_t P, dq_t Q )
 }
 
 
-void dq_op_mul( dq_t PQ, dq_t P, dq_t Q )
+void dq_op_mul( dq_t PQ, const dq_t P, const dq_t Q )
 {
    dq_t T;
    /* Multiplication table:
@@ -369,29 +341,27 @@ void dq_op_mul( dq_t PQ, dq_t P, dq_t Q )
 }
 
 
-void dq_op_f1g( dq_t ABA, dq_t A, dq_t B )
+void dq_op_f1g( dq_t ABA, const dq_t A, const dq_t B )
 {
-   dq_t tmp;
-
-   dq_op_mul( tmp, A, B );
-   dq_op_mul( ABA, tmp, A );
+   dq_op_mul( ABA, A, B );
+   dq_op_mul( ABA, ABA, A );
 }
 
 
-void dq_op_f2g( dq_t ABA, dq_t A, dq_t B )
+void dq_op_f2g( dq_t ABA, const dq_t A, const dq_t B )
 {
-   dq_t tmp, Astar;
+   dq_t Astar;
 
-   dq_op_mul( tmp, A, B );
+   dq_op_mul( ABA, A, B );
    dq_cr_conj( Astar, A );
-   dq_op_mul( ABA, tmp, Astar );
+   dq_op_mul( ABA, ABA, Astar );
 }
 
-void dq_op_f3g( dq_t ABA, dq_t A, dq_t B )
+void dq_op_f3g( dq_t ABA, const dq_t A, const dq_t B )
 {
-   dq_t tmp, Astar;
+   dq_t Astar;
 
-   dq_op_mul( tmp, A, B );
+   dq_op_mul( ABA, A, B );
    Astar[0] =  A[0];
    Astar[1] =  A[1];
    Astar[2] =  A[2];
@@ -400,15 +370,15 @@ void dq_op_f3g( dq_t ABA, dq_t A, dq_t B )
    Astar[5] = -A[5];
    Astar[6] = -A[6];
    Astar[7] = -A[7];
-   dq_op_mul( ABA, tmp, Astar );
+   dq_op_mul( ABA, ABA, Astar );
 }
 
 
-void dq_op_f4g( dq_t ABA, dq_t A, dq_t B )
+void dq_op_f4g( dq_t ABA, const dq_t A, const dq_t B )
 {
-   dq_t tmp, Astar;
+   dq_t Astar;
 
-   dq_op_mul( tmp, A, B );
+   dq_op_mul( ABA, A, B );
    Astar[0] =  A[0];
    Astar[1] = -A[1];
    Astar[2] = -A[2];
@@ -417,31 +387,41 @@ void dq_op_f4g( dq_t ABA, dq_t A, dq_t B )
    Astar[5] =  A[5];
    Astar[6] =  A[6];
    Astar[7] = -A[7];
-   dq_op_mul( ABA, tmp, Astar );
+   dq_op_mul( ABA, ABA, Astar );
 }
 
 
-int dq_cmp( dq_t P, dq_t Q )
+int dq_ch_unit( const dq_t Q )
+{
+   double real, dual;
+   dq_op_norm2( &real, &dual, Q );
+   if ((fabs(real-1.) > DQ_PRECISION) || (fabs(dual-0.) > DQ_PRECISION))
+      return 0;
+   return 1;
+}
+
+
+int dq_ch_cmp( const dq_t P, const dq_t Q )
 {
    int i, ret;
    
    ret = 0;
    for (i=0; i<8; i++)
-      if (fabs(P[i]-Q[i]) > 1e-10)
+      if (fabs(P[i]-Q[i]) > DQ_PRECISION)
          ret++;
 
    return ret;
 }
 
 
-void dq_print( dq_t Q )
+void dq_print( const dq_t Q )
 {
    printf( "%.3f + %.3fi + %.3fj + %.3fk + %.3fie + %.3fje + %.3fke + %.3fe\n",
          Q[0], Q[1], Q[2], Q[3], Q[4], Q[5], Q[6], Q[7] );
 }
 
 
-void dq_print_vert( dq_t Q )
+void dq_print_vert( const dq_t Q )
 {
    printf( "   % 3.3fi   % 3.3fi\n", Q[1], Q[4] );
    printf( "   % 3.3fj   % 3.3fj\n", Q[2], Q[5] );

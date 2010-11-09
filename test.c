@@ -107,7 +107,7 @@ static int test_translation (void)
    dq_cr_point( PF, pf );
 
    /* Results. */
-   if (dq_cmp( PF, TP ) != 0) {
+   if (dq_ch_cmp( PF, TP ) != 0) {
       fprintf( stderr, "Translation failed!\n" );
       printf( "Point:\n" );
       dq_print_vert( P );
@@ -128,7 +128,6 @@ static int test_rotation (void)
 {
    double a, p[3], s[3], c[3], pf[3];
    dq_t P, R, RP, PF;
-   double norm;
 
    /* Create positions. */
    a    = M_PI/2.;
@@ -152,15 +151,14 @@ static int test_rotation (void)
    dq_cr_point( PF, pf );
 
    /* Check norm. */
-   norm = dq_op_norm( R );
-   if (fabs(norm - 1.) > 1e-10) {
-      fprintf( stderr, "Rotation dual quaternion R is not a unit dual quaternion (has a norm of %.3f)\n", norm );
+   if (!dq_ch_unit( R )) {
+      fprintf( stderr, "Rotation dual quaternion R is not a unit dual quaternion!\n" );
       dq_print_vert( R );
       return 1;
    }
 
    /* Results. */
-   if (dq_cmp( PF, RP ) != 0) {
+   if (dq_ch_cmp( PF, RP ) != 0) {
       fprintf( stderr, "Rotation failed!\n" );
       printf( "Point:\n" );
       dq_print_vert( P );
@@ -182,7 +180,6 @@ static int test_movement (void)
    int i;
    double a, p[3], t[3], s[3], c[3], pf[3];
    dq_t P, R, T, RT, RTP, PF;
-   double norm;
 
    /* Create positions. */
    a    = M_PI/2.;
@@ -214,15 +211,14 @@ static int test_movement (void)
    dq_cr_point( PF, pf );
 
    /* Check norm. */
-   norm = dq_op_norm( R );
-   if (fabs(norm - 1.) > 1e-10) {
-      fprintf( stderr, "Rotation dual quaternion R is not a unit dual quaternion (has a norm of %.3f)\n", norm );
+   if (!dq_ch_unit( R )) {
+      fprintf( stderr, "Rotation dual quaternion R is not a unit dual quaternion!\n");
       dq_print_vert( R );
       return 1;
    }
 
    /* Results. */
-   if (dq_cmp( PF, RTP ) != 0) {
+   if (dq_ch_cmp( PF, RTP ) != 0) {
       fprintf( stderr, "Rotation+Translation failed!\n" );
       printf( "Point:\n" );
       dq_print_vert( P );
@@ -266,7 +262,7 @@ static int test_homo (void)
    dq_op_f4g( E, Q, P );
 
    /* Comparison. */
-   if (dq_cmp( PF, E ) != 0) {
+   if (dq_ch_cmp( PF, E ) != 0) {
          fprintf( stderr, "Homogeneous matrix test failed!\n" );
          printf( "Got:\n" );
          dq_print_vert( E );
@@ -322,7 +318,7 @@ static int test_scara (void)
       St[6] = -t4/2.*cos((a1+a2+a3)/2.);
       St[7] =  t4/2.*sin((a1+a2+a3)/2.);
       /* Compare with real movement. */
-      if (dq_cmp( S1234, St ) != 0) {
+      if (dq_ch_cmp( S1234, St ) != 0) {
          fprintf( stderr, "Scara test failed!\n" );
          printf( "Got:\n" );
          dq_print_vert( S1234 );
@@ -343,8 +339,7 @@ static int test_benchmark (void)
    struct timeval tstart, tend;
    unsigned long elapsed;
    double dt;
-   double n, na, ns;
-   double norm;
+   double nra, nda, nrs, nds;
 
    N = 1000000;
 
@@ -376,9 +371,8 @@ static int test_benchmark (void)
    dq_cr_point( PF, pf );
 
    /* Check norm. */
-   norm = dq_op_norm( R );
-   if (fabs(norm - 1.) > 1e-10) {
-      fprintf( stderr, "Rotation dual quaternion R is not a unit dual quaternion (has a norm of %.3f)\n", norm );
+   if (!dq_ch_unit( R )) {
+      fprintf( stderr, "Rotation dual quaternion R is not a unit dual quaternion!\n" );
       dq_print_vert( R );
       return 1;
    }
@@ -391,11 +385,10 @@ static int test_benchmark (void)
    /* Compare result. */
    dq_op_add( PA, PF, P );
    dq_op_sub( PS, PF, P );
-   na = dq_op_norm( PA );
-   ns = dq_op_norm( PS );
-   n = (na > ns) ? ns : na;
-   if (n > 1e-10) {
-      fprintf( stderr, "Error with %d multiplications is above 1e-10: %.3e\n", N, n );
+   dq_op_norm2( &nra, &nda, PA );
+   dq_op_norm2( &nrs, &nds, PA );
+   if ((fabs(nra-nrs) > DQ_PRECISION) || (fabs(nda-nds) > DQ_PRECISION)) {
+      fprintf( stderr, "Error with %d multiplications is above 1e-10!\n", N );
       return -1;
    }
 
@@ -425,7 +418,7 @@ static int test_inversion (void)
    dq_cr_translation_vector( I, z );
 
    /* Make sure the result is the identity. */
-   if (dq_cmp( M, I ) != 0) {
+   if (dq_ch_cmp( M, I ) != 0) {
       fprintf( stderr, "Failed dual quaternion inversion test!\n" );
       printf( "Got:\n" );
       dq_print_vert( M );

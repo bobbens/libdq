@@ -53,6 +53,9 @@
  */
 
 
+#define DQ_PRECISION    1e-10 /**< Precision to use when comparing doubles. */
+
+
 /**
  * @brief A representation of a dual quaternion.
  * 
@@ -94,6 +97,7 @@
  */
 typedef double dq_t[8];
 
+
 /**
  * @defgroup creation Dual Quaternion Creation Functions
  * @brief Set of functions to create dual quaternions.
@@ -103,20 +107,20 @@ typedef double dq_t[8];
  * @brief Creates a pure rotation dual quaternion.
  *
  *    @param[out] O Dual quaternion created.
- *    @param[in] zita Angle to rotate.
+ *    @param[in] theta Angle to rotate.
  *    @param[in] s Vector to rotate around (normalized).
  *    @param[in] c Any point of the vector (to create plucker coordinates).
  */
-void dq_cr_rotation( dq_t O, double zita, const double s[3], const double c[3] );
+void dq_cr_rotation( dq_t O, double theta, const double s[3], const double c[3] );
 /**
  * @brief Creates a pure rotation dual quaternion using plucker coordinates.
  *
  *    @param[out] O Dual quaternion created.
- *    @param[in] zita Angle to rotate.
+ *    @param[in] theta Angle to rotate.
  *    @param[in] s Vector to rotate around (normalized).
  *    @param[in] s0 Moment of the vector.
  */
-void dq_cr_rotation_plucker( dq_t O, double zita, const double s[3], const double s0[3] );
+void dq_cr_rotation_plucker( dq_t O, double theta, const double s[3], const double s0[3] );
 /**
  * @brief Creates a pure rotation dual quaternion from a rotation matrix.
  *
@@ -179,7 +183,7 @@ void dq_cr_homo( dq_t O, double R[3][3], const double d[3] );
  *    @param[out] O Dual quaternion created.
  *    @param[in] Q Dual quaternion to copy.
  */
-void dq_cr_copy( dq_t O, dq_t Q );
+void dq_cr_copy( dq_t O, const dq_t Q );
 /**
  * @brief Conjugates a dual quaternion.
  *
@@ -190,7 +194,7 @@ void dq_cr_copy( dq_t O, dq_t Q );
  *    @param[out] O Dual quaternion created (conjugated).
  *    @param[in] Q Dual quaternion to conjugate.
  */
-void dq_cr_conj( dq_t O, dq_t Q );
+void dq_cr_conj( dq_t O, const dq_t Q );
 /**
  * @brief Inverts a dual quaternion.
  *
@@ -230,25 +234,15 @@ void dq_cr_conj( dq_t O, dq_t Q );
  *    @param[out] O Dual quaternion created (inverted).
  *    @param[in] Q Dual quaternion to invert.
  */
-void dq_cr_inv( dq_t O, dq_t Q );
+void dq_cr_inv( dq_t O, const dq_t Q );
 /* @} */
+
 
 /**
  * @defgroup operations Dual Quaternion Operations
  * @brief Functions for operation on dual quaternions.
  */
 /* @{ */
-/**
- * @brief Gets the norm of a dual quaternion.
- *
- * \f[
- * \| \widehat{Q} \| = \sqrt{\widehat{Q} \widehat{Q}^*}
- * \f]
- *
- *    @param[in] Q Dual quaternion to get norm of.
- *    @return The norm of the dual quaternion.
- */
-double dq_op_norm( dq_t Q );
 /**
  * @brief Gets the square of the norm of a dual quaternion.
  *
@@ -279,7 +273,7 @@ double dq_op_norm( dq_t Q );
  *    @param[in] Q Dual quaternion to get square of norm of.
  * @sa dq_cr_conj
  */
-void dq_op_norm2( double *real, double *dual, dq_t Q );
+void dq_op_norm2( double *real, double *dual, const dq_t Q );
 /**
  * @brief Adds two dual quaternions.
  *
@@ -291,7 +285,7 @@ void dq_op_norm2( double *real, double *dual, dq_t Q );
  *    @param[in] P First quaternion to add.
  *    @param[in] Q Second quaternion to add.
  */
-void dq_op_add( dq_t O, dq_t P, dq_t Q );
+void dq_op_add( dq_t O, const dq_t P, const dq_t Q );
 /**
  * @brief Subtracts two dual quaternions.
  *
@@ -303,7 +297,7 @@ void dq_op_add( dq_t O, dq_t P, dq_t Q );
  *    @param[in] P Dual quaternion to subtract from.
  *    @param[in] Q Dual quaternion to subtract.
  */
-void dq_op_sub( dq_t O, dq_t P, dq_t Q );
+void dq_op_sub( dq_t O, const dq_t P, const dq_t Q );
 /**
  * @brief Multiplies to dual quaternions.
  *
@@ -315,7 +309,7 @@ void dq_op_sub( dq_t O, dq_t P, dq_t Q );
  *    @param[in] P First dual quaternion to multiply.
  *    @param[in] Q Second dual quaternion to multiply.
  */
-void dq_op_mul( dq_t PQ, dq_t P, dq_t Q );
+void dq_op_mul( dq_t PQ, const dq_t P, const dq_t Q );
 /**
  * @brief Clifford conjugation transformation of type \f$f_{1g}\f$ (Alba Perez notation).
  *
@@ -327,7 +321,7 @@ void dq_op_mul( dq_t PQ, dq_t P, dq_t Q );
  *    @param[in] A Dual quaternion representing the transformation.
  *    @param[in] B Dual quaternion being transformated.
  */
-void dq_op_f1g( dq_t ABA, dq_t A, dq_t B );
+void dq_op_f1g( dq_t ABA, const dq_t A, const dq_t B );
 /**
  * @brief Clifford conjugation transformation of type \f$f_{2g}\f$ (Alba Perez notation).
  *
@@ -341,7 +335,7 @@ void dq_op_f1g( dq_t ABA, dq_t A, dq_t B );
  *    @param[in] A Dual quaternion representing the transformation.
  *    @param[in] B Dual quaternion being transformated.
  */
-void dq_op_f2g( dq_t ABA, dq_t A, dq_t B );
+void dq_op_f2g( dq_t ABA, const dq_t A, const dq_t B );
 /**
  * @brief Clifford conjugation transformation of type \f$f_{3g}\f$ (Alba Perez notation).
  *
@@ -353,7 +347,7 @@ void dq_op_f2g( dq_t ABA, dq_t A, dq_t B );
  *    @param[in] A Dual quaternion representing the transformation.
  *    @param[in] B Dual quaternion being transformated.
  */
-void dq_op_f3g( dq_t ABA, dq_t A, dq_t B );
+void dq_op_f3g( dq_t ABA, const dq_t A, const dq_t B );
 /**
  * @brief Clifford conjugation transformation of type \f$f_{4g}\f$ (Alba Perez notation).
  *
@@ -367,8 +361,9 @@ void dq_op_f3g( dq_t ABA, dq_t A, dq_t B );
  *    @param[in] A Dual quaternion representing the transformation.
  *    @param[in] B Dual quaternion being transformated.
  */
-void dq_op_f4g( dq_t ABA, dq_t A, dq_t B );
+void dq_op_f4g( dq_t ABA, const dq_t A, const dq_t B );
 /* @} */
+
 
 /**
  * @defgroup misc Dual Quaternion Miscellaneous Functions
@@ -376,25 +371,40 @@ void dq_op_f4g( dq_t ABA, dq_t A, dq_t B );
  */
 /* @{ */
 /**
+ * @brief Checks to see if a dual quaternion is a unit quaternion.
+ *
+ *    @param[in] Q Dual quaternion to check if is a unit quaternion.
+ *    @return 1 if is a unit dual quaternion or 0 otherwise.
+ */
+int dq_ch_unit( const dq_t Q );
+/**
  * @brief Compares two dual quaternions.
  *
  *    @param[in] P First dual quaternion to compare.
  *    @param[in] Q Second dual quaternion to compare.
  *    @return 0 if they are equal.
  */
-int dq_cmp( dq_t P, dq_t Q );
+int dq_ch_cmp( const dq_t P, const dq_t Q );
+/* @} */
+
+
+/**
+ * @defgroup misc Dual Quaternion Miscellaneous Functions
+ * @brief Assorted functions related to dual quaternions that don't fit elsewhere.
+ */
+/* @{ */
 /**
  * @brief Prints a quaternion on a single line.
  * 
  *    @param[in] Q Dual quaternion to print.
  */
-void dq_print( dq_t Q );
+void dq_print( const dq_t Q );
 /**
  * @brief Prints a dual quaternion vertically.
  * 
  *    @param[in] Q Dual quaternion to print.
  */
-void dq_print_vert( dq_t Q );
+void dq_print_vert( const dq_t Q );
 /* @} */
 
 
