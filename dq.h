@@ -43,6 +43,7 @@
  * @sa dq_t
  * @sa creation
  * @sa operations
+ * @sa check
  * @sa misc
  */
 
@@ -366,8 +367,8 @@ void dq_op_f4g( dq_t ABA, const dq_t A, const dq_t B );
 
 
 /**
- * @defgroup misc Dual Quaternion Miscellaneous Functions
- * @brief Assorted functions related to dual quaternions that don't fit elsewhere.
+ * @defgroup check Dual Quaternion Check Functions
+ * @brief Assorted functions related to dual quaternions properties that can be checked.
  */
 /* @{ */
 /**
