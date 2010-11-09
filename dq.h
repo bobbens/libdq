@@ -311,6 +311,21 @@ void dq_op_sub( dq_t O, const dq_t P, const dq_t Q );
  * \widehat{PQ} = \widehat{P} \widehat{Q}
  * \f]
  *
+ *  The multiplication table used is:
+ *
+ @verbatim
+   Q1*Q2 | Q2.1  Q2.i  Q2.j  Q2.k  Q2.ei  Q2.ej  Q2.ek  Q2.e
+   ------+---------------------------------------------------
+   Q1.1  |   1     i     j     k    ei     ej     ek      e
+   Q1.i  |   i    -1     k    -j    -e     ek     -ej    ei
+   Q1.j  |   j    -k    -1     i    -ek    -e     ei     ej
+   Q1.k  |   k     j    -i    -1    ej     -ei    -e     ek
+   Q1.ei |  ei    -e    ek    -ej    0      0      0      0
+   Q1.ej |  ej    -ek   -e    ei     0      0      0      0
+   Q1.ek |  ek    ej    -ei   -e     0      0      0      0
+   Q1.e  |   e    ei     ej   ek     0      0      0      0
+ @endverbatim
+ *
  *    @param[out] PQ Result of the multiplication.
  *    @param[in] P First dual quaternion to multiply.
  *    @param[in] Q Second dual quaternion to multiply.
