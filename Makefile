@@ -22,7 +22,7 @@ libdq.a: $(OBJS)
 	$(AR) rcs libdq.a $(OBJS)
 
 libdq.so: $(OBJS)
-	$(CC) -lm -shared -Wl,-soname,$(LIBNAME).so.1 -o $(LIBNAME).so.1.0.1 $(OBJS)
+	$(CC) -lm -shared -Wl,-soname,$(LIBNAME).so -o $(LIBNAME).so.1.0.1 $(OBJS)
 	ln -sf $(LIBNAME).so.1.0.1 $(LIBNAME).so
 
 test:
