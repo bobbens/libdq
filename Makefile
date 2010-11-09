@@ -1,24 +1,32 @@
 
 
-SRC		:= test.c dq.c mat3.c
+SRC		:= test.c
+OBJS		:= dq.o mat3.o
 
-CFLAGS	:= -g -W -Wall -Wextra -pedantic -ansi -D_GNU_SOURCE
+CFLAGS	:= -O3 -fPIC -W -Wall -Wextra -pedantic -ansi -D_GNU_SOURCE
 LDFLAGS	:= -lm
 
 
-.PHONY: all clean docs
+.PHONY: all lib test clean docs
 
 
-all: dq_test
+all: libdq test
 
+libdq: libdq.a libdq.so
 
-dq_test: $(SRC)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(SRC)
+libdq.a: $(OBJS)
+	$(AR) rcs libdq.a $(OBJS)
 
+libdq.so: $(OBJS)
+	$(CC) -shared -Wl,-soname,libdq.so.1 -o libdq.so.1.0.1 $(OBJS)
+
+test:
+	+$(MAKE) -C test
+	./test/dq_test
 
 docs:
 	doxygen
 
-
 clean:
-	$(RM) dq_test
+	$(RM) $(OBJS)
+	$(MAKE) -C test clean

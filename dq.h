@@ -7,7 +7,7 @@
 /**
  * @mainpage libdq doxygen documentation
  * @author Edgar Simo <bobbens@gmail.com>
- * @version 0.1
+ * @version 1.0
  * @date November 2010
  *
  @verbatim
@@ -39,6 +39,11 @@
  *  - Output dual quaternions should be called O or a combination of the input quaternions in the case it is multiplying or transforming like for example PQ.
  *
  * For notation and quaternion definition please refer to the documentation for the dual quaternion type @ref dq_t .
+ *
+ * Changelog:
+ *
+ *  - Version 1.0, November 2010
+ *    - Initial Revision
  *
  * @sa dq_t
  * @sa creation
