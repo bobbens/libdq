@@ -283,7 +283,7 @@ static int test_scara (void)
    double s1[3] = { 0., 0., 1. };
    double c1[3] = { 0., 0., 0. };
    double s2[3] = { 0., 0., 1. };
-   double c2[3] = { 0., -300., 0. };
+   double c2[3] = { 300., 0., 0. };
    double s3[3] = { 0., 0., 1. };
    double c3[3] = { 0., -650., 0. };
    double s4[3] = { 0., 0., -1. };
@@ -298,13 +298,13 @@ static int test_scara (void)
     */
    for (i=0; i<10; i++) {
       /* Parameters. */
-      a1 = 0.5+3.0*(10./(double)(i));
-      a2 = 1.0-1.0*(10./(double)(i));
-      a3 = 0.0+1.5*(10./(double)(i));
+      a1 = 0.5+3.0*(10./(double)(i+1));
+      a2 = 1.0-1.0*(10./(double)(i+1));
+      a3 = 0.0+1.5*(10./(double)(i+1));
       t4 = (double)(i);
       /* Create individual rotations. */
       dq_cr_rotation_plucker( S1, a1, s1, c1 );
-      dq_cr_rotation_plucker( S2, a2, s2, c2 );
+      dq_cr_rotation( S2, a2, s2, c2 ); /* We spice it up by using non-plucker here. */
       dq_cr_rotation_plucker( S3, a3, s3, c3 );
       dq_cr_translation( S4, t4, s4 );
       /* Create movement. */
