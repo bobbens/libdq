@@ -195,8 +195,38 @@ void dq_cr_conj( dq_t O, dq_t Q );
  * @brief Inverts a dual quaternion.
  *
  * \f[
- * \widehat{O} = \widehat{Q}^{-1} = \frac{ \widehat{Q}^* }{ \widehat{Q}^2 }
+ * \widehat{O} = \widehat{Q}^{-1} = \frac{ \widehat{Q}^* }{ \| \widehat{Q} \|^2 }
  * \f]
+ *
+ * First we multiply the dual quaternion by it's conjugate:
+ *
+ * \f[
+ * \widehat{Q} \widehat{Q}^* = \| \widehat{Q} \| = \\
+ *    (q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3) + \epsilon 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6)
+ * \f]
+ *
+ * To get rid of the \f$ \epsilon \f$ term we multiply by \f$ (q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3) - \epsilon 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6) \f$.
+ *
+ * \f[
+ * ((q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3) + \epsilon 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6)) * \\
+ *    ((q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3) - \epsilon 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6)) =
+ *    (q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3)^2
+ * \f]
+ *
+ * Due to the fact that the first quaternion represents the rotation, it can be proven that it's equal to the identity:
+ *
+ * \f[
+ * \| \widehat{q} \| = \| ( \cos \left ( \frac{\theta}{2} \right ) + \sin \left ( \frac{\theta}{2} \right ) s) \| =
+ *    ( \sin^2 \left ( \frac{\theta}{2} \right ) + \cos^2 \left ( \frac{\theta}{2} \right ) ) = 1 = q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3
+ * \f]
+ *
+ * Therefore with the multiplications we've done we have gotten what we wanted. If we analyze the multiplication we did we see it was:
+ *
+ * \f[
+ * \widehat{Q}^* ((q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3) - \epsilon 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6)) = \
+ *    (q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3 )((q_0 - q_1 i - q_2 j - q_3 k) + \epsilon( q_7 - q_4 i - q_5 j - q_7 k)) - 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6)(q_7 + q_4 i - q_5 j - q_6 k)
+ * \f]
+ *
  *    @param[out] O Dual quaternion created (inverted).
  *    @param[in] Q Dual quaternion to invert.
  */
@@ -232,11 +262,14 @@ double dq_op_norm( dq_t Q );
  * \widehat{Q} \widehat{Q}^* = (\widehat{q_0} + Q)(\widehat{q_0} - Q) = \widehat{q_0}^2 + Q \cdot Q
  * \f]
  *
- * If we denote the dual quaternion as \f$ Q = q + \epsilon q' \f$ with \f$ q \f$ being the pure real quaternion
- *  and \f$ q' \f$ being the pure dual quaternion we can use the following notation to describe the product:
+ * If we denote the dual quaternion as \f$ \widehat{Q} = \widehat{q} + \epsilon \widehat{q}' \f$ with
+ *  \f$ \widehat{q} \f$ being the pure real quaternion and \f$ \widehat{q}' \f$ being the pure dual
+ *  quaternion we can use the following notation to describe the product:
  *
  * \f[
- * \widehat{Q} \widehat{Q}^* = q \cdot q^* + \epsilon (q \cdot q'^* + q' \cdot q^*)
+ * \widehat{Q} \widehat{Q}^* = \widehat{q} \widehat{q}^* + \\
+ *    \epsilon (\widehat{q} \widehat{q}'^* + \widehat{q}' \widehat{q}^*) = \\
+ *    (q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3) + \epsilon 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6)
  * \f]
  *
  * @note A norm of 1 indicates that the dual quaternion is a unit dual quaternion.
