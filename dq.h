@@ -34,6 +34,8 @@
  *
  * This is a library for using and manipulating dual quaternions. Dual quaternions are useful for describing rigid body movements in screw theory.
  *
+ * If you use this library please reference it.
+ *
  *
  * @section Notation
  *
@@ -53,6 +55,13 @@
  *
  *  - Version 1.0, November 2010
  *    - Initial Revision
+ *
+ *
+ * @section Acknowledgements
+ *
+ * A big thanks to Alba Perez for having the patience to deal with my repetitive
+ *  boring dual quaternion questions and for lending me her notes.
+ *
  *
  * @sa dq_t
  * @sa creation
