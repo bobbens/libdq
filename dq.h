@@ -32,7 +32,9 @@
  *
  * @section Overview
  *
- * This is a library for using and manipulating dual quaternions. Dual quaternions are useful for describing rigid body movements in screw theory.
+ * This is a library for using and manipulating dual quaternions. Dual quaternions are useful for describing rigid body movements using screw theory.
+ *
+ * If you use this library please reference it.
  *
  *
  * @section Notation
@@ -49,10 +51,43 @@
  * For notation and quaternion definition please refer to the documentation for the dual quaternion type @ref dq_t .
  *
  *
+ * @section Usage
+ *
+ * To use dual quaternion library you need to include it as <dq.h>. When linking you should pass -ldq. A simple example would be:
+ *
+ * @code
+ * #include <dq.h>
+ *
+ * int main( int argc, char *argv[] )
+ * {
+ *    dq_t Q;
+ *    double t[3] = { 1.0, 2.0, 3.0 };
+ *
+ *    dq_cr_point( Q, t );
+ *    dq_print_vert( Q );
+ *
+ *    return 0;
+ * }
+ * @endcode
+ *
+ * The example would just create a point dual quaternion and display it. To compile you would have to use:
+ *
+ * @code
+ * $ gcc -ldq dq_test.c -o dq_test
+ * @endcode
+ *
+ *
  * @section Changelog
  *
  *  - Version 1.0, November 2010
  *    - Initial Revision
+ *
+ *
+ * @section Acknowledgements
+ *
+ * A big thanks to Alba Perez for having the patience to deal with my repetitive
+ *  boring dual quaternion questions and for lending me her notes.
+ *
  *
  * @sa dq_t
  * @sa creation
