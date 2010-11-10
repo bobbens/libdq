@@ -77,9 +77,12 @@ void dq_cr_rotation_matrix( dq_t O, double R[3][3] )
    s[1] = B[1][0];
    s[2] = B[0][2];
    tz   = vec3_norm( s );
-   s[0] /= tz;
-   s[1] /= tz;
-   s[2] /= tz;
+   /* Avoid normalizing 0. vectors. */
+   if (tz > 0.) {
+      s[0] /= tz;
+      s[1] /= tz;
+      s[2] /= tz;
+   }
    z2   = atan(tz);
 
     /*
