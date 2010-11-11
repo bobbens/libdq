@@ -123,11 +123,13 @@ void mat3_inv( double out[3][3], double in[3][3] )
 void mat3_mul( double AB[3][3], double A[3][3], double B[3][3] )
 {
    int c,r;
+   double T[3][3];
    for (c=0; c<3; c++) {
       for (r=0; r<3; r++) {
-         AB[r][c] = A[r][0]*B[0][c] + A[r][1]*B[1][c] + A[r][2]*B[2][c];
+         T[r][c] = A[r][0]*B[0][c] + A[r][1]*B[1][c] + A[r][2]*B[2][c];
       }
    }
+   memcpy( AB, T, sizeof(double)*3*3 );
 }
 
 
