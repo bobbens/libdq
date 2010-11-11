@@ -74,8 +74,8 @@ void dq_cr_rotation_matrix( dq_t O, double R[3][3] )
     * tan(theta/2) = ||b||
     */
    s[0] = B[2][1];
-   s[1] = B[1][0];
-   s[2] = B[0][2];
+   s[1] = B[0][2];
+   s[2] = B[1][0];
    tz   = vec3_norm( s );
    /* Avoid normalizing 0. vectors. */
    if (tz > 0.) {
