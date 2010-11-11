@@ -239,36 +239,85 @@ static int test_movement (void)
 }
 
 
+static void test_mat_rot( double R[3][3], double a1, double a2, double a3 )
+{
+   double R1[3][3], R2[3][3], R3[3][3];
+   double c1, s1, c2, s2, c3, s3;
+
+   s1 = sin(a1);
+   s2 = sin(a2);
+   s3 = sin(a3);
+   c1 = cos(a1);
+   c2 = cos(a2);
+   c3 = cos(a3);
+
+   memset( R1, 0, sizeof(double)*3*3 );
+   memset( R2, 0, sizeof(double)*3*3 );
+   memset( R3, 0, sizeof(double)*3*3 );
+
+   R1[0][0] =  1.;
+   R1[1][1] =  c1;
+   R1[1][2] = -s1;
+   R1[2][1] =  s1;
+   R1[2][2] =  c1;
+
+   R2[0][0] =  c2;
+   R2[0][2] =  s2;
+   R2[1][1] =  1.;
+   R2[2][0] = -s2;
+   R2[2][2] =  c2;
+
+   R3[0][0] =  c3;
+   R3[0][1] = -s3;
+   R3[1][0] =  s3;
+   R3[1][1] =  c3;
+   R3[2][2] =  1.;
+
+   mat3_mul( R, R1, R2 );
+   mat3_mul( R, R,  R3 );
+}
+
+
 static int test_homo (void)
 {
    dq_t E, P, Q, PF;
-   double R[3][3] = { { 0.36, 0.48, -0.8 },
-                      { -0.8, 0.6, 0. },
-                      { 0.48, 0.64, 0.6 } };
-   double d[3] = { 1., 2., 3. };
-   double p[3] = { 4., 5., 6. };
+   double R[3][3];
+   double d[3] = { 1., 5., 3. };
+   double p[3] = { 7., 5., 6. };
    double pf[3];
+   double a1, a2, a3;
+   int i;
 
-   /* Calculations with vector math. */
-   mat3_mul_vec( pf, R, p );
-   pf[0] += d[0];
-   pf[1] += d[1];
-   pf[2] += d[2];
-   dq_cr_point( PF, pf );
+   for (i=0; i<10; i++) {
+      /* Parameters. */
+      a1 = 0.5+3.0*(10./(double)(i+1));
+      a2 = 1.0-1.0*(10./(double)(i+1));
+      a3 = 0.0+1.5*(10./(double)(i+1));
 
-   /* Calculations with quaternions. */
-   dq_cr_homo( Q, R, d );
-   dq_cr_point( P, p );
-   dq_op_f4g( E, Q, P );
+      /* Create rotation matrix. */
+      test_mat_rot( R, a1, a2, a3 );
 
-   /* Comparison. */
-   if (dq_ch_cmp( PF, E ) != 0) {
+      /* Calculations with vector math. */
+      mat3_mul_vec( pf, R, p );
+      pf[0] += d[0];
+      pf[1] += d[1];
+      pf[2] += d[2];
+      dq_cr_point( PF, pf );
+
+      /* Calculations with quaternions. */
+      dq_cr_homo( Q, R, d );
+      dq_cr_point( P, p );
+      dq_op_f4g( E, Q, P );
+
+      /* Comparison. */
+      if (dq_ch_cmp( PF, E ) != 0) {
          fprintf( stderr, "Homogeneous matrix test failed!\n" );
          printf( "Got:\n" );
          dq_print_vert( E );
          printf( "Expected:\n" );
          dq_print_vert( PF );
          return -1;
+      }
    }
    return 0;
 }
@@ -404,8 +453,8 @@ static int test_inversion (void)
    /* Normalize vector and set up coordinates. */
    a    = 1.2;
    s[0] = 1.;
-   s[1] = 1.;
-   s[2] = 1.;
+   s[1] = 2.;
+   s[2] = 5.;
    vec3_normalize( s );
    c[0] = 3.;
    c[1] = 7.;
