@@ -7,7 +7,7 @@ LIBNAME	:= libdq
 SRC		:= test.c
 OBJS		:= dq.o mat3.o
 
-CFLAGS	:= -O3 -fPIC -W -Wall -Wextra -pedantic -ansi -D_GNU_SOURCE
+CFLAGS	:= -O3 -fPIC -W -Wall -Wextra -pedantic -ansi
 LDFLAGS	:= -lm
 
 
