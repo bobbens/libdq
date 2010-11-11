@@ -285,6 +285,7 @@ static int test_homo (void)
    double d[3] = { 1., 5., 3. };
    double p[3] = { 7., 5., 6. };
    double pf[3];
+   double det;
    double a1, a2, a3;
    int i;
 
@@ -296,6 +297,13 @@ static int test_homo (void)
 
       /* Create rotation matrix. */
       test_mat_rot( R, a1, a2, a3 );
+
+      /* Test determinant. */
+      det = mat3_det( R );
+      if (fabs(det-1.) > DQ_PRECISION) {
+         fprintf( stderr, "Rotation matrix determinant test failed (got %.3e, expected 1.)!\n", det );
+         return -1;
+      }
 
       /* Calculations with vector math. */
       mat3_mul_vec( pf, R, p );
