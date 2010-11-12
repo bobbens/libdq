@@ -6,8 +6,20 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include <sys/time.h>
+
+
+void rnd_init (void)
+{
+   srand( 0 );
+}
+
+double rnd_double (void)
+{
+   return ((double)rand() / (double)RAND_MAX);
+}
 
 
 static int test_vector (void)
@@ -289,11 +301,14 @@ static int test_homo (void)
    double a1, a2, a3;
    int i;
 
+   /* Make function deterministic. */
+   rnd_init();
+
    for (i=0; i<10; i++) {
       /* Parameters. */
-      a1 = 0.5+3.0*(10./(double)(i+1));
-      a2 = 1.0-1.0*(10./(double)(i+1));
-      a3 = 0.0+1.5*(10./(double)(i+1));
+      a1 = rnd_double() * 2. * M_PI;
+      a2 = rnd_double() * 2. * M_PI;
+      a3 = rnd_double() * 2. * M_PI;
 
       /* Create rotation matrix. */
       test_mat_rot( R, a1, a2, a3 );
@@ -346,16 +361,19 @@ static int test_scara (void)
    dq_t S1234;
    dq_t St;
 
+   /* Make function deterministic. */
+   rnd_init();
+
    /* Example taken form Alba Perez.
     *
     * SCARA robot Epson E2L65
     */
    for (i=0; i<10; i++) {
       /* Parameters. */
-      a1 = 0.5+3.0*(10./(double)(i+1));
-      a2 = 1.0-1.0*(10./(double)(i+1));
-      a3 = 0.0+1.5*(10./(double)(i+1));
-      t4 = (double)(i);
+      a1 = rnd_double() * 2. * M_PI;
+      a2 = rnd_double() * 2. * M_PI;
+      a3 = rnd_double() * 2. * M_PI;
+      t4 = rnd_double() * 10.;
       /* Create individual rotations. */
       dq_cr_rotation_plucker( S1, a1, s1, c1 );
       dq_cr_rotation( S2, a2, s2, c2 ); /* We spice it up by using non-plucker here. */
@@ -488,6 +506,74 @@ static int test_inversion (void)
 }
 
 
+static int test_stress( int stress )
+{
+   int i;
+   dq_t H, P, PF;
+   double pf[3];
+   double R[3][3], d[3];
+   double a1, a2, a3;
+   double det;
+
+   /* Make function deterministic. */
+   rnd_init();
+
+   /* Initialize. */
+   pf[0] = 1.;
+   pf[1] = 2.;
+   pf[2] = 3.;
+   dq_cr_point( P, pf );
+
+   /* Stress the bugger. */
+   for (i=0; i<stress; i++) {
+      a1 = rnd_double() * 2. * M_PI;
+      a2 = rnd_double() * 2. * M_PI;
+      a3 = rnd_double() * 2. * M_PI;
+
+      /* Create rotation matrix. */
+      test_mat_rot( R, a1, a2, a3 );
+      det = mat3_det( R );
+      if (fabs(det-1.) > 1e-10) {
+         fprintf( stderr, "Error with determinant, got %.3e expected 1.\n", det );
+         return -1;
+      }
+
+      /* Create translation. */
+      d[0] = rnd_double() * 10.;
+      d[1] = rnd_double() * 10.;
+      d[2] = rnd_double() * 10.;
+
+      /* Rotate and translate with homogeneous matrix. */
+      mat3_mul_vec( pf, R, pf );
+      vec3_add( pf, pf, d );
+
+      /* Create the dual quaternion rotation and run. */
+      dq_cr_homo( H, R, d );
+      dq_op_f4g( P, H, P );
+
+      /* Compare results. */
+      dq_cr_point( PF, pf );
+      if (dq_ch_cmpV( PF, P, 1e-6 ) != 0) {
+         fprintf( stderr, "Stress test failed at %d/%d!\n", i, stress );
+         printf( "Got:\n" );
+         dq_print_vert( P );
+         printf( "Expected:\n" );
+         dq_print_vert( PF );
+         printf( "R:\n" );
+         mat3_print( R );
+         printf( "d:\n" );
+         vec3_print( d );
+         return -1;
+      }
+
+      /* We must copy over to avoid problems with double accuracy deviation. */
+      dq_cr_point( P, pf );
+   }
+
+   return 0;
+}
+
+
 int main( int argc, char *argv[] )
 {
    int ret;
@@ -506,6 +592,7 @@ int main( int argc, char *argv[] )
    ret += !!test_scara();
    ret += !!test_inversion();
    ret += !!test_benchmark();
+   ret += !!test_stress( 100000 );
 
    if (ret == 0) {
       fprintf( stdout, "All tests passed.\n" );
