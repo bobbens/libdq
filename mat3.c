@@ -23,6 +23,22 @@ void vec3_cross( double o[3], const double u[3], const double v[3] )
 }
 
 
+void vec3_add( double o[3], const double u[3], const double v[3] )
+{
+   int i;
+   for (i=0; i<3; i++)
+      o[i] = u[i] + v[i];
+}
+
+
+void vec3_sub( double o[3], const double u[3], const double v[3] )
+{
+   int i;
+   for (i=0; i<3; i++)
+      o[i] = u[i] - v[i];
+}
+
+
 double vec3_norm( const double v[3] )
 {
    return sqrt( v[0]*v[0] + v[1]*v[1] + v[2]*v[2] );
