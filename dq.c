@@ -346,6 +346,19 @@ int dq_ch_cmp( const dq_t P, const dq_t Q )
 }
 
 
+int dq_ch_cmpV( const dq_t P, const dq_t Q, double precision )
+{
+   int i, ret;
+   
+   ret = 0;
+   for (i=0; i<8; i++)
+      if (fabs(P[i]-Q[i]) > precision)
+         ret++;
+
+   return ret;
+}
+
+
 void dq_print( const dq_t Q )
 {
    printf( "%.3f + %.3fi + %.3fj + %.3fk + %.3fie + %.3fje + %.3fke + %.3fe\n",

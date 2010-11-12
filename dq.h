@@ -450,6 +450,15 @@ int dq_ch_unit( const dq_t Q );
  *    @return 0 if they are equal.
  */
 int dq_ch_cmp( const dq_t P, const dq_t Q );
+/**
+ * @brief Compares two dual quaternions with variable precision.
+ *
+ *    @param[in] P First dual quaternion to compare.
+ *    @param[in] Q Second dual quaternion to compare.
+ *    @param[in] precision Precision to use when comparing members of each dual quaternion.
+ *    @return 0 if they are equal.
+ */
+int dq_ch_cmpV( const dq_t P, const dq_t Q, double precision );
 /* @} */
 
 
