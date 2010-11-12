@@ -509,11 +509,12 @@ static int test_inversion (void)
 static int test_stress( int stress )
 {
    int i;
-   dq_t H, P, PF;
+   dq_t Minv, M, I, Hinv, H, P, PF;
    double pf[3];
    double R[3][3], d[3];
    double a1, a2, a3;
    double det;
+   double z[3] = { 0., 0., 0. };
 
    /* Make function deterministic. */
    rnd_init();
@@ -523,6 +524,7 @@ static int test_stress( int stress )
    pf[1] = 2.;
    pf[2] = 3.;
    dq_cr_point( P, pf );
+   dq_cr_translation_vector( I, z );
 
    /* Stress the bugger. */
    for (i=0; i<stress; i++) {
@@ -563,6 +565,28 @@ static int test_stress( int stress )
          mat3_print( R );
          printf( "d:\n" );
          vec3_print( d );
+         return -1;
+      }
+
+      /* Test inversion. */
+      dq_cr_inv( Hinv, H );
+      dq_op_mul( M, H, Hinv );
+      dq_op_mul( Minv, Hinv, H );
+      /* Make sure the result is the identity. */
+      if (dq_ch_cmp( M, I ) != 0) {
+         fprintf( stderr, "Failed dual quaternion inversion test!\n" );
+         printf( "Got:\n" );
+         dq_print_vert( M );
+         printf( "Expected:\n" );
+         dq_print_vert( I );
+         return -1;
+      }
+      if (dq_ch_cmp( Minv, I ) != 0) {
+         fprintf( stderr, "Failed dual quaternion inversion test!\n" );
+         printf( "Got:\n" );
+         dq_print_vert( Minv );
+         printf( "Expected:\n" );
+         dq_print_vert( I );
          return -1;
       }
 
