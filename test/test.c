@@ -471,19 +471,19 @@ static int test_benchmark (void)
    double dt;
    double nra, nda, nrs, nds;
 
-   N = 1000000;
+   N     = 1000000;
 
    /* Create positions. */
-   a    = M_PI/2./(double)N;
-   p[0] = 1.;
-   p[1] = 1.;
-   p[2] = 1.;
-   s[0] = 0.;
-   s[1] = 0.;
-   s[2] = 1.;
-   c[0] = 0.;
-   c[1] = 0.;
-   c[2] = 0.;
+   a     = M_PI/2./(double)N;
+   p[0]  = 1.;
+   p[1]  = 1.;
+   p[2]  = 1.;
+   s[0]  = 0.;
+   s[1]  = 0.;
+   s[2]  = 1.;
+   c[0]  = 0.;
+   c[1]  = 0.;
+   c[2]  = 0.;
    pf[0] = -1.;
    pf[1] = 1.;
    pf[2] = 1.;
@@ -710,7 +710,7 @@ int main( int argc, char *argv[] )
    ret += !!test_scara();
    ret += !!test_inversion();
    ret += !!test_benchmark();
-   ret += !!test_stress( 100000 );
+   ret += !!test_stress( 500000 );
 
    if (ret == 0) {
       fprintf( stdout, "All tests passed.\n" );
