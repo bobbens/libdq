@@ -8,6 +8,7 @@ SRC		:= test.c
 OBJS		:= dq.o mat3.o
 
 CFLAGS	:= -O3 -fPIC -W -Wall -Wextra -Werror -pedantic -ansi
+#CFLAGS	:= -g -DDQ_CHECK -fPIC -W -Wall -Wextra -Werror -pedantic -ansi
 LDFLAGS	:= -lm
 
 
