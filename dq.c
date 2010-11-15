@@ -335,14 +335,7 @@ int dq_ch_unit( const dq_t Q )
 
 int dq_ch_cmp( const dq_t P, const dq_t Q )
 {
-   int i, ret;
-   
-   ret = 0;
-   for (i=0; i<8; i++)
-      if (fabs(P[i]-Q[i]) > DQ_PRECISION)
-         ret++;
-
-   return ret;
+   return dq_ch_cmpV( P, Q, DQ_PRECISION );
 }
 
 
