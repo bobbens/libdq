@@ -98,27 +98,32 @@ static int test_matrix (void)
 
 static int test_translation (void)
 {
-   int i, j;
-   double p[3], t[3], pf[3];
-   dq_t P, T, TP, PF;
+   int i, j, k;
+   double p[3], t[3*10], pf[3];
+   dq_t P, TT, T[10], TP, PF;
 
    rnd_init();
 
    for (j=0; j<10000; j++) {
       /* Create positions. */
-      p[0] = rnd_double() * 10;
-      p[1] = rnd_double() * 10;
-      p[2] = rnd_double() * 10;
-      t[0] = rnd_double() * 10;
-      t[1] = rnd_double() * 10;
-      t[2] = rnd_double() * 10;
-      for (i=0; i<3; i++)
-         pf[i] = p[i] + t[i];
+      pf[0] = p[0] = rnd_double() * 10;
+      pf[1] = p[1] = rnd_double() * 10;
+      pf[2] = p[2] = rnd_double() * 10;
+      for (i=0; i<10; i++) {
+         t[3*i+0] = rnd_double() * 10;
+         t[3*i+1] = rnd_double() * 10;
+         t[3*i+2] = rnd_double() * 10;
+         for (k=0; k<3; k++)
+            pf[k] += t[3*i+k];
+         dq_cr_translation_vector( T[i], &t[3*i] ); 
+      }
 
       /* Calculate. */
       dq_cr_point( P, p );
-      dq_cr_translation_vector( T, t ); 
-      dq_op_f4g( TP, T, P );
+      dq_op_mul( TT, T[0], T[1] );
+      for (i=2; i<10; i++)
+         dq_op_mul( TT, TT, T[i] );
+      dq_op_f4g( TP, TT, P );
       dq_cr_point( PF, pf );
 
       /* Results. */
@@ -127,7 +132,7 @@ static int test_translation (void)
          printf( "Point:\n" );
          dq_print_vert( P );
          printf( "Translation:\n" );
-         dq_print_vert( T );
+         dq_print_vert( TT );
          printf( "Got:\n" );
          dq_print_vert( TP );
          printf( "Expected:\n" );
@@ -710,7 +715,7 @@ int main( int argc, char *argv[] )
    ret += !!test_scara();
    ret += !!test_inversion();
    ret += !!test_benchmark();
-   ret += !!test_stress( 500000 );
+   ret += !!test_stress( 100000 );
 
    if (ret == 0) {
       fprintf( stdout, "All tests passed.\n" );
