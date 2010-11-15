@@ -267,7 +267,7 @@ void dq_op_mul( dq_t PQ, const dq_t P, const dq_t Q )
    /* Real quaternion. */
    T[0] = P[0]*Q[0] - P[1]*Q[1] - P[2]*Q[2] - P[3]*Q[3];
    T[1] = P[0]*Q[1] + P[1]*Q[0] + P[2]*Q[3] - P[3]*Q[2];
-   T[2] = P[0]*Q[2] + P[2]*Q[0] + P[1]*Q[3] - P[3]*Q[1];
+   T[2] = P[0]*Q[2] + P[2]*Q[0] - P[1]*Q[3] + P[3]*Q[1];
    T[3] = P[0]*Q[3] + P[3]*Q[0] + P[1]*Q[2] - P[2]*Q[1];
 
    /* Dual unit Quaternion. */
