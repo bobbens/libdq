@@ -469,33 +469,34 @@ static int test_scara (void)
 static int test_benchmark (void)
 {
    int i, N;
-   double a, p[3], s[3], c[3], pf[3];
-   dq_t P, R, RR, RP, PF, PS, PA;
+   double a, astep, p[3], s[3], c[3];
+   dq_t P, R, RR, RP, PF, Rtrue, E;
    struct timeval tstart, tend;
    unsigned long elapsed;
    double dt;
-   double nra, nda, nrs, nds;
+   double nr, nd;
 
    N     = 1000000;
+   rnd_init();
 
    /* Create positions. */
-   a     = M_PI/2./(double)N;
-   p[0]  = 1.;
-   p[1]  = 1.;
-   p[2]  = 1.;
-   s[0]  = 0.;
-   s[1]  = 0.;
-   s[2]  = 1.;
-   c[0]  = 0.;
-   c[1]  = 0.;
-   c[2]  = 0.;
-   pf[0] = -1.;
-   pf[1] = 1.;
-   pf[2] = 1.;
+   a     = rnd_double() * 2. * M_PI;
+   astep = a / (double)N;
+   p[0]  = rnd_double() * 10.;
+   p[1]  = rnd_double() * 10.;
+   p[2]  = rnd_double() * 10.;
+   s[0]  = rnd_double();
+   s[1]  = rnd_double();
+   s[2]  = rnd_double();
+   vec3_normalize( s );
+   c[0]  = rnd_double() * 10.;
+   c[1]  = rnd_double() * 10.;
+   c[2]  = rnd_double() * 10.;
 
    /* Calculate. */
    dq_cr_point( P, p ); /* B */
-   dq_cr_rotation( R, a, s, c ); /* A */
+   dq_cr_rotation( R, astep, s, c ); /* A */
+   dq_cr_rotation( Rtrue, a, s, c );
    dq_cr_copy( RR, R );
    gettimeofday( &tstart, NULL );
    for (i=0; i<N; i++)
@@ -503,7 +504,7 @@ static int test_benchmark (void)
    gettimeofday( &tend, NULL );
    dq_cr_copy( R, RR );
    dq_op_f4g( RP, R, P ); /* ABA* */
-   dq_cr_point( PF, pf );
+   dq_op_f4g( PF, Rtrue, P );
 
    /* Check norm. */
    if (!dq_ch_unit( R )) {
@@ -512,21 +513,25 @@ static int test_benchmark (void)
       return 1;
    }
 
+   /* Calculate multiplication error. */
+   dq_op_sub( E, Rtrue, R );
+   dq_op_norm2( &nr, &nd, E );
+
    /* Display elapsed time. */
    elapsed = ((tend.tv_sec - tstart.tv_sec) * 1000000 + (tend.tv_usec - tstart.tv_usec));
    dt      = ((double)elapsed) / 1e6;
-   fprintf( stdout, "Benchmarked %d multiplications in %.3f seconds (%.3e seconds/multiplication).\n", N, dt, dt/(double)N );
+   fprintf( stdout, "Benchmarked %d multiplications in %.3f seconds (%.3e seconds/multiplication) with error %.3e.\n",
+         N, dt, dt/(double)N, sqrt( nr*nr + nd*nd ) );
 
-   /* Compare result. */
-   dq_op_add( PA, PF, P );
-   dq_op_sub( PS, PF, P );
-   dq_op_norm2( &nra, &nda, PA );
-   dq_op_norm2( &nrs, &nds, PA );
-   if ((fabs(nra-nrs) > DQ_PRECISION) || (fabs(nda-nds) > DQ_PRECISION)) {
-      fprintf( stderr, "Error with %d multiplications is above 1e-10!\n", N );
+   /* RP and PF must be equal. */
+   if (dq_ch_cmpV( RP, PF, 1e-3 ) != 0) {
+      fprintf( stderr, "Failed dual quaternion inversion test!\n" );
+      printf( "Direct multiplication:\n" );
+      dq_print_vert( PF );
+      printf( "Benchmarked multiplication:\n" );
+      dq_print_vert( RP );
       return -1;
    }
-
    return 0;
 }
 
