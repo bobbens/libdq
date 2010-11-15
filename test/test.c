@@ -142,8 +142,9 @@ static int test_translation (void)
 
 static int test_rotation (void)
 {
-   double a, p[3], s[3], c[3], pf[3];
-   dq_t P, R, RP, PF;
+   int i;
+   double a, p[3], s[3], c[3], pf[3], t[3] = { 0., 0., 0. };
+   dq_t P, R, RP, PF, RR, Rinv;
 
    /* Create positions. */
    a    = M_PI/2.;
@@ -185,6 +186,56 @@ static int test_rotation (void)
       printf( "Expected:\n" );
       dq_print_vert( PF );
       return -1;
+   }
+
+   /* Some number crunching. */
+   for (i=0; i<10000; i++) {
+      a    = rnd_double() * 2. * M_PI;
+      s[0] = rnd_double();
+      s[1] = rnd_double();
+      s[2] = rnd_double();
+      vec3_normalize( s );
+      c[0] = rnd_double() * 10.;
+      c[1] = rnd_double() * 10.;
+      c[2] = rnd_double() * 10.;
+      dq_cr_rotation( RR, a, s, c );
+
+      a    = rnd_double() * 2. * M_PI;
+      s[0] = rnd_double();
+      s[1] = rnd_double();
+      s[2] = rnd_double();
+      vec3_normalize( s );
+      c[0] = rnd_double() * 10.;
+      c[1] = rnd_double() * 10.;
+      c[2] = rnd_double() * 10.;
+      dq_cr_rotation( R, a, s, c );
+
+      /* Multiply. */
+      dq_op_mul( RR, RR, R );
+
+      /* Check norm. */
+      if (!dq_ch_unit( RR )) {
+         fprintf( stderr, "Rotation dual quaternion RR is not a unit dual quaternion!\n" );
+         dq_print_vert( RR );
+         return 1;
+      }
+
+      /* Now we'll test inversion. */
+      dq_cr_inv( Rinv, RR );
+      dq_op_mul( R, RR, Rinv );
+      dq_cr_point( P, t );
+      if (dq_ch_cmp( P, R ) != 0) {
+         fprintf( stderr, "Rotation inversion failed (RR = R1*R2 ; I = RR RR^-1)!\n" );
+         printf( "RR:\n" );
+         dq_print_vert( RR );
+         printf( "Rinvt:\n" );
+         dq_print_vert( Rinv );
+         printf( "Got:\n" );
+         dq_print_vert( R );
+         printf( "Expected:\n" );
+         dq_print_vert( P );
+         return -1;
+      }
    }
 
    return 0;
