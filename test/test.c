@@ -479,13 +479,14 @@ static int test_inversion (void)
 {
    int i, r1, r2;
    dq_t Q, Qinv, M, I, M2;
+   dq_t R, RIQ, RQI;
    double a, s[3], c[3], z[3] = { 0., 0., 0. };
 
    rnd_init();
 
    /* Normalize vector and set up coordinates. */
    for (i=0; i<10000; i++) {
-      a    = 1.2;
+      a    = rnd_double() * 2. * M_PI;
       s[0] = rnd_double();
       s[1] = rnd_double();
       s[2] = rnd_double();
@@ -513,6 +514,33 @@ static int test_inversion (void)
             dq_print_vert( M2 );
          printf( "Expected:\n" );
          dq_print_vert( I );
+         return -1;
+      }
+
+      /* Now test commutative property. */
+      a    = rnd_double() * 2. * M_PI;
+      s[0] = rnd_double();
+      s[1] = rnd_double();
+      s[2] = rnd_double();
+      vec3_normalize( s );
+      c[0] = rnd_double() * 10.;
+      c[1] = rnd_double() * 10.;
+      c[2] = rnd_double() * 10.;
+
+      /* Create the dual quaternions. */
+      dq_cr_rotation( R, a, s, c );
+      dq_op_mul( RIQ, R, Qinv );
+      dq_op_mul( RIQ, RIQ, Q );
+      dq_op_mul( RQI, R, Q );
+      dq_op_mul( RQI, RQI, Qinv );
+
+      /* M and M2 must be equal. */
+      if (dq_ch_cmp( RQI, RIQ ) != 0) {
+         fprintf( stderr, "Failed dual quaternion inversion test!\n" );
+         printf( "R Qinv Q:\n" );
+         dq_print_vert( RIQ );
+         printf( "R Q Qinv:\n" );
+         dq_print_vert( RQI );
          return -1;
       }
    }
