@@ -98,38 +98,42 @@ static int test_matrix (void)
 
 static int test_translation (void)
 {
-   int i;
+   int i, j;
    double p[3], t[3], pf[3];
    dq_t P, T, TP, PF;
 
-   /* Create positions. */
-   p[0] = 1.;
-   p[1] = 2.;
-   p[2] = 3.;
-   t[0] = 4.;
-   t[1] = 5.;
-   t[2] = 6.;
-   for (i=0; i<3; i++)
-      pf[i] = p[i] + t[i];
+   rnd_init();
 
-   /* Calculate. */
-   dq_cr_point( P, p );
-   dq_cr_translation_vector( T, t ); 
-   dq_op_f4g( TP, T, P );
-   dq_cr_point( PF, pf );
+   for (j=0; j<10000; j++) {
+      /* Create positions. */
+      p[0] = rnd_double() * 10;
+      p[1] = rnd_double() * 10;
+      p[2] = rnd_double() * 10;
+      t[0] = rnd_double() * 10;
+      t[1] = rnd_double() * 10;
+      t[2] = rnd_double() * 10;
+      for (i=0; i<3; i++)
+         pf[i] = p[i] + t[i];
 
-   /* Results. */
-   if (dq_ch_cmp( PF, TP ) != 0) {
-      fprintf( stderr, "Translation failed!\n" );
-      printf( "Point:\n" );
-      dq_print_vert( P );
-      printf( "Translation:\n" );
-      dq_print_vert( T );
-      printf( "Got:\n" );
-      dq_print_vert( TP );
-      printf( "Expected:\n" );
-      dq_print_vert( PF );
-      return -1;
+      /* Calculate. */
+      dq_cr_point( P, p );
+      dq_cr_translation_vector( T, t ); 
+      dq_op_f4g( TP, T, P );
+      dq_cr_point( PF, pf );
+
+      /* Results. */
+      if (dq_ch_cmp( PF, TP ) != 0) {
+         fprintf( stderr, "Translation failed!\n" );
+         printf( "Point:\n" );
+         dq_print_vert( P );
+         printf( "Translation:\n" );
+         dq_print_vert( T );
+         printf( "Got:\n" );
+         dq_print_vert( TP );
+         printf( "Expected:\n" );
+         dq_print_vert( PF );
+         return -1;
+      }
    }
 
    return 0;
@@ -304,7 +308,7 @@ static int test_homo (void)
    /* Make function deterministic. */
    rnd_init();
 
-   for (i=0; i<10; i++) {
+   for (i=0; i<10000; i++) {
       /* Parameters. */
       a1 = rnd_double() * 2. * M_PI;
       a2 = rnd_double() * 2. * M_PI;
@@ -368,7 +372,7 @@ static int test_scara (void)
     *
     * SCARA robot Epson E2L65
     */
-   for (i=0; i<10; i++) {
+   for (i=0; i<10000; i++) {
       /* Parameters. */
       a1 = rnd_double() * 2. * M_PI;
       a2 = rnd_double() * 2. * M_PI;
@@ -473,33 +477,44 @@ static int test_benchmark (void)
 
 static int test_inversion (void)
 {
-   dq_t Q, Qinv, M, I;
+   int i, r1, r2;
+   dq_t Q, Qinv, M, I, M2;
    double a, s[3], c[3], z[3] = { 0., 0., 0. };
 
+   rnd_init();
+
    /* Normalize vector and set up coordinates. */
-   a    = 1.2;
-   s[0] = 1.;
-   s[1] = 2.;
-   s[2] = 5.;
-   vec3_normalize( s );
-   c[0] = 3.;
-   c[1] = 7.;
-   c[2] = 14.;
+   for (i=0; i<10000; i++) {
+      a    = 1.2;
+      s[0] = rnd_double();
+      s[1] = rnd_double();
+      s[2] = rnd_double();
+      vec3_normalize( s );
+      c[0] = rnd_double() * 10.;
+      c[1] = rnd_double() * 10.;
+      c[2] = rnd_double() * 10.;
 
-   /* Create the dual quaternions. */
-   dq_cr_rotation( Q, a, s, c );
-   dq_cr_inv( Qinv, Q );
-   dq_op_mul( M, Q, Qinv );
-   dq_cr_translation_vector( I, z );
+      /* Create the dual quaternions. */
+      dq_cr_rotation( Q, a, s, c );
+      dq_cr_inv( Qinv, Q );
+      dq_op_mul( M, Q, Qinv );
+      dq_op_mul( M2, Qinv, Q );
+      dq_cr_translation_vector( I, z );
 
-   /* Make sure the result is the identity. */
-   if (dq_ch_cmp( M, I ) != 0) {
-      fprintf( stderr, "Failed dual quaternion inversion test!\n" );
-      printf( "Got:\n" );
-      dq_print_vert( M );
-      printf( "Expected:\n" );
-      dq_print_vert( I );
-      return -1;
+      /* Make sure the result is the identity. */
+      r1 = dq_ch_cmp( M, I );
+      r2 = dq_ch_cmp( M2, I );
+      if ((r1 != 0) || (r2 != 0)) {
+         fprintf( stderr, "Failed dual quaternion inversion test!\n" );
+         printf( "Got:\n" );
+         if (r1 != 0)
+            dq_print_vert( M );
+         else
+            dq_print_vert( M2 );
+         printf( "Expected:\n" );
+         dq_print_vert( I );
+         return -1;
+      }
    }
 
    return 0;
