@@ -1,9 +1,9 @@
 
 
-SRC		:= test.c
+SRC		:= test.c ../dq.c ../mat3.c
 
-CFLAGS	:= -O3 -W -Wall -Wextra -pedantic -ansi -D_GNU_SOURCE -I..
-LDFLAGS	:= -lm -L.. -ldq -Wl,-rpath,$(shell pwd)/..
+CFLAGS	:= -O3 -W -Wall -Wextra -pedantic -ansi -D_GNU_SOURCE -DDQ_CHECK -I..
+LDFLAGS	:= -lm
 
 
 .PHONY: all clean docs
@@ -11,8 +11,8 @@ LDFLAGS	:= -lm -L.. -ldq -Wl,-rpath,$(shell pwd)/..
 
 all: dq_test
 
-dq_test: test.c
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ test.c
+dq_test: $(SRC)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(SRC)
 
 clean:
 	$(RM) dq_test

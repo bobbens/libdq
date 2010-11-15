@@ -6,6 +6,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#ifdef DQ_CHECK
+#include <assert.h>
+#endif /* DQ_CHECK */
 
 #include "mat3.h"
 
@@ -35,6 +38,10 @@ void dq_cr_rotation_plucker( dq_t O, double theta, const double s[3], const doub
 {
    double ss, cs;
 
+#if DQ_CHECK
+   assert( fabs(vec3_dot(s,s0)) < DQ_PRECISION );
+#endif /* DQ_CHECK */
+
    /* Store sin and cos values to speed up calculations. */
    ss = sin( theta/2. );
    cs = cos( theta/2. );
@@ -55,6 +62,10 @@ void dq_cr_rotation_matrix( dq_t O, double R[3][3] )
    double Rminus[3][3], Rplus[3][3], Rinv[3][3], B[3][3], eye[3][3];
    double s[3];
    double z2, tz, sz, cz;
+
+#ifdef DQ_CHECK
+   assert( fabs(mat3_det(R) - 1.) < DQ_PRECISION );
+#endif /* DQ_CHECK */
 
    /* B = (R-I)(R+I)^{-1} */
    mat3_eye( eye );
@@ -165,6 +176,11 @@ void dq_cr_line_plucker( dq_t O, const double s[3], const double c[3] )
 void dq_cr_homo( dq_t O, double R[3][3], const double d[3] )
 {
    dq_t QR, QT;
+
+#ifdef DQ_CHECK
+   assert( fabs(mat3_det(R) - 1.) < DQ_PRECISION );
+#endif /* DQ_CHECK */
+
    dq_cr_rotation_matrix( QR, R );
    dq_cr_translation_vector( QT, d );
    dq_op_mul( O, QT, QR );

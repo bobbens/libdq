@@ -5,6 +5,11 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#ifdef DQ_CHECK
+#include <assert.h>
+#endif /* DQ_CHECK */
+
+#include "dq.h"
 
 
 double vec3_dot( const double u[3], const double v[3] )
@@ -48,6 +53,11 @@ double vec3_norm( const double v[3] )
 void vec3_normalize( double v[3] )
 {
    double n = vec3_norm( v );
+
+#ifdef DQ_CHECK
+   assert( fabs(vec3_norm(v)) > DQ_PRECISION );
+#endif /* DQ_CHECK */
+
    v[0] /= n;
    v[1] /= n;
    v[2] /= n;
@@ -123,6 +133,10 @@ void mat3_inv( double out[3][3], double in[3][3] )
    double det;
 
    det = mat3_det(in);
+
+#ifdef DQ_CHECK
+   assert( fabs(det) > DQ_PRECISION );
+#endif /* DQ_CHECK */
 
    out[0][0] = (in[1][1]*in[2][2] - in[2][1]*in[1][2])/det;
    out[0][1] = (in[0][2]*in[2][1] - in[2][2]*in[0][1])/det;
