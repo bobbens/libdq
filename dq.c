@@ -193,23 +193,19 @@ void dq_cr_conj( dq_t O, const dq_t Q )
 void dq_cr_inv( dq_t O, const dq_t Q )
 {
    double real, dual;
-   dq_t T;
 
    /* Get the dual number of t he norm. */
    dq_op_norm2( &real, &dual, Q );
   
    /* Set the values. */
-   T[0] =  Q[0]*real;
-   T[1] = -Q[1]*real;
-   T[2] = -Q[2]*real;
-   T[3] = -Q[3]*real;
-   T[4] =  Q[4]*(dual-real);
-   T[5] =  Q[5]*(dual-real);
-   T[6] =  Q[6]*(dual-real);
-   T[7] =  Q[7]*(real-dual);
-
-   /* Copy over the dual quaternion. */
-   memcpy( O, T, sizeof(dq_t) );
+   O[0] =  Q[0] * real;
+   O[1] = -Q[1] * real;
+   O[2] = -Q[2] * real;
+   O[3] = -Q[3] * real;
+   O[4] =  Q[4] * (dual-real);
+   O[5] =  Q[5] * (dual-real);
+   O[6] =  Q[6] * (dual-real);
+   O[7] =  Q[7] * (real-dual);
 }
 
 
