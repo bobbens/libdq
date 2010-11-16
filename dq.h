@@ -120,13 +120,13 @@
  * \f]
  *
  * \f[
- * Q = (q_0 + q_1 i + q_2 j + q_3 k ) + \epsilon ( q_7 + q_4 i + q_5 j + q_6 k ) = \widehat{q} + \epsilon \widehat{q}^0
+ * \widehat{Q} = (q_0 + q_1 i + q_2 j + q_3 k ) + \epsilon ( q_7 + q_4 i + q_5 j + q_6 k ) = \widehat{q} + \epsilon \widehat{q}^0
  * \f]
  *
  * In vertical notation we have the following:
  *
  * \f[
- * Q = \left\{\begin{array}{c}
+ * \widehat{Q} = \left\{\begin{array}{c}
  *   e_{23} \\
  *   e_{31} \\
  *   e_{12} \\
