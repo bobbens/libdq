@@ -304,7 +304,7 @@ void dq_cr_inv( dq_t O, const dq_t Q );
  * \| \widehat{Q} \|^2 = \widehat{Q} \widehat{Q}^*
  * \f]
  *
- * The square of the norm is a dual number.
+ * The square of the norm is a dual number. If we denote \f$ Q \f$ as the vector part of the dual quaternion (all except \f$ q_0 \f$ and \f$ q_7 \f$):
  *
  * \f[
  * \widehat{Q} \widehat{Q}^* = (\widehat{q_0} + Q)(\widehat{q_0} - Q) = \widehat{q_0}^2 + Q \cdot Q
