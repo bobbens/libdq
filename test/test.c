@@ -355,8 +355,10 @@ static int test_homo (void)
    dq_t E, P, Q, PF, H[10];
    double RR[3][3], Rt[10][3][3];
    double dd[3], dt[3*10];
-   double p[3] = { 7., 5., 6. };
+   double HH[3][4], Ht[10][3][4];
+   double p[4] = { 7., 5., 6., 1. };
    double pf[3];
+   double ph[4];
    double det;
    double a1, a2, a3;
    int i, j;
@@ -386,6 +388,9 @@ static int test_homo (void)
 
          /* Create quaternion stuff. */
          dq_cr_homo( H[j], Rt[j], &dt[3*j] );
+
+         /* Create homogeneous matrix. */
+         homo_cr_join( Ht[j], Rt[j], &dt[3*j] );
       }
 
       /* Create rotation matrix. */
@@ -408,17 +413,30 @@ static int test_homo (void)
       pf[2] += dd[2];
       dq_cr_point( PF, pf );
 
+      /* Calculate with homogeneous matrix math. */
+      homo_op_mul( HH, Ht[1], Ht[0] );
+      for (j=2; j<10; j++)
+         homo_op_mul( HH, Ht[j], HH );
+      homo_op_mul_vec( ph, HH, p );
+      if (vec3_cmp( pf, ph ) != 0) {
+         fprintf( stderr, "Homogeneous matrix test failed!\n" );
+         printf( "Got:\n" );
+         vec3_print( ph );
+         printf( "Expected:\n" );
+         vec3_print( pf );
+         return -1;
+      }
+
       /* Calculations with quaternions. */
       dq_op_mul( Q, H[1], H[0] );
       for (j=2; j<10; j++)
          dq_op_mul( Q, H[j], Q );
-
       dq_cr_point( P, p );
       dq_op_f4g( E, Q, P );
 
       /* Comparison. */
       if (dq_ch_cmp( PF, E ) != 0) {
-         fprintf( stderr, "Homogeneous matrix test failed!\n" );
+         fprintf( stderr, "Homogeneous matrix dual quaternion test failed!\n" );
          printf( "Got:\n" );
          dq_print_vert( E );
          printf( "Expected:\n" );

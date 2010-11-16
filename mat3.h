@@ -24,6 +24,10 @@ void mat3_mul_vec( double out[3], double M[3][3], const double v[3] );
 int mat3_cmp( double A[3][3], double B[3][3] );
 void mat3_print( double M[3][3] );
 
+void homo_cr_join( double H[3][4], double R[3][3], double d[3] );
+void homo_op_mul( double O[3][4], double A[3][4], double B[3][4] );
+void homo_op_mul_vec( double o[4], double H[3][4], const double v[4] );
+
 
 #endif /* _MAT3_H */
 
