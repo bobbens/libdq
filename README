@@ -39,6 +39,10 @@ Docs are located in the docs folder that will be created when you run make docs.
 
 CHANGELOG
 
+ - Version 1.1, November 2010
+   - Fixed dual quaternion multiplication
+   - Implemented more strict unit tests
+   - Misc fixes
  - Version 1.0, November 2010
    - Initial Revision
 
