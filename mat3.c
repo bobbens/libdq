@@ -239,6 +239,17 @@ void homo_op_mul_vec( double o[4], double H[3][4], const double v[4] )
 }
 
 
+void homo_op_split( double R[3][3], double d[3], double H[3][4] )
+{
+   int i, j;
+   for (j=0; j<3; j++)
+      for (i=0; i<3; i++)
+         R[j][i] = H[j][i];
+   for (i=0; i<3; i++)
+      d[i] = H[i][3];
+}
+
+
 int homo_ch_cmp( double A[3][4], double B[3][4] )
 {
    int i, j, ret;
