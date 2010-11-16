@@ -352,43 +352,67 @@ static void test_mat_rot( double R[3][3], double a1, double a2, double a3 )
 
 static int test_homo (void)
 {
-   dq_t E, P, Q, PF;
-   double R[3][3];
-   double d[3] = { 1., 5., 3. };
+   dq_t E, P, Q, PF, H[10];
+   double RR[3][3], Rt[10][3][3];
+   double dd[3], dt[3*10];
    double p[3] = { 7., 5., 6. };
    double pf[3];
    double det;
    double a1, a2, a3;
-   int i;
+   int i, j;
 
    /* Make function deterministic. */
    rnd_init();
 
    for (i=0; i<10000; i++) {
-      /* Parameters. */
-      a1 = rnd_double() * 2. * M_PI;
-      a2 = rnd_double() * 2. * M_PI;
-      a3 = rnd_double() * 2. * M_PI;
+      for (j=0; j<10; j++) {
+         /* Parameters. */
+         a1          = rnd_double() * 2. * M_PI;
+         a2          = rnd_double() * 2. * M_PI;
+         a3          = rnd_double() * 2. * M_PI;
+         dt[3*j+0]   = rnd_double() * 10.;
+         dt[3*j+1]   = rnd_double() * 10.;
+         dt[3*j+2]   = rnd_double() * 10.;
+
+         /* Create rotation matrix. */
+         test_mat_rot( Rt[j], a1, a2, a3 );
+
+         /* Test determinant. */
+         det = mat3_det( Rt[j] );
+         if (fabs(det-1.) > DQ_PRECISION) {
+            fprintf( stderr, "Rotation matrix determinant test failed (got %.3e, expected 1.)!\n", det );
+            return -1;
+         }
+
+         /* Create quaternion stuff. */
+         dq_cr_homo( H[j], Rt[j], &dt[3*j] );
+      }
 
       /* Create rotation matrix. */
-      test_mat_rot( R, a1, a2, a3 );
-
-      /* Test determinant. */
-      det = mat3_det( R );
-      if (fabs(det-1.) > DQ_PRECISION) {
-         fprintf( stderr, "Rotation matrix determinant test failed (got %.3e, expected 1.)!\n", det );
-         return -1;
+      mat3_mul( RR, Rt[1], Rt[0] ); /* Matrix. */
+      dd[0] = dt[0];
+      dd[1] = dt[1];
+      dd[2] = dt[2];
+      mat3_mul_vec( dd, Rt[1], dd );
+      vec3_add( dd, dd, &dt[3] );
+      for (j=2; j<10; j++) {
+         mat3_mul( RR, Rt[j], RR );
+         mat3_mul_vec( dd, Rt[j], dd );
+         vec3_add( dd, dd, &dt[j*3] );
       }
 
       /* Calculations with vector math. */
-      mat3_mul_vec( pf, R, p );
-      pf[0] += d[0];
-      pf[1] += d[1];
-      pf[2] += d[2];
+      mat3_mul_vec( pf, RR, p );
+      pf[0] += dd[0];
+      pf[1] += dd[1];
+      pf[2] += dd[2];
       dq_cr_point( PF, pf );
 
       /* Calculations with quaternions. */
-      dq_cr_homo( Q, R, d );
+      dq_op_mul( Q, H[1], H[0] );
+      for (j=2; j<10; j++)
+         dq_op_mul( Q, H[j], Q );
+
       dq_cr_point( P, p );
       dq_op_f4g( E, Q, P );
 
