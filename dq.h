@@ -7,7 +7,7 @@
 /**
  * @mainpage libdq doxygen documentation
  * @author Edgar Simo <bobbens@gmail.com>
- * @version 1.0
+ * @version 1.1
  * @date November 2010
  *
  * @section License
@@ -79,6 +79,10 @@
  *
  * @section Changelog
  *
+ *  - Version 1.1, November 2010
+ *    - Fixed dual quaternion multiplication
+ *    - Implemented more strict unit tests
+ *    - Misc fixes
  *  - Version 1.0, November 2010
  *    - Initial Revision
  *
