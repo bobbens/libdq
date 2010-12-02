@@ -364,17 +364,19 @@ int dq_ch_cmp( const dq_t P, const dq_t Q )
 
 int dq_ch_cmpV( const dq_t P, const dq_t Q, double precision )
 {
-   int i, ret;
-   double m;
-   
-   ret = 0;
-   for (i=0; i<8; i++) {
-      m = MIN( fabs(P[i]-Q[i]), fabs(P[i]+Q[i]) );
-      if (m > precision)
-         ret++;
-   }
+   int i, ret1, ret2;
 
-   return ret;
+   /* To compensate the rotational ambiguity we see if the 'z' component is the same. */
+   ret1 = 0;
+   for (i=0; i<8; i++)
+      if (fabs( P[i] - Q[i] ) > precision)
+         ret1++;
+   ret2 = 0;
+   for (i=0; i<8; i++)
+      if (fabs( P[i] + Q[i] ) > precision)
+         ret2++;
+
+   return MIN( ret1, ret2 );
 }
 
 
