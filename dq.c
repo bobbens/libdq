@@ -13,6 +13,9 @@
 #include "mat3.h"
 
 
+#define MIN(a,b)     (((a)<(b))?(a):(b))
+
+
 void dq_cr_rotation( dq_t O, double theta, const double s[3], const double c[3] )
 {
    double ss, cs, s0[3];
@@ -285,6 +288,14 @@ void dq_op_mul( dq_t PQ, const dq_t P, const dq_t Q )
 }
 
 
+void dq_op_sign( dq_t P, const dq_t Q )
+{
+   int i;
+   for (i=0; i<8; i++)
+      P[i] = -Q[i];
+}
+
+
 void dq_op_f1g( dq_t ABA, const dq_t A, const dq_t B )
 {
    dq_op_mul( ABA, A, B );
@@ -354,11 +365,14 @@ int dq_ch_cmp( const dq_t P, const dq_t Q )
 int dq_ch_cmpV( const dq_t P, const dq_t Q, double precision )
 {
    int i, ret;
+   double m;
    
    ret = 0;
-   for (i=0; i<8; i++)
-      if (fabs(P[i]-Q[i]) > precision)
+   for (i=0; i<8; i++) {
+      m = MIN( fabs(P[i]-Q[i]), fabs(P[i]+Q[i]) );
+      if (m > precision)
          ret++;
+   }
 
    return ret;
 }

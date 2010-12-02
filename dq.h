@@ -7,7 +7,7 @@
 /**
  * @mainpage libdq doxygen documentation
  * @author Edgar Simo <bobbens@gmail.com>
- * @version 1.1
+ * @version 1.2
  * @date November 2010
  *
  * @section License
@@ -79,6 +79,9 @@
  *
  * @section Changelog
  *
+ * - Version 1.2, December 2010
+ *    - Added dq_op_sign to change sign of a dual quaternion.
+ *    - dq_ch_cmp and dq_ch_cmpV now take into account the fact it could be with a different sign.
  *  - Version 1.1, November 2010
  *    - Fixed dual quaternion multiplication
  *    - Implemented more strict unit tests
@@ -379,6 +382,13 @@ void dq_op_sub( dq_t O, const dq_t P, const dq_t Q );
  *    @param[in] Q Second dual quaternion to multiply.
  */
 void dq_op_mul( dq_t PQ, const dq_t P, const dq_t Q );
+/**
+ * @brief Swaps the sign of all the elements in a dual quaternion.
+ *
+ *    @param[out] P Result of swapping all values of the elements.
+ *    @param[in] Q Dual quaternion to swap sign of all elements.
+ */
+void dq_op_sign( dq_t P, const dq_t Q );
 /**
  * @brief Clifford conjugation transformation of type \f$f_{1g}\f$ (Alba Perez notation).
  *
