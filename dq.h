@@ -76,6 +76,7 @@
  * $ gcc -ldq dq_test.c -o dq_test
  * @endcode
  *
+ *
  * @section Changelog
  *
  * - Version 1.2, December 2010
@@ -89,14 +90,10 @@
  *    - Initial Revision
  *
  *
- * @section Acknowledgements
- *
- * A big thanks to Alba Perez for having the patience to deal with my repetitive
- *  boring dual quaternion questions and for lending me her notes.
- *
  * @section References
  *
  * - A. Perez, Kinematics of Robots (unpublished as of this writing)
+ *
  *
  * @section Citation
  *
@@ -109,6 +106,12 @@
  *    year = {2010}
  * }
  * @endcode
+ *
+ *
+ * @section Acknowledgements
+ *
+ * A big thanks to Alba Perez for having the patience to deal with my repetitive
+ *  boring dual quaternion questions and for lending me her notes.
  *
  * @sa dq_t
  * @sa creation
