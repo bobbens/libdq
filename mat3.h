@@ -13,7 +13,6 @@ void vec3_normalize( double v[3] );
 int vec3_cmp( const double u[3], const double v[3] );
 void vec3_print( const double v[3] );
 
-
 void mat3_eye( double M[3][3] );
 double mat3_det( double M[3][3] );
 void mat3_add( double out[3][3], double A[3][3], double B[3][3] );
