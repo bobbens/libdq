@@ -29,6 +29,9 @@
  */
 
 
+static int cur_seed     = 0; /**< Current seed to keep things sane. */
+
+
 /**
  * @brief Generates a random value from [0:1].
  */
@@ -107,7 +110,7 @@ static void calc_M( double Z1[3][4], double Z2[3][4], double Z3[3][4],
 {
    double R[3][3], d[3];
 
-   srand(0);
+   srand( cur_seed );
 
    /* S */
    make_rot( R, rnd()*2.*M_PI, rnd()*2.*M_PI, rnd()*2.*M_PI );
@@ -207,7 +210,7 @@ static void calc_T( dq_t T, const double a[3] )
  */
 int main( int argc, char *argv[] )
 {
-   int i;
+   int i, j;
    double a0[3], a1[3], a01[3];
    dq_t T0, T1, R01, T01, Tinv;
    (void) argc;
@@ -215,43 +218,46 @@ int main( int argc, char *argv[] )
 
    srand(0);
 
-   /* Create rotations and static stuff. */
-   for (i=0; i<3; i++) {
-      a0[i]  = rnd();
-      a1[i]  = rnd();
-      a01[i] = a1[i] - a0[i];
-   }
+   for (j=0; j<5000; j++) {
 
-   /* Calculate T0 and T1. */
-   calc_T( T0, a0 );
-   calc_T( T1, a1 );
+      cur_seed = rand();
 
-   /* Calculate R. */
-   calc_R( R01, a0, a01 );
+      /* Create rotations and static stuff. */
+      for (i=0; i<3; i++) {
+         a0[i]  = rnd();
+         a1[i]  = rnd();
+         a01[i] = a1[i] - a0[i];
+      }
 
-   /* Calculate T01. */
-   dq_cr_inv( Tinv, T0 );
-   dq_op_mul( T01, T1, Tinv );
+      /* Calculate T0 and T1. */
+      calc_T( T0, a0 );
+      calc_T( T1, a1 );
 
-   if (dq_ch_cmp( T01, R01 ) != 0) {
-      fprintf( stderr, "T01 != R01!\n" );
+      /* Calculate R. */
+      calc_R( R01, a0, a01 );
 
-      /* Spam. */
-#if 0
-      printf( "T1:\n" );
-      dq_print_vert( T1 );
-      printf( "T0:\n" );
-      dq_print_vert( T0 );
-      printf( "Tinv:\n" );
-      dq_print_vert( Tinv );
-#endif
+      /* Calculate T01. */
+      dq_cr_inv( Tinv, T0 );
+      dq_op_mul( T01, T1, Tinv );
 
-      /* Now we compare. */
-      printf( "T01:\n" );
-      dq_print_vert( T01 );
-      printf( "R01:\n" );
-      dq_print_vert( R01 );
-      return EXIT_SUCCESS;
+      if (dq_ch_cmpV( T01, R01, 1e-10 ) != 0) {
+         fprintf( stderr, "T01 != R01! (iteration %d)\n", j );
+
+         /* Spam. */
+         printf( "T1:\n" );
+         dq_print_vert( T1 );
+         printf( "T0:\n" );
+         dq_print_vert( T0 );
+         printf( "Tinv:\n" );
+         dq_print_vert( Tinv );
+
+         /* Now we compare. */
+         printf( "T01:\n" );
+         dq_print_vert( T01 );
+         printf( "R01:\n" );
+         dq_print_vert( R01 );
+         return EXIT_FAILURE;
+      }
    }
 
    printf( "Success!\n" );
