@@ -76,17 +76,16 @@
  * $ gcc -ldq dq_test.c -o dq_test
  * @endcode
  *
- *
  * @section Changelog
  *
  * - Version 1.2, December 2010
  *    - Added dq_op_sign to change sign of a dual quaternion.
  *    - dq_ch_cmp and dq_ch_cmpV now take into account the fact it could be with a different sign.
- *  - Version 1.1, November 2010
+ * - Version 1.1, November 2010
  *    - Fixed dual quaternion multiplication
  *    - Implemented more strict unit tests
  *    - Misc fixes
- *  - Version 1.0, November 2010
+ * - Version 1.0, November 2010
  *    - Initial Revision
  *
  *
@@ -95,6 +94,21 @@
  * A big thanks to Alba Perez for having the patience to deal with my repetitive
  *  boring dual quaternion questions and for lending me her notes.
  *
+ * @section References
+ *
+ * - A. Perez, Kinematics of Robots (unpublished as of this writing)
+ *
+ * @section Citation
+ *
+ * There is no real convention for citing software, the following is a proposal.
+ *
+ * @code
+ * @MISC{esimolibdq,
+ *    author = {Edgar Sim\'{o}},
+ *    title = {libdq: {D}ual {Q}uaternion {L}ibrary},
+ *    year = {2010}
+ * }
+ * @endcode
  *
  * @sa dq_t
  * @sa creation
