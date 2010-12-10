@@ -7,7 +7,7 @@
 /**
  * @mainpage libdq doxygen documentation
  * @author Edgar Simo <bobbens@gmail.com>
- * @version 1.2
+ * @version 1.3
  * @date November 2010
  *
  * @section License
@@ -76,9 +76,13 @@
  * $ gcc -ldq dq_test.c -o dq_test
  * @endcode
  *
+ * Auxiliary functions are also provided to help manipulate common data structures when working with dual quaternions.
+ *
  *
  * @section Changelog
  *
+ * - Version 1.3, December 2010
+ *    - Cleaned up and documented the auxiliary function files so they can be used.
  * - Version 1.2, December 2010
  *    - Added dq_op_sign to change sign of a dual quaternion.
  *    - dq_ch_cmp and dq_ch_cmpV now take into account the fact it could be with a different sign.

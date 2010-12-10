@@ -39,6 +39,8 @@ Docs are located in the docs folder that will be created when you run make docs.
 
 CHANGELOG
 
+ - Version 1.3, December 2010
+   - Cleaned up and documented the auxiliary function files so they can be used.
  - Version 1.2, December 2010
    - Added dq_op_sign to change sign of a dual quaternion.
    - dq_ch_cmp and dq_ch_cmpV now take into account the fact it could be with a different sign.
