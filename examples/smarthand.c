@@ -5,7 +5,8 @@
 #include <string.h>
 
 #include <dq.h>
-#include "../mat3.h"
+#include <dq_mat3.h>
+#include <dq_homo.h>
 
 /**
  * Small example of using dual quaternions to solve the hand reconstruction problem.

@@ -1,7 +1,9 @@
 
 
 #include "dq.h"
-#include "mat3.h"
+#include "dq_vec3.h"
+#include "dq_mat3.h"
+#include "dq_homo.h"
 
 #include <stdio.h>
 #include <math.h>
