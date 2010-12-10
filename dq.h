@@ -220,7 +220,7 @@ void dq_cr_translation( dq_t O, double t, const double s[3] );
  *    @param[out] O Dual quaternion created.
  *    @param[in] t Traslation vector.
  */
- void dq_cr_translation_vector( dq_t O, const double t[3] );
+void dq_cr_translation_vector( dq_t O, const double t[3] );
 /**
  * @brief Creates a point dual quaternion.
  *
