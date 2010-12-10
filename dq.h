@@ -188,6 +188,8 @@ typedef double dq_t[8];
  *    @param[in] theta Angle to rotate.
  *    @param[in] s Vector to rotate around (normalized).
  *    @param[in] c Any point of the vector (to create plucker coordinates).
+ * @sa dq_cr_rotation_plucker
+ * @sa dq_cr_rotation_matrix
  */
 void dq_cr_rotation( dq_t O, double theta, const double s[3], const double c[3] );
 /**
@@ -197,6 +199,8 @@ void dq_cr_rotation( dq_t O, double theta, const double s[3], const double c[3] 
  *    @param[in] theta Angle to rotate.
  *    @param[in] s Vector to rotate around (normalized).
  *    @param[in] s0 Moment of the vector.
+ * @sa dq_cr_rotation
+ * @sa dq_cr_rotation_matrix
  */
 void dq_cr_rotation_plucker( dq_t O, double theta, const double s[3], const double s0[3] );
 /**
@@ -204,6 +208,8 @@ void dq_cr_rotation_plucker( dq_t O, double theta, const double s[3], const doub
  *
  *    @param[out] O Dual quaternion created.
  *    @param[in] R 3x3 Rotation matrix.
+ * @sa dq_cr_rotation
+ * @sa dq_cr_rotation_plucker
  */
 void dq_cr_rotation_matrix( dq_t O, double R[3][3] );
 /**
@@ -212,6 +218,7 @@ void dq_cr_rotation_matrix( dq_t O, double R[3][3] );
  *    @param[out] O Dual quaternion created.
  *    @param[in] t Translation amount.
  *    @param[in] s Translation vector (normalized).
+ * @sa dq_cr_translation_vector
  */
 void dq_cr_translation( dq_t O, double t, const double s[3] );
 /**
@@ -219,6 +226,7 @@ void dq_cr_translation( dq_t O, double t, const double s[3] );
  *
  *    @param[out] O Dual quaternion created.
  *    @param[in] t Traslation vector.
+ * @sa dq_cr_translation
  */
 void dq_cr_translation_vector( dq_t O, const double t[3] );
 /**
@@ -235,6 +243,7 @@ void dq_cr_point( dq_t O, const double pos[3] );
  *    @param[out] O Dual quaternion created.
  *    @param[in] s Direction vector of the line.
  *    @param[in] c A point of the line.
+ * @sa dq_cr_line_plucker
  * @sa dq_op_f2g
  */
 void dq_cr_line( dq_t O, const double s[3], const double c[3] );
@@ -244,6 +253,7 @@ void dq_cr_line( dq_t O, const double s[3], const double c[3] );
  *    @param[out] O Dual quaternion created.
  *    @param[in] s Direction vector of the line.
  *    @param[in] c The momento f the line.
+ * @sa dq_cr_line
  * @sa dq_op_f2g
  */
 void dq_cr_line_plucker( dq_t O, const double s[3], const double c[3] );
@@ -362,6 +372,7 @@ void dq_op_norm2( double *real, double *dual, const dq_t Q );
  *    @param[out] O The result of the addition.
  *    @param[in] P First quaternion to add.
  *    @param[in] Q Second quaternion to add.
+ * @sa dq_op_sub
  */
 void dq_op_add( dq_t O, const dq_t P, const dq_t Q );
 /**
@@ -374,6 +385,7 @@ void dq_op_add( dq_t O, const dq_t P, const dq_t Q );
  *    @param[out] O The result of the subtraction.
  *    @param[in] P Dual quaternion to subtract from.
  *    @param[in] Q Dual quaternion to subtract.
+ * @sa dq_op_add
  */
 void dq_op_sub( dq_t O, const dq_t P, const dq_t Q );
 /**
@@ -421,6 +433,9 @@ void dq_op_sign( dq_t P, const dq_t Q );
  *    @param[out] ABA Result of the transformation.
  *    @param[in] A Dual quaternion representing the transformation.
  *    @param[in] B Dual quaternion being transformated.
+ * @sa dq_op_f2g
+ * @sa dq_op_f3g
+ * @sa dq_op_f4g
  */
 void dq_op_f1g( dq_t ABA, const dq_t A, const dq_t B );
 /**
@@ -436,6 +451,9 @@ void dq_op_f1g( dq_t ABA, const dq_t A, const dq_t B );
  *    @param[out] ABA Result of the transformation.
  *    @param[in] A Dual quaternion representing the transformation.
  *    @param[in] B Dual quaternion being transformated.
+ * @sa dq_op_f1g
+ * @sa dq_op_f3g
+ * @sa dq_op_f4g
  */
 void dq_op_f2g( dq_t ABA, const dq_t A, const dq_t B );
 /**
@@ -449,6 +467,9 @@ void dq_op_f2g( dq_t ABA, const dq_t A, const dq_t B );
  *    @param[out] ABA Result of the transformation.
  *    @param[in] A Dual quaternion representing the transformation.
  *    @param[in] B Dual quaternion being transformated.
+ * @sa dq_op_f1g
+ * @sa dq_op_f2g
+ * @sa dq_op_f4g
  */
 void dq_op_f3g( dq_t ABA, const dq_t A, const dq_t B );
 /**
@@ -464,6 +485,9 @@ void dq_op_f3g( dq_t ABA, const dq_t A, const dq_t B );
  *    @param[out] ABA Result of the transformation.
  *    @param[in] A Dual quaternion representing the transformation.
  *    @param[in] B Dual quaternion being transformated.
+ * @sa dq_op_f1g
+ * @sa dq_op_f2g
+ * @sa dq_op_f3g
  */
 void dq_op_f4g( dq_t ABA, const dq_t A, const dq_t B );
 /** @} */
