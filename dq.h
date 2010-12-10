@@ -176,7 +176,7 @@ typedef double dq_t[8];
  * @defgroup creation Dual Quaternion Creation Functions
  * @brief Set of functions to create dual quaternions.
  */
-/* @{ */
+/** @{ */
 /**
  * @brief Creates a pure rotation dual quaternion.
  *
@@ -309,14 +309,14 @@ void dq_cr_conj( dq_t O, const dq_t Q );
  *    @param[in] Q Dual quaternion to invert.
  */
 void dq_cr_inv( dq_t O, const dq_t Q );
-/* @} */
+/** @} */
 
 
 /**
  * @defgroup operations Dual Quaternion Operations
  * @brief Functions for operation on dual quaternions.
  */
-/* @{ */
+/** @{ */
 /**
  * @brief Gets the square of the norm of a dual quaternion.
  *
@@ -458,14 +458,14 @@ void dq_op_f3g( dq_t ABA, const dq_t A, const dq_t B );
  *    @param[in] B Dual quaternion being transformated.
  */
 void dq_op_f4g( dq_t ABA, const dq_t A, const dq_t B );
-/* @} */
+/** @} */
 
 
 /**
  * @defgroup check Dual Quaternion Check Functions
  * @brief Assorted functions related to dual quaternions properties that can be checked.
  */
-/* @{ */
+/** @{ */
 /**
  * @brief Checks to see if a dual quaternion is a unit quaternion.
  *
@@ -490,14 +490,14 @@ int dq_ch_cmp( const dq_t P, const dq_t Q );
  *    @return 0 if they are equal.
  */
 int dq_ch_cmpV( const dq_t P, const dq_t Q, double precision );
-/* @} */
+/** @} */
 
 
 /**
  * @defgroup misc Dual Quaternion Miscellaneous Functions
  * @brief Assorted functions related to dual quaternions that don't fit elsewhere.
  */
-/* @{ */
+/** @{ */
 /**
  * @brief Prints a quaternion on a single line.
  * 
@@ -510,7 +510,7 @@ void dq_print( const dq_t Q );
  *    @param[in] Q Dual quaternion to print.
  */
 void dq_print_vert( const dq_t Q );
-/* @} */
+/** @} */
 
 
 #endif /* _DQ_H */
