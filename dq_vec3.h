@@ -93,6 +93,15 @@ void vec3_normalize( double v[3] );
  */
 int vec3_cmp( const double u[3], const double v[3] );
 /**
+ * @brief Compares two 3d vectors with variable precision.
+ *
+ *    @param[in] u First 3d vector to compare.
+ *    @param[in] v Second 3d vector to compare.
+ *    @param[in] precision Precision to use.
+ *    @return 0 if they are the same.
+ */
+int vec3_cmpV( const double u[3], const double v[3], double precision );
+/**
  * @brief Prints a 3d vector on screen.
  *
  *    @param[in] v Vector to print.

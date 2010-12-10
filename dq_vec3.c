@@ -64,14 +64,20 @@ void vec3_normalize( double v[3] )
 }
 
 
-int vec3_cmp( const double u[3], const double v[3] )
+int vec3_cmpV( const double u[3], const double v[3], double precision )
 {
    int ret, i;
    ret = 0;
    for (i=0; i<3; i++)
-      if (fabs(u[i]-v[i]) > 1e-10)
+      if (fabs(u[i]-v[i]) > precision)
          ret = ret + 1;
    return ret;
+}
+
+
+int vec3_cmp( const double u[3], const double v[3] )
+{
+   return vec3_cmpV( u, v, DQ_PRECISION );
 }
 
 

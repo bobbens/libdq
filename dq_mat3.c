@@ -104,18 +104,24 @@ void mat3_mul_vec( double out[3], double M[3][3], const double v[3] )
 }
 
 
-int mat3_cmp( double A[3][3], double B[3][3] )
+int mat3_cmpV( double A[3][3], double B[3][3], double precision )
 {
    int c,r, ret;
    ret = 0;
    for (c=0; c<3; c++) {
       for (r=0; r<3; r++) {
-         if (fabs(A[r][c] - B[r][c]) > 1e-10) {
+         if (fabs(A[r][c] - B[r][c]) > precision) {
             ret = ret + 1;
          }
       }
    }
    return ret;
+}
+
+
+int mat3_cmp( double A[3][3], double B[3][3] )
+{
+   return mat3_cmpV( A, B, DQ_PRECISION );
 }
 
 

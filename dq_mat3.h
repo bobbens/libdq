@@ -108,6 +108,15 @@ void mat3_mul_vec( double out[3], double M[3][3], const double v[3] );
  */
 int mat3_cmp( double A[3][3], double B[3][3] );
 /**
+ * @brief Compares two 3x3 matrix with custom precision.
+ *
+ *    @param[in] A First matrix to compare.
+ *    @param[in] B Second matrix to compare.
+ *    @param[in] precision Precision to use when comparing.
+ *    @return 0 if they are the same.
+ */
+int mat3_cmpV( double A[3][3], double B[3][3], double precision );
+/**
  * @brief Prints the value of a matrix on screen.
  *
  *    @param[in] M Matrix to print.
