@@ -4,8 +4,7 @@ PATH_INSTALL	:= /usr/lib
 
 LIBNAME	:= libdq
 
-SRC		:= test.c
-OBJS		:= dq.o mat3.o
+OBJS		:= dq.o dq_vec3.o dq_mat3.o dq_homo.o
 
 CFLAGS	:= -O3 -fPIC -W -Wall -Wextra -Werror -pedantic -ansi
 #CFLAGS	:= -g -DDQ_CHECK -fPIC -W -Wall -Wextra -Werror -pedantic -ansi
@@ -33,6 +32,9 @@ test:
 install: all
 	install -m 644 libdq.a $(PATH_INSTALL)
 	cp dq.h $(PATH_INCLUDE)
+	cp dq_vec3.h $(PATH_INCLUDE)
+	cp dq_mat3.h $(PATH_INCLUDE)
+	cp dq_homo.h $(PATH_INCLUDE)
 	cp $(LIBNAME).so.1.0.1 $(PATH_INSTALL)
 	(cd $(PATH_INSTALL); ln -sf $(PATH_INSTALL)/$(LIBNAME).so.1.0.1 $(LIBNAME).so)
 	ldconfig

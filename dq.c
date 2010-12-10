@@ -10,7 +10,9 @@
 #include <assert.h>
 #endif /* DQ_CHECK */
 
-#include "mat3.h"
+#include "dq_vec3.h"
+#include "dq_mat3.h"
+#include "dq_homo.h"
 
 
 #define MIN(a,b)     (((a)<(b))?(a):(b))
