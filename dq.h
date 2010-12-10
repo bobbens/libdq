@@ -413,9 +413,10 @@ void dq_op_sign( dq_t P, const dq_t Q );
 /**
  * @brief Clifford conjugation transformation of type \f$f_{1g}\f$ (Alba Perez notation).
  *
- * \f[
- * A : B \longmapsto ABA
- * \f]
+ * \f{eqnarray*}{
+ *    f_{1G} : C(V,<,>) &\longrightarrow& C(V,<,>) \\
+ *    A : B &\longmapsto& ABA
+ * \f}
  *
  *    @param[out] ABA Result of the transformation.
  *    @param[in] A Dual quaternion representing the transformation.
@@ -425,9 +426,10 @@ void dq_op_f1g( dq_t ABA, const dq_t A, const dq_t B );
 /**
  * @brief Clifford conjugation transformation of type \f$f_{2g}\f$ (Alba Perez notation).
  *
- * \f[
- * A : B \longmapsto ABA^*
- * \f]
+ * \f{eqnarray*}{
+ *    f_{2G} : C(V,<,>) &\longrightarrow& C(V,<,>) \\
+ *    A : B &\longmapsto& ABA^*
+ * \f}
  *
  * This transformation is useful for lines.
  *
@@ -439,9 +441,10 @@ void dq_op_f2g( dq_t ABA, const dq_t A, const dq_t B );
 /**
  * @brief Clifford conjugation transformation of type \f$f_{3g}\f$ (Alba Perez notation).
  *
- * \f[
- * A : B \longmapsto AB(a_0 + a - \epsilon ( a^0 + a_7 ))
- * \f]
+ * \f{eqnarray*}{
+ *    f_{3G} : C(V,<,>) &\longrightarrow& C(V,<,>) \\
+ *    A : B &\longmapsto& AB(a_0 + a - \epsilon ( a^0 + a_7 ))
+ * \f}
  *
  *    @param[out] ABA Result of the transformation.
  *    @param[in] A Dual quaternion representing the transformation.
@@ -451,9 +454,10 @@ void dq_op_f3g( dq_t ABA, const dq_t A, const dq_t B );
 /**
  * @brief Clifford conjugation transformation of type \f$f_{4g}\f$ (Alba Perez notation).
  *
- * \f[
- * A : B \longmapsto AB(a_0 - a + \epsilon ( a^0 - a_7 ))
- * \f]
+ * \f{eqnarray*}{
+ *    f_{3G} : C(V,<,>) &\longrightarrow& C(V,<,>) \\
+    * A : B &\longmapsto& AB(a_0 - a + \epsilon ( a^0 - a_7 ))
+ * \f}
  *
  * This transformation is useful for points.
  *
@@ -483,6 +487,7 @@ int dq_ch_unit( const dq_t Q );
  *    @param[in] P First dual quaternion to compare.
  *    @param[in] Q Second dual quaternion to compare.
  *    @return 0 if they are equal.
+ * @sa dq_ch_cmpV
  */
 int dq_ch_cmp( const dq_t P, const dq_t Q );
 /**
@@ -492,6 +497,7 @@ int dq_ch_cmp( const dq_t P, const dq_t Q );
  *    @param[in] Q Second dual quaternion to compare.
  *    @param[in] precision Precision to use when comparing members of each dual quaternion.
  *    @return 0 if they are equal.
+ * @sa dq_ch_cmp
  */
 int dq_ch_cmpV( const dq_t P, const dq_t Q, double precision );
 /** @} */
@@ -506,12 +512,14 @@ int dq_ch_cmpV( const dq_t P, const dq_t Q, double precision );
  * @brief Prints a quaternion on a single line.
  * 
  *    @param[in] Q Dual quaternion to print.
+ * @sa dq_printVert
  */
 void dq_print( const dq_t Q );
 /**
  * @brief Prints a dual quaternion vertically.
  * 
  *    @param[in] Q Dual quaternion to print.
+ * @sa dq_print
  */
 void dq_print_vert( const dq_t Q );
 /** @} */

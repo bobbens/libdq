@@ -52,6 +52,7 @@
  *    @param[out] H Homogeneous matrix formed by R and d.
  *    @param[in] R 3x3 Rotation matrix.
  *    @param[in] d 3d translation vector.
+ * @sa homo_op_split
  */
 void homo_cr_join( double H[3][4], double R[3][3], double d[3] );
 /**
@@ -64,6 +65,7 @@ void homo_cr_join( double H[3][4], double R[3][3], double d[3] );
  *    @param[out] O Resulting homogeneous matrix of the multiplication.
  *    @param[in] A First homogeneous matrix to operate on.
  *    @param[in] B Second homogeneous matrix to operate on.
+ * @sa homo_op_mul_vec
  */
 void homo_op_mul( double O[3][4], double A[3][4], double B[3][4] );
 /**
@@ -82,6 +84,7 @@ void homo_op_split( double R[3][3], double d[3], double H[3][4] );
  *    @param[out] o Resulting 4d vector of the multiplication.
  *    @param[in] H Homogeneous matrix to multiply against.
  *    @param[in] v 4d vector to multiply.
+ * @sa homo_op_mul
  */
 void homo_op_mul_vec( double o[4], double H[3][4], const double v[4] );
 /**
