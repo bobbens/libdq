@@ -26,6 +26,13 @@
  *    \end{array} \right)
  * \f]
  *
+ * With:
+ *
+ * \f{eqnarray*}{
+ *    R &\in \mathbb{R}^{3x3} \\
+ *    d &\in \mathbb{R}^{3}
+ * \f}
+ *
  * Where R is a 3x3 rotation matrix and d is a 3d translation vector. The
  *  bottom row is always \f$ ( 0, 0, 0, 1 ) \f$.
  *
@@ -35,7 +42,7 @@
  * \f[
  *    H = \left( \begin{array}{cc}
  *       R & t
- *    \end{array} \right)
+ *    \end{array} \right) \in \mathbb{R}^{3x4}
  * \f]
  */
 /** @{ */
