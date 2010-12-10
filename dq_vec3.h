@@ -7,7 +7,7 @@
 /**
  * @file dq_vec3.h
  *
- * File containing functions related to 3d vectors.
+ * @brief File containing functions related to 3d vectors.
  */
 
 /**
