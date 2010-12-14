@@ -78,7 +78,7 @@ double vec3_norm( const double v[3] );
  * @brief Normalizes a 3d vector.
  *
  * \f[
- *    v = \frac{v}{\| v \|}
+ *    v_{out} = \frac{v}{\| v \|}
  * \f]
  *
  *    @param v Vector to normalize.
