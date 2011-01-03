@@ -29,8 +29,8 @@
  * With:
  *
  * \f{eqnarray*}{
- *    R &\in \mathbb{R}^{3x3} \\
- *    d &\in \mathbb{R}^{3}
+ *    R &\in R^{3x3} \\
+ *    d &\in R^{3}
  * \f}
  *
  * Where R is a 3x3 rotation matrix and d is a 3d translation vector. The
@@ -42,7 +42,7 @@
  * \f[
  *    H = \left( \begin{array}{cc}
  *       R & t
- *    \end{array} \right) \in \mathbb{R}^{3x4}
+ *    \end{array} \right) \in R^{3x4}
  * \f]
  */
 /** @{ */
