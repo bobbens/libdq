@@ -654,6 +654,43 @@ static int test_inversion (void)
 }
 
 
+static int test_extract (void)
+{
+   int i, j;
+   dq_t Q, P;
+   double R[3][3], d[3];
+   double a[3];
+
+   /* Make function deterministic. */
+   rnd_init();
+
+   /* Run a few times. */
+   for (j=0; j<10000; j++) {
+      /* Create the dataset. */
+      for (i=0; i<3; i++) {
+         a[i] = 2.*M_PI * rnd_double();
+         d[i] = 10. * rnd_double() - 5.;
+      }
+      test_mat_rot( R, a[0], a[1], a[2] );
+      dq_cr_homo( Q, R, d );
+     
+      /* Extract and create new dual quaternion. */
+      dq_op_extract( R, d, Q );
+      dq_cr_homo( P, R, d );
+
+      if (dq_ch_cmp( Q, P ) != 0) {
+         fprintf( stderr, "Failed dual quaternion extraction test!\n" );
+         printf( "Q:\n" );
+         dq_print_vert( Q );
+         printf( "P:\n" );
+         dq_print_vert( P );
+         return -1;
+      }
+   }
+   return 0;
+}
+
+
 static int test_stress( int stress )
 {
    int i;
@@ -763,6 +800,7 @@ int main( int argc, char *argv[] )
    ret += !!test_homo();
    ret += !!test_scara();
    ret += !!test_inversion();
+   ret += !!test_extract();
    ret += !!test_benchmark();
    ret += !!test_stress( 100000 );
 

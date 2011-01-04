@@ -490,6 +490,14 @@ void dq_op_f3g( dq_t ABA, const dq_t A, const dq_t B );
  * @sa dq_op_f3g
  */
 void dq_op_f4g( dq_t ABA, const dq_t A, const dq_t B );
+/**
+ * @brief Extracts the rotation matrix and translation vector assosciated to a dual quaternion.
+ *
+ *    @param[out] R Rotation matrix.
+ *    @param[out] d Translation vector.
+ *    @param[in] Q Dual quaternion to extract R and d from.
+ */
+void dq_op_extract( double R[3][3], double d[3], const dq_t Q );
 /** @} */
 
 
