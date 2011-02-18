@@ -691,6 +691,42 @@ static int test_extract (void)
 }
 
 
+static int test_solve (void)
+{
+   int i, j, k;
+   double A[3][3], b[3], x[3], solved[3];
+
+   /* Make function deterministic. */
+   rnd_init();
+
+   for (i=0; i<10000; i++) {
+      for (j=0; j<3; j++) {
+         for (k=0; k<3; k++)
+            A[j][k] = rnd_double();
+         x[j] = rnd_double();
+      }
+      mat3_mul_vec( b, A, x );
+
+      /* Ignore systems with no determinant. */
+      if (fabs(mat3_det(A)) < DQ_PRECISION)
+         continue;
+  
+      /* Try to solve. */
+      mat3_solve( solved, A, b );
+      if (vec3_cmp( solved, x )) {
+         fprintf( stderr, "Failed to solve 3x3 system!\n" );
+         printf( "Got:\n" );
+         vec3_print( solved );
+         printf( "Expected:\n" );
+         vec3_print( x );
+         return -1;
+      }
+   }
+
+   return 0;
+}
+
+
 static int test_stress( int stress )
 {
    int i;
@@ -802,6 +838,7 @@ int main( int argc, char *argv[] )
    ret += !!test_inversion();
    ret += !!test_extract();
    ret += !!test_benchmark();
+   ret += !!test_solve();
    ret += !!test_stress( 100000 );
 
    if (ret == 0) {

@@ -104,6 +104,26 @@ void mat3_mul_vec( double out[3], double M[3][3], const double v[3] )
 }
 
 
+void mat3_solve( double x[3], double A[3][3], const double b[3] )
+{
+   int i, j;
+   double dA, dT, T[3][3];
+
+   dA = mat3_det( A );
+#ifdef DQ_CHECK
+   assert( fabs(dA) > DQ_PRECISION );
+#endif /* DQ_CHECK */
+
+   for (i=0; i<3; i++) {
+      memcpy( T, A, sizeof(double)*9 );
+      for (j=0; j<3; j++)
+         T[j][i] = b[j];
+      dT = mat3_det( T );
+      x[i] = dT / dA;
+   }
+}
+
+
 int mat3_cmpV( double A[3][3], double B[3][3], double precision )
 {
    int c,r, ret;

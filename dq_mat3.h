@@ -100,6 +100,22 @@ void mat3_mul( double AB[3][3], double A[3][3], double B[3][3] );
  */
 void mat3_mul_vec( double out[3], double M[3][3], const double v[3] );
 /**
+ * @brief Solves a 3x3 equation system.
+ *
+ * Equation system should be in the form of:
+ *
+ * \f[
+ * A x = b
+ * \]
+ *
+ * The system should be solveable (\f$ det(A) \neq 0 \f$).
+ *
+ *    @param[out] x Vector of variables to solve.
+ *    @param[in] A Matrix of coefficients.
+ *    @param[in] b Independent variable matrix.
+ */
+void mat3_solve( double x[3], double A[3][3], const double b[3] );
+/**
  * @brief Compares two 3x3 matrix.
  *
  *    @param[in] A First matrix to compare.
