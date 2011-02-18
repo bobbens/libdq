@@ -64,6 +64,14 @@ void vec3_normalize( double v[3] )
 }
 
 
+double vec3_distance( const double u[3], const double v[3] )
+{
+   double t[3];
+   vec3_sub( t, u, v );
+   return vec3_norm( t );
+}
+
+
 int vec3_cmpV( const double u[3], const double v[3], double precision )
 {
    int ret, i;

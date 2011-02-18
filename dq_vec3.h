@@ -85,6 +85,18 @@ double vec3_norm( const double v[3] );
  */
 void vec3_normalize( double v[3] );
 /**
+ * @brief Gets the distance between two vectors.
+ *
+ * \f[
+ *    out = \| u - v \
+ * \f]
+ *
+ *    @param[in] u Base vector.
+ *    @param[in] v Vector to get distance from u.
+ *    @return The distance between the two vectors.
+ */
+double vec3_distance( const double u[3], const double v[3] );
+/**
  * @brief Compares two 3d vectors.
  *
  *    @param[in] u First 3d vector to compare.
