@@ -108,6 +108,8 @@ void mat3_mul_vec( double out[3], double M[3][3], const double v[3] );
  * A x = b
  * \]
  *
+ * Uses Cramer's rule to solve the system.
+ *
  * The system should be solveable (\f$ det(A) \neq 0 \f$).
  *
  *    @param[out] x Vector of variables to solve.
