@@ -146,10 +146,10 @@ void dq_cr_point( dq_t O, const double pos[3] )
 
 void dq_cr_line( dq_t O, const double s[3], const double c[3] )
 {
-   double v[3];
+   double s0[3];
    /* We do cross product with the line point and line vector to get the plucker coordinates. */
-   vec3_cross( v, c, s );
-   dq_cr_line_plucker( O, s, v );
+   vec3_cross( s0, c, s );
+   dq_cr_line_plucker( O, s, s0 );
 }
 
 
