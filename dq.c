@@ -165,15 +165,18 @@ void dq_cr_line( dq_t O, const double s[3], const double c[3] )
 }
 
 
-void dq_cr_line_plucker( dq_t O, const double s[3], const double c[3] )
+void dq_cr_line_plucker( dq_t O, const double s[3], const double s0[3] )
 {
+#if DQ_CHECK
+   assert( fabs(vec3_dot(s,s0)) < DQ_PRECISION );
+#endif /* DQ_CHECK */
    O[0] = 0.;
    O[1] = s[0];
    O[2] = s[1];
    O[3] = s[2];
-   O[4] = c[0];
-   O[5] = c[1];
-   O[6] = c[2];
+   O[4] = s0[0];
+   O[5] = s0[1];
+   O[6] = s0[2];
    O[7] = 0.;
 }
 

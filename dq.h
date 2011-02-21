@@ -252,11 +252,11 @@ void dq_cr_line( dq_t O, const double s[3], const double c[3] );
  *
  *    @param[out] O Dual quaternion created.
  *    @param[in] s Direction vector of the line.
- *    @param[in] c The momento f the line.
+ *    @param[in] s0 The momento f the line.
  * @sa dq_cr_line
  * @sa dq_op_f2g
  */
-void dq_cr_line_plucker( dq_t O, const double s[3], const double c[3] );
+void dq_cr_line_plucker( dq_t O, const double s[3], const double s0[3] );
 /**
  * @brief Creates a dual quaternion from a homogeneous transformation matrix.
  *
