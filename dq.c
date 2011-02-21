@@ -20,22 +20,10 @@
 
 void dq_cr_rotation( dq_t O, double theta, const double s[3], const double c[3] )
 {
-   double ss, cs, s0[3];
-
-   /* Store sin and cos values to speed up calculations. */
-   ss = sin( theta/2. );
-   cs = cos( theta/2. );
-
-   O[0] = cs;
-   O[1] = ss*s[0];
-   O[2] = ss*s[1];
-   O[3] = ss*s[2];
+   double s0[3];
    /* We do cross product with the line point and line vector to get the plucker coordinates. */
    vec3_cross( s0, c, s );
-   O[4] = ss*s0[0];
-   O[5] = ss*s0[1];
-   O[6] = ss*s0[2];
-   O[7] = 0.;
+   dq_cr_rotation_plucker( O, theta, s, s0 );
 }
 
 
