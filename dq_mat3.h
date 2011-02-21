@@ -106,7 +106,7 @@ void mat3_mul_vec( double out[3], double M[3][3], const double v[3] );
  *
  * \f[
  * A x = b
- * \]
+ * \f]
  *
  * Uses Cramer's rule to solve the system.
  *
