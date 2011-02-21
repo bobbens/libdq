@@ -7,13 +7,13 @@
 /**
  * @mainpage libdq doxygen documentation
  * @author Edgar Simo <bobbens@gmail.com>
- * @version 1.3
- * @date November 2010
+ * @version 1.4
+ * @date February 2011
  *
  * @section License
  *
  @verbatim
-    Copyright 2010 Edgar Simo
+    Copyright 2010, 2011 Edgar Simo
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -81,6 +81,13 @@
  *
  * @section Changelog
  *
+ * - Version 1.4, February 2011
+ *    - Fixed major issue in dual quaternion conjugation
+ *    - Added dq_op_extract
+ *    - Added mat3_solve
+ *    - Added vec3_sign
+ *    - Added vec3_distance
+ *    - Minor doxygen improvements
  * - Version 1.3, December 2010
  *    - Cleaned up and documented the auxiliary function files so they can be used.
  * - Version 1.2, December 2010
@@ -107,7 +114,7 @@
  * @MISC{esimolibdq,
  *    author = {Edgar Sim\'{o}},
  *    title = {libdq: {D}ual {Q}uaternion {L}ibrary},
- *    year = {2010}
+ *    year = {2011}
  * }
  * @endcode
  *
