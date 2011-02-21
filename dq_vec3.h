@@ -64,6 +64,16 @@ void vec3_add( double o[3], const double u[3], const double v[3] );
  */
 void vec3_sub( double o[3], const double u[3], const double v[3] );
 /**
+ * @brief Changes the sign of a vector.
+ *
+ * \f[
+ *    o = -v
+ * \f]
+ *
+ *    @param v Vector to change sign of.
+ */
+void vec3_sign( double v[3] );
+/**
  * @brief Gets the norm of a 3d vector.
  *
  * \f[
