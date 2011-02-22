@@ -114,7 +114,8 @@
  * @MISC{esimolibdq,
  *    author = {Edgar Sim\'{o}},
  *    title = {libdq: {D}ual {Q}uaternion {L}ibrary},
- *    year = {2011}
+ *    year = {2011},
+ *    howpublished = {https://github.com/bobbens/libdq},
  * }
  * @endcode
  *
