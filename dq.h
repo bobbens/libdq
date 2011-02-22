@@ -6,14 +6,14 @@
 
 /**
  * @mainpage libdq doxygen documentation
- * @author Edgar Simo <bobbens@gmail.com>
+ * @author Edgar Simo-Serra <bobbens@gmail.com>
  * @version 1.4
  * @date February 2011
  *
  * @section License
  *
  @verbatim
-    Copyright 2010, 2011 Edgar Simo
+    Copyright 2010, 2011 Edgar Simo-Serra
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -112,7 +112,7 @@
  *
  * @code
  * @MISC{esimolibdq,
- *    author = {Edgar Sim\'{o}},
+ *    author = {Edgar Simo-serra},
  *    title = {libdq: {D}ual {Q}uaternion {L}ibrary},
  *    year = {2011},
  *    howpublished = {https://github.com/bobbens/libdq},
