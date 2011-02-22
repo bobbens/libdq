@@ -115,7 +115,7 @@
  *    author = {Edgar Simo-serra},
  *    title = {libdq: {D}ual {Q}uaternion {L}ibrary},
  *    year = {2011},
- *    howpublished = {https://github.com/bobbens/libdq},
+ *    howpublished = {\url{https://github.com/bobbens/libdq}},
  * }
  * @endcode
  *
