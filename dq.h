@@ -484,8 +484,8 @@ void dq_op_f3g( dq_t ABA, const dq_t A, const dq_t B );
  * @brief Clifford conjugation transformation of type \f$f_{4g}\f$ (Alba Perez notation).
  *
  * \f{eqnarray*}{
- *    f_{3G} : C(V,<,>) &\longrightarrow& C(V,<,>) \\
-    * A : B &\longmapsto& AB(a_0 - a + \epsilon ( a^0 - a_7 ))
+ *    f_{4G} : C(V,<,>) &\longrightarrow& C(V,<,>) \\
+ *    A : B &\longmapsto& AB(a_0 - a + \epsilon ( a^0 - a_7 ))
  * \f}
  *
  * This transformation is useful for points.
