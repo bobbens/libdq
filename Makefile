@@ -1,5 +1,5 @@
 
-PATH_INCLUDE	:= /usr/include
+PATH_INCLUDE	:= /usr/include/dq
 PATH_INSTALL	:= /usr/lib
 
 LIBNAME	:= libdq
@@ -31,16 +31,17 @@ test:
 
 install: all
 	install -m 644 libdq.a $(PATH_INSTALL)
-	cp dq.h $(PATH_INCLUDE)
-	cp dq_vec3.h $(PATH_INCLUDE)
-	cp dq_mat3.h $(PATH_INCLUDE)
-	cp dq_homo.h $(PATH_INCLUDE)
+	test -d $(PATH_INCLUDE) || mkdir $(PATH_INCLUDE)
+	cp dq.h      $(PATH_INCLUDE)/dq.h
+	cp dq_vec3.h $(PATH_INCLUDE)/vec3.h
+	cp dq_mat3.h $(PATH_INCLUDE)/mat3.h
+	cp dq_homo.h $(PATH_INCLUDE)/homo.h
 	cp $(LIBNAME).so.1.0.1 $(PATH_INSTALL)
 	(cd $(PATH_INSTALL); ln -sf $(PATH_INSTALL)/$(LIBNAME).so.1.0.1 $(LIBNAME).so)
 	ldconfig
 
 uninstall:
-	$(RM) $(PATH_INCLUDE)/dq.h
+	$(RM) $(PATH_INCLUDE)/*
 	$(RM) $(PATH_INSTALL)/$(LIBNAME).so.1.0.1
 	$(RM) $(PATH_INSTALL)/$(LIBNAME).so
 
