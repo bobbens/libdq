@@ -39,6 +39,10 @@ Docs are located in the docs folder that will be created when you run make docs.
 
 CHANGELOG
 
+ - Version 1.5, April 2011
+   - Install headers into /usr/include/dq by default instead of prefixing with dq_.
+   - Updated documentation
+   - Make docs now places final documentation in /
  - Version 1.4, February 2011
    - Fixed major issue in dual quaternion conjugation
    - Added dq_op_extract

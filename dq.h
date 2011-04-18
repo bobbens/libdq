@@ -7,7 +7,7 @@
 /**
  * @mainpage libdq doxygen documentation
  * @author Edgar Simo-Serra <bobbens@gmail.com>
- * @version 1.4
+ * @version 1.5
  * @date February 2011
  *
  * @section License
@@ -32,7 +32,7 @@
  *
  * @section Overview
  *
- * This is a library for using and manipulating dual quaternions. Dual quaternions are useful for describing rigid body movements using screw theory.
+ * This is a library for using and manipulating unit dual quaternions. Unit dual quaternions are useful for describing rigid body movements using screw theory.
  *
  * If you use this library please reference it.
  *
@@ -56,7 +56,7 @@
  * To use dual quaternion library you need to include it as <dq.h>. When linking you should pass -ldq. A simple example would be:
  *
  * @code
- * #include <dq.h>
+ * #include <dq/dq.h>
  *
  * int main( int argc, char *argv[] )
  * {
@@ -81,6 +81,10 @@
  *
  * @section Changelog
  *
+ * - Version 1.5, April 2011
+ *    - Install headers into /usr/include/dq by default instead of prefixing with dq_
+ *    - Updated documentation
+ *    - Make docs now places final documentation in /
  * - Version 1.4, February 2011
  *    - Fixed major issue in dual quaternion conjugation
  *    - Added dq_op_extract
@@ -103,6 +107,9 @@
  *
  * @section References
  *
+ * - E. Simo-Serra, Chapter 4 of Kinematic Model of the Hand using Computer Vision (Degree Thesis). BarcelonaTECH (UPC), April 2011.
+ * - J. M. Selig. Geometric Fundamentals of Robotics (Monographs in Computer Science). Springer, 2nd edition, November 2004.
+ * - J. M. McCarthy, Introduction to theoretical kinematics, MIT Press, Cambridge, MA, 1990 
  * - A. Perez, Kinematics of Robots (unpublished as of this writing)
  *
  *
@@ -145,7 +152,7 @@
 /**
  * @brief A representation of a dual quaternion.
  * 
- * Uses \f$C^{+}_{0,3,1}\f$ notation (McArthy).
+ * Dual quaternions are elements of the Clifford even subalgebra \f$C^{+}_{0,3,1}\f$. There are many notations for dual quaternions. This library uses the basis used by McArthy which is the same as Selig with minor rearrangements.
  *
  * \f[
  * \{ 1, e_{23}, e_{31}, e_{12}, e_{41}, e_{42}, e_{43}, e_{1234} \} = \{ 1, i, j, k, i\epsilon, j\epsilon, k\epsilon, \epsilon \}
@@ -180,6 +187,18 @@
  *   1
  * \end{array}\right\}
  * \f]
+ *
+ * In order for the dual quaternion to be able to represent spatial displacements it must be a unit dual quaternion and thus comply with the following restrictions:
+ *
+ * \f[
+ * \widehat{q}\widehat{q}^0 = 0
+ * \f]
+ *
+ * \f[
+ * \widehat{q}\cdot\widehat{q}^0 = 0
+ * \f]
+ *
+ * It is important to note that unit dual quaternions double cover the special euclidean group \f$SE(3)\f$. This means that \f$\widehat{Q}\f$ and \f$-\widehat{Q}\f$ represent the same spatial displacement.
  */
 typedef double dq_t[8];
 
