@@ -47,6 +47,8 @@ uninstall:
 
 docs:
 	doxygen
+	$(MAKE) -C docs/latex
+	cp docs/latex/refman.pdf libdq.pdf
 
 clean:
 	$(RM) $(OBJS)
