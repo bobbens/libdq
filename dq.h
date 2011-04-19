@@ -191,7 +191,7 @@
  * In order for the dual quaternion to be able to represent spatial displacements it must be a unit dual quaternion and thus comply with the following restrictions:
  *
  * \f[
- * \widehat{q}\widehat{q}^0 = 0
+ * \widehat{q}\widehat{q}^0 = 1
  * \f]
  *
  * \f[
