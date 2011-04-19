@@ -2,7 +2,7 @@
 
 SRC		:= test.c ../dq.c ../dq_vec3.c ../dq_mat3.c ../dq_homo.c
 
-CFLAGS	:= -O3 -W -Wall -Wextra -pedantic -ansi -D_GNU_SOURCE -DDQ_CHECK -I..
+CFLAGS	:= -O3 -W -Wall -Wextra -pedantic -ansi -Wconversion -D_GNU_SOURCE -DDQ_CHECK -I..
 LDFLAGS	:= -lm
 
 

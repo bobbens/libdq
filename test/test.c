@@ -516,7 +516,7 @@ static int test_benchmark (void)
    double a, astep, p[3], s[3], c[3];
    dq_t P, R, RR, RP, PF, Rtrue, E;
    struct timeval tstart, tend;
-   unsigned long elapsed;
+   long elapsed;
    double dt;
    double nr, nd;
 
