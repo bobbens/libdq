@@ -64,15 +64,21 @@ void homo_op_split( double R[3][3], double d[3], double H[3][4] )
 }
 
 
-int homo_ch_cmp( double A[3][4], double B[3][4] )
+int homo_ch_cmpV( double A[3][4], double B[3][4], double precision )
 {
    int i, j, ret;
    ret = 0;
    for (j=0; j<3; j++)
       for (i=0; i<4; i++)
-         if (fabs(A[j][i]-B[j][i]) > DQ_PRECISION)
+         if (fabs(A[j][i]-B[j][i]) > precision)
             ret = ret + 1;
    return ret;
+}
+
+
+int homo_ch_cmp( double A[3][4], double B[3][4] )
+{
+   return homo_ch_cmpV( A, B, DQ_PRECISION );
 }
 
 

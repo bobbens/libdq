@@ -88,6 +88,25 @@ void homo_op_split( double R[3][3], double d[3], double H[3][4] );
  */
 void homo_op_mul_vec( double o[4], double H[3][4], const double v[4] );
 /**
+ * @brief Compares two homogeneous matrix with variable precision.
+ *
+ *    @param[in] A First homogeneous matrix to compare.
+ *    @param[in] B Second homogeneous matrix to compare.
+ *    @param[in] precision Precision to use when comparing.
+ *    @return 0 if they are the same, 1 otherwise.
+ * @sa homo_ch_cmpV
+ */
+int homo_ch_cmpV( double A[3][4], double B[3][4], double precision );
+/**
+ * @brief Compares two homogeneous matrix.
+ *
+ *    @param[in] A First homogeneous matrix to compare.
+ *    @param[in] Second homogeneous matrix to compare.
+ *    @return 0 if they are the same, 1 otherwise.
+ * @sa homo_ch_cmpV
+ */
+int homo_ch_cmp( double A[3][4], double B[3][4] );
+/**
  * @brief Prints a homogeneous matrix on screen.
  *
  *    @param[in] H Homogeneous matrix to print on screen.
