@@ -1,7 +1,7 @@
 *.o
 libdq.a
 libdq.so
-libdq.so.1.0.1
+libdq.so.*
 libdq.pdf
 test/dq_test
 docs/*
