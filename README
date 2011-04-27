@@ -39,6 +39,8 @@ Docs are located in the docs folder that will be created when you run make docs.
 
 CHANGELOG
 
+ - Version 2.0, April 2011
+   - Lua bindings
  - Version 1.5, April 2011
    - Install headers into /usr/include/dq by default instead of prefixing with dq_.
    - Updated documentation

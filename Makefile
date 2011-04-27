@@ -3,6 +3,7 @@ PATH_INCLUDE	:= /usr/include/dq
 PATH_INSTALL	:= /usr/lib
 
 LIBNAME	:= libdq
+VERSION  := 2.0
 
 OBJS		:= dq.o dq_vec3.o dq_mat3.o dq_homo.o
 
@@ -13,10 +14,22 @@ LDFLAGS	:= -lm
 ROCKNAME := luadq-2.0-0
 
 
-.PHONY: all lib test rock install uninstall clean docs
+.PHONY: all lib test rock install uninstall clean docs help
 
 
 all: libdq test
+
+help:
+	@echo "Valid targets are:"
+	@echo "          all - Makes the library and tests it"
+	@echo "        libdq - Makes the libdq library"
+	@echo "         test - Tests the library"
+	@echo "      install - Installs the library"
+	@echo "    uninstall - Uninstalls the library"
+	@echo "         rock - Builds the Luarocks rock package file (Lua bindings)"
+	@echo " rock-install - Installs the Luarocks package (Lua bindings)"
+	@echo "         docs - Makes the documentation"
+	@echo "        clean - Cleans up the build system"
 
 libdq: libdq.a libdq.so
 
@@ -24,8 +37,8 @@ libdq.a: $(OBJS)
 	$(AR) rcs libdq.a $(OBJS)
 
 libdq.so: $(OBJS)
-	$(CC) -lm -shared -Wl,-soname,$(LIBNAME).so -o $(LIBNAME).so.1.0.1 $(OBJS)
-	ln -sf $(LIBNAME).so.1.0.1 $(LIBNAME).so
+	$(CC) -lm -shared -Wl,-soname,$(LIBNAME).so -o $(LIBNAME).so.$(VERSION) $(OBJS)
+	ln -sf $(LIBNAME).so.$(VERSION) $(LIBNAME).so
 
 test:
 	+$(MAKE) -C test
@@ -51,13 +64,16 @@ install: all
 	cp dq_vec3.h $(PATH_INCLUDE)/vec3.h
 	cp dq_mat3.h $(PATH_INCLUDE)/mat3.h
 	cp dq_homo.h $(PATH_INCLUDE)/homo.h
-	cp $(LIBNAME).so.1.0.1 $(PATH_INSTALL)
-	(cd $(PATH_INSTALL); ln -sf $(PATH_INSTALL)/$(LIBNAME).so.1.0.1 $(LIBNAME).so)
+	cp $(LIBNAME).so.$(VERSION) $(PATH_INSTALL)
+	(cd $(PATH_INSTALL); ln -sf $(PATH_INSTALL)/$(LIBNAME).so.$(VERSION) $(LIBNAME).so)
 	ldconfig
 
 uninstall:
-	$(RM) $(PATH_INCLUDE)/*
-	$(RM) $(PATH_INSTALL)/$(LIBNAME).so.1.0.1
+	$(RM) $(PATH_INCLUDE)/dq.h
+	$(RM) $(PATH_INCLUDE)/vec3.h
+	$(RM) $(PATH_INCLUDE)/mat3.h
+	$(RM) $(PATH_INCLUDE)/homo.h
+	$(RM) $(PATH_INSTALL)/$(LIBNAME).so.$(VERSION)
 	$(RM) $(PATH_INSTALL)/$(LIBNAME).so
 
 docs:

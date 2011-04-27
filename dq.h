@@ -7,7 +7,7 @@
 /**
  * @mainpage libdq doxygen documentation
  * @author Edgar Simo-Serra <bobbens@gmail.com>
- * @version 1.5
+ * @version 2.0
  * @date February 2011
  *
  * @section License
@@ -81,6 +81,8 @@
  *
  * @section Changelog
  *
+ * - Version 2.0, April 2011
+ *    - Lua bindings
  * - Version 1.5, April 2011
  *    - Install headers into /usr/include/dq by default instead of prefixing with dq_
  *    - Updated documentation
