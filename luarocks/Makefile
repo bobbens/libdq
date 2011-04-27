@@ -18,5 +18,5 @@ $(LIBNAME): $(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) -shared $(OBJS) -o $(LIBNAME)
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(LIBNAME)
 
