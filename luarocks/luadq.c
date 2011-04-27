@@ -202,8 +202,8 @@ static int lua_pushmat3( lua_State *L, double M[3][3] )
    int i, j;
    lua_newtable(L);
    for (j=0; j<3; j++) {
-      lua_newtable(L);
       lua_pushnumber( L, j+1 );
+      lua_newtable(L);
       for (i=0; i<3; i++) {
          lua_pushnumber( L, i+1 );
          lua_pushnumber( L, M[j][i] );
