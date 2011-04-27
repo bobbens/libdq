@@ -31,7 +31,12 @@ test:
 	+$(MAKE) -C test
 	./test/dq_test
 
-rock:
+rock: $(ROCKNAME).src.rock
+
+rock-install: rock
+	luarocks install $(ROCKNAME).src.rock
+
+$(ROCKNAME).src.rock:
 	cp -r luarocks $(ROCKNAME)
 	cp COPYING $(ROCKNAME)
 	cp COPYING.LESSER $(ROCKNAME)
@@ -62,4 +67,5 @@ docs:
 
 clean:
 	$(RM) $(OBJS)
+	$(RM) $(ROCKNAME).src.rock
 	$(MAKE) -C test clean
