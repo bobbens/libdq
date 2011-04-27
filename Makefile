@@ -10,8 +10,10 @@ CFLAGS	:= -O3 -fPIC -W -Wall -Wextra -Werror -pedantic -ansi -Wconversion -Wunus
 #CFLAGS	:= -g -DDQ_CHECK -fPIC -W -Wall -Wextra -Werror -pedantic -ansi
 LDFLAGS	:= -lm
 
+ROCKNAME := luadq-2.0-0
 
-.PHONY: all lib test install uninstall clean docs
+
+.PHONY: all lib test rock install uninstall clean docs
 
 
 all: libdq test
@@ -28,6 +30,14 @@ libdq.so: $(OBJS)
 test:
 	+$(MAKE) -C test
 	./test/dq_test
+
+rock:
+	cp -r luarocks $(ROCKNAME)
+	cp COPYING $(ROCKNAME)
+	cp COPYING.LESSER $(ROCKNAME)
+	tar cvzf $(ROCKNAME).tar.gz $(ROCKNAME)/luadq.c $(ROCKNAME)/COPYING $(ROCKNAME)/COPYING.LESSER
+	luarocks pack luarocks/$(ROCKNAME).rockspec
+	rm -r $(ROCKNAME) $(ROCKNAME).tar.gz $(ROCKNAME).rockspec
 
 install: all
 	install -m 644 libdq.a $(PATH_INSTALL)
