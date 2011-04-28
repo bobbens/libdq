@@ -45,6 +45,7 @@ static dqL_t* luaL_checkdq( lua_State *L, int ind );
 static dqL_t* lua_pushdq( lua_State *L, dqL_t dq );
 #define DQL( n )     static int dqL_##n( lua_State *L )
 /* Creation functions. */
+DQL( cr_raw );
 DQL( cr_rotation );
 DQL( cr_rotation_plucker );
 DQL( cr_rotation_matrix );
@@ -69,6 +70,7 @@ DQL( op_f3g );
 DQL( op_f4g );
 DQL( op_extract );
 /* Check functions. */
+DQL( ch_get );
 DQL( ch_unit );
 DQL( ch_cmp );
 /* Misc functions. */
@@ -77,6 +79,7 @@ DQL( print );
 #undef DQL
 static const luaL_reg dqL_methods[] = {
    /* Creation. */
+   { "raw", dqL_cr_raw },
    { "rotation", dqL_cr_rotation },
    { "rotation_plucker", dqL_cr_rotation_plucker },
    { "rotation_matrix", dqL_cr_rotation_matrix },
@@ -104,6 +107,7 @@ static const luaL_reg dqL_methods[] = {
    { "f4g", dqL_op_f4g },
    { "extract", dqL_op_extract },
    /* Check. */
+   { "get", dqL_ch_get },
    { "unit", dqL_ch_unit },
    { "cmp", dqL_ch_cmp },
    /* Misc. */
@@ -213,7 +217,6 @@ static int lua_pushmat3( lua_State *L, double M[3][3] )
    }
    return 0;
 }
-#undef TBL_GETNUM
 
 
 /*
@@ -304,6 +307,17 @@ static int dqL_##n( lua_State *L ) { \
    dq_##n( Q.dq, P->dq ); \
    lua_pushdq( L, Q ); \
    return 1; }
+static int dqL_cr_raw( lua_State *L )
+{
+   int i;
+   dqL_t Q;
+   luaL_checktype(L,1,LUA_TTABLE);
+   for (i=0; i<8; i++) {
+      TBL_GETNUM( L, Q.dq[i], i+1, 1 );
+   }
+   lua_pushdq( L, Q );
+   return 1;
+}
 DQL_CR_DVV( cr_rotation )
 DQL_CR_DVV( cr_rotation_plucker )
 DQL_CR_M(   cr_rotation_matrix )
@@ -361,6 +375,18 @@ static int dqL_op_extract( lua_State *L )
    return 2;
 }
 /* Check stuff. */
+static int dqL_ch_get( lua_State *L )
+{
+   int i;
+   dqL_t *Q = luaL_checkdq( L, 1 );
+   lua_newtable(L);
+   for (i=0; i<8; i++) {
+      lua_pushnumber( L, i+1 );
+      lua_pushnumber( L, Q->dq[i] );
+      lua_settable( L, -3 );
+   }
+   return 1;
+}
 static int dqL_ch_unit( lua_State *L )
 {
    dqL_t *Q = luaL_checkdq( L, 1 );
