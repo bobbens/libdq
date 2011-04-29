@@ -31,12 +31,12 @@ help:
 	@echo "         docs - Makes the documentation"
 	@echo "        clean - Cleans up the build system"
 
-libdq: libdq.a libdq.so
+$(LIBNAME): $(LIBNAME).a $(LIBNAME).so
 
-libdq.a: $(OBJS)
-	$(AR) rcs libdq.a $(OBJS)
+$(LIBNAME).a: $(OBJS)
+	$(AR) rcs $(LIBNAME).a $(OBJS)
 
-libdq.so: $(OBJS)
+$(LIBNAME).so: $(OBJS)
 	$(CC) -lm -shared -Wl,-soname,$(LIBNAME).so -o $(LIBNAME).so.$(VERSION) $(OBJS)
 	ln -sf $(LIBNAME).so.$(VERSION) $(LIBNAME).so
 
@@ -82,6 +82,8 @@ docs:
 	cp docs/latex/refman.pdf libdq.pdf
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(LIBNAME).a $(LIBNAME).so $(LIBNAME).so.$(VERSION)
 	$(RM) $(ROCKNAME).src.rock
 	$(MAKE) -C test clean
+
+
