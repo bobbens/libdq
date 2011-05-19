@@ -26,11 +26,11 @@
  *    \end{array} \right)
  * \f]
  *
- * With:
+ * Where,
  *
- * \f{eqnarray*}{
- *    R &\in R^{3x3} \\
- *    d &\in R^{3}
+ * \f{align}{
+ *    R &\in \mathbb{R}^{3x3} \\
+ *    d &\in \mathbb{R}^{3}
  * \f}
  *
  * Where R is a 3x3 rotation matrix and d is a 3d translation vector. The
@@ -42,7 +42,7 @@
  * \f[
  *    H = \left( \begin{array}{cc}
  *       R & t
- *    \end{array} \right) \in R^{3x4}
+ *    \end{array} \right) \in \mathbb{R}^{3x4}
  * \f]
  */
 /** @{ */
@@ -94,14 +94,14 @@ void homo_op_mul_vec( double o[4], double H[3][4], const double v[4] );
  *    @param[in] B Second homogeneous matrix to compare.
  *    @param[in] precision Precision to use when comparing.
  *    @return 0 if they are the same, 1 otherwise.
- * @sa homo_ch_cmpV
+ * @sa homo_ch_cmp
  */
 int homo_ch_cmpV( double A[3][4], double B[3][4], double precision );
 /**
  * @brief Compares two homogeneous matrix.
  *
  *    @param[in] A First homogeneous matrix to compare.
- *    @param[in] Second homogeneous matrix to compare.
+ *    @param[in] B Second homogeneous matrix to compare.
  *    @return 0 if they are the same, 1 otherwise.
  * @sa homo_ch_cmpV
  */

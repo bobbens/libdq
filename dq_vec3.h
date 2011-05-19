@@ -98,7 +98,7 @@ void vec3_normalize( double v[3] );
  * @brief Gets the distance between two vectors.
  *
  * \f[
- *    out = \| u - v \
+ *    out = \| u - v \|
  * \f]
  *
  *    @param[in] u Base vector.

@@ -32,7 +32,9 @@
  *
  * @section Overview
  *
- * This is a library for using and manipulating unit dual quaternions. Unit dual quaternions are useful for describing rigid body movements using screw theory.
+ * This is a library for using and manipulating unit dual quaternions. Unit
+ * dual quaternions are useful for describing rigid body movements using screw
+ * theory.
  *
  * If you use this library please reference it.
  *
@@ -48,12 +50,14 @@
  *  - Input dual quaternions should be called Q if there is one input or P and Q if there are two.
  *  - Output dual quaternions should be called O or a combination of the input quaternions in the case it is multiplying or transforming like for example PQ.
  *
- * For notation and quaternion definition please refer to the documentation for the dual quaternion type @ref dq_t .
+ * For notation and quaternion definition please refer to the documentation for
+ * the dual quaternion type @ref dq_t .
  *
  *
  * @section Usage
  *
- * To use dual quaternion library you need to include it as <dq.h>. When linking you should pass -ldq. A simple example would be:
+ * To use dual quaternion library you need to include it as <dq.h>. When
+ * linking you should pass -ldq. A simple example would be:
  *
  * @code
  * #include <dq/dq.h>
@@ -70,13 +74,15 @@
  * }
  * @endcode
  *
- * The example would just create a point dual quaternion and display it. To compile you would have to use:
+ * The example would just create a point dual quaternion and display it. To
+ * compile you would have to use:
  *
  * @code
  * $ gcc -ldq dq_test.c -o dq_test
  * @endcode
  *
- * Auxiliary functions are also provided to help manipulate common data structures when working with dual quaternions.
+ * Auxiliary functions are also provided to help manipulate common data
+ * structures when working with dual quaternions.
  *
  *
  * @section Changelog
@@ -154,17 +160,23 @@
 /**
  * @brief A representation of a dual quaternion.
  * 
- * Dual quaternions are elements of the Clifford even subalgebra \f$C^{+}_{0,3,1}\f$. There are many notations for dual quaternions. This library uses the basis used by McArthy which is the same as Selig with minor rearrangements.
+ * Dual quaternions are elements of the Clifford even subalgebra
+ * \f$C^{+}_{0,3,1}\f$. There are many notations for dual quaternions. This
+ * library uses the basis used by McArthy which is the same as Selig with minor
+ * rearrangements,
  *
  * \f[
- * \{ 1, e_{23}, e_{31}, e_{12}, e_{41}, e_{42}, e_{43}, e_{1234} \} = \{ 1, i, j, k, i\epsilon, j\epsilon, k\epsilon, \epsilon \}
+ * \{ 1, e_{23}, e_{31}, e_{12}, e_{41}, e_{42}, e_{43}, e_{1234} \} = \\
+ * \{ 1, i, j, k, i\epsilon, j\epsilon, k\epsilon, \epsilon \}
  * \f]
+ *
+ * This allows us to write a dual quaternion as,
  *
  * \f[
  * \widehat{Q} = (q_0 + q_1 i + q_2 j + q_3 k ) + \epsilon ( q_7 + q_4 i + q_5 j + q_6 k ) = \widehat{q} + \epsilon \widehat{q}^0
  * \f]
  *
- * In vertical notation we have the following:
+ * Using vertical notation we would have the following,
  *
  * \f[
  * \widehat{Q} = \left\{\begin{array}{c}
@@ -177,7 +189,8 @@
  *   e_{42} \\
  *   e_{43} \\
  *   e_{1234}
- * \end{array}\right\} = \left\{\begin{array}{c}
+ * \end{array}\right\}
+ * = \left\{\begin{array}{c}
  *   i \\
  *   j \\
  *   k \\
@@ -190,17 +203,18 @@
  * \end{array}\right\}
  * \f]
  *
- * In order for the dual quaternion to be able to represent spatial displacements it must be a unit dual quaternion and thus comply with the following restrictions:
+ * In order for the dual quaternion to be able to represent spatial
+ * displacements it must be a unit dual quaternion and thus comply with the
+ * following restrictions,
  *
- * \f[
- * \widehat{q}\widehat{q}^0 = 1
- * \f]
+ * \f{align}{
+ * \widehat{q}\widehat{q}^0 = 1 \nonumber \\
+ * \widehat{q}\cdot\widehat{q}^0 = 0 \nonumber
+ * \f}
  *
- * \f[
- * \widehat{q}\cdot\widehat{q}^0 = 0
- * \f]
- *
- * It is important to note that unit dual quaternions double cover the special euclidean group \f$SE(3)\f$. This means that \f$\widehat{Q}\f$ and \f$-\widehat{Q}\f$ represent the same spatial displacement.
+ * It is important to note that unit dual quaternions double cover the special
+ * euclidean group \f$SE(3)\f$. This means that \f$\widehat{Q}\f$ and
+ * \f$-\widehat{Q}\f$ represent the same spatial displacement.
  */
 typedef double dq_t[8];
 
@@ -328,25 +342,26 @@ void dq_cr_conj( dq_t O, const dq_t Q );
  *
  * To get rid of the \f$ \epsilon \f$ term we multiply by \f$ (q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3) - \epsilon 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6) \f$.
  *
- * \f[
- * ((q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3) + \epsilon 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6)) * \\
- *    ((q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3) - \epsilon 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6)) =
- *    (q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3)^2
- * \f]
+ * \f{align}{
+ * ((q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3) + \epsilon 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6)) \nonumber \\
+ *    ((q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3) - \epsilon 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6)) \nonumber \\
+ *  = (q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3)^2 \nonumber
+ * \f}
  *
  * Due to the fact that the first quaternion represents the rotation, it can be proven that it's equal to the identity:
  *
- * \f[
- * \| \widehat{q} \| = \| ( \cos \left ( \frac{\theta}{2} \right ) + \sin \left ( \frac{\theta}{2} \right ) s) \| =
- *    ( \sin^2 \left ( \frac{\theta}{2} \right ) + \cos^2 \left ( \frac{\theta}{2} \right ) ) = 1 = q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3
- * \f]
+ * \f{align}{
+ * \| \widehat{q} \| &= \| ( \cos \left ( \frac{\theta}{2} \right ) + \sin \left ( \frac{\theta}{2} \right ) s) \| \nonumber \\
+ *    &= ( \sin^2 \left ( \frac{\theta}{2} \right ) + \cos^2 \left ( \frac{\theta}{2} \right ) ) = 1 = q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3 \nonumber
+ * \f}
  *
  * Therefore with the multiplications we've done we have gotten what we wanted. If we analyze the multiplication we did we see it was:
  *
- * \f[
- * \widehat{Q}^* ((q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3) - \epsilon 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6)) = \
- *    (q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3 )((q_0 - q_1 i - q_2 j - q_3 k) + \epsilon( q_7 - q_4 i - q_5 j - q_7 k)) - 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6)(q_7 + q_4 i - q_5 j - q_6 k)
- * \f]
+ * \f{align}{
+ * & \widehat{Q}^* ((q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3) - \epsilon 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6)) = \nonumber \\
+ * &   (q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3 )((q_0 - q_1 i - q_2 j - q_3 k) + \epsilon( q_7 - q_4 i - q_5 j - q_7 k)) \nonumber \\
+ * & - 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6)(q_7 + q_4 i - q_5 j - q_6 k) \nonumber
+ * \f}
  *
  *    @param[out] O Dual quaternion created (inverted).
  *    @param[in] Q Dual quaternion to invert.
