@@ -273,7 +273,7 @@ void dq_cr_translation( dq_t O, double t, const double s[3] );
  */
 void dq_cr_translation_vector( dq_t O, const double t[3] );
 /**
- * @brief Creates a point dual quaternion.
+ * @brief Creates a dual quaternion representing a point.
  *
  *    @param[out] O Dual quaternion created.
  *    @param[in] pos Position of the point.
@@ -281,7 +281,7 @@ void dq_cr_translation_vector( dq_t O, const double t[3] );
  */
 void dq_cr_point( dq_t O, const double pos[3] );
 /**
- * @brief Creates a line dual quaternion.
+ * @brief Creates a dual quaternion representing a line.
  *
  *    @param[out] O Dual quaternion created.
  *    @param[in] s Direction vector of the line.
@@ -291,7 +291,7 @@ void dq_cr_point( dq_t O, const double pos[3] );
  */
 void dq_cr_line( dq_t O, const double s[3], const double c[3] );
 /**
- * @brief Creates a line dual quaternion from plucker coordinates.
+ * @brief Creates a dual quaternion representing a line from plucker coordinates.
  *
  *    @param[out] O Dual quaternion created.
  *    @param[in] s Direction vector of the line.
@@ -300,6 +300,14 @@ void dq_cr_line( dq_t O, const double s[3], const double c[3] );
  * @sa dq_op_f2g
  */
 void dq_cr_line_plucker( dq_t O, const double s[3], const double s0[3] );
+/**
+ * @brief Creates a unit dual quaternion representing a plane.
+ *
+ *    @param[out] O Dual quaternion created.
+ *    @param[in] n Normal of the plane.
+ *    @param[in] d Distancefrom the origin to the plane.
+ */
+void dq_cr_plane( dq_t O, const double n[3], const double d );
 /**
  * @brief Creates a dual quaternion from a homogeneous transformation matrix.
  *

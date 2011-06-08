@@ -32,7 +32,8 @@ void dq_cr_rotation_plucker( dq_t O, double theta, const double s[3], const doub
    double ss, cs;
 
 #if DQ_CHECK
-   assert( fabs(vec3_dot(s,s0)) < DQ_PRECISION );
+   assert( fabs(vec3_dot(s,s)-1.) < DQ_PRECISION );
+   assert( fabs(vec3_dot(s,s0))   < DQ_PRECISION );
 #endif /* DQ_CHECK */
 
    /* Store sin and cos values to speed up calculations. */
@@ -156,7 +157,8 @@ void dq_cr_line( dq_t O, const double s[3], const double c[3] )
 void dq_cr_line_plucker( dq_t O, const double s[3], const double s0[3] )
 {
 #if DQ_CHECK
-   assert( fabs(vec3_dot(s,s0)) < DQ_PRECISION );
+   assert( fabs(vec3_dot(s,s)-1.) < DQ_PRECISION );
+   assert( fabs(vec3_dot(s,s0))   < DQ_PRECISION );
 #endif /* DQ_CHECK */
 
    O[0] = 0.;
@@ -167,6 +169,23 @@ void dq_cr_line_plucker( dq_t O, const double s[3], const double s0[3] )
    O[5] = s0[1];
    O[6] = s0[2];
    O[7] = 0.;
+}
+
+
+void dq_cr_plane( dq_t O, const double n[3], const double d )
+{
+#if DQ_CHECK
+   assert( fabs(vec3_dot(n,n)-1.) < DQ_PRECISION );
+#endif /* DQ_CHECK */
+
+   O[0] = 0.;
+   O[1] = n[0];
+   O[2] = n[1];
+   O[3] = n[2];
+   O[4] = 0.;
+   O[5] = 0.;
+   O[6] = 0.;
+   O[7] = d;
 }
 
 
