@@ -401,6 +401,12 @@ int dq_ch_unit( const dq_t Q )
 }
 
 
+int dq_ch_point_plane( const dq_t P, const dq_t Q )
+{
+   return (fabs(P[1]*Q[4]+P[2]*Q[5]+P[3]*Q[6]-P[7]) < DQ_PRECISION);
+}
+
+
 int dq_ch_cmp( const dq_t P, const dq_t Q )
 {
    return dq_ch_cmpV( P, Q, DQ_PRECISION );

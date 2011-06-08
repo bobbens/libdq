@@ -566,6 +566,14 @@ void dq_op_extract( double R[3][3], double d[3], const dq_t Q );
  */
 int dq_ch_unit( const dq_t Q );
 /**
+ * @brief Checks to see if a point Q is on the plane P.
+ *
+ *    @param[in] P Plane to check if point is on it.
+ *    @param[in] Q Point to check if is on plane P.
+ *    @return 1 if point Q is on plane P.
+ */
+int dq_ch_point_plane( const dq_t P, const dq_t Q );
+/**
  * @brief Compares two dual quaternions.
  *
  *    @param[in] P First dual quaternion to compare.
