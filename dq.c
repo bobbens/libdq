@@ -279,6 +279,18 @@ void dq_op_mul( dq_t PQ, const dq_t P, const dq_t Q )
     *  Q1.ej |  ej    -ek   -e    ei     0      0      0      0
     *  Q1.ek |  ek    ej    -ei   -e     0      0      0      0
     *  Q1.e  |   e    ei     ej   ek     0      0      0      0
+    *
+    *  We can also decomopose the problem into quaternion multiplication:
+    *
+    *  Q = q + \epsilon q0
+    *  P = p + \epsilon p0
+    *  Q*P = q*p + \epsilon(q*p0 + q0*p)
+    *
+    *  We can treat quaternion multiplication as:
+    *
+    *  q1 = (r1, v1)
+    *  q2 = (r2, v2)
+    *  q1*q2 = (r1*r2-v1.v2, r1*v2 + r2*v1 + v1 x v2)
     */
    /* Real quaternion. */
    T[0] = P[0]*Q[0] - P[1]*Q[1] - P[2]*Q[2] - P[3]*Q[3];
