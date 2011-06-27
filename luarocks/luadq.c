@@ -178,7 +178,7 @@ static int luaL_checkmatrix( lua_State *L, double *M, int rows, int columns, int
 
       /* Process row. */
       for (j=0; j<columns; j++) {
-         TBL_GETNUM( L, M[i*rows+j], j+1, -1 );
+         TBL_GETNUM( L, M[i*rows+j], j+1, -2 );
       }
 
       /* Clean up. */
