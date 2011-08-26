@@ -7,10 +7,10 @@
 #include "lua.h"
 #include "lauxlib.h"
 
-#include "dq.h"
-#include "dq_vec3.h"
-#include "dq_mat3.h"
-#include "dq_homo.h"
+#include <dq/dq.h>
+#include <dq/vec3.h>
+#include <dq/mat3.h>
+#include <dq/homo.h>
 
 
 /*
