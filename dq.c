@@ -458,4 +458,9 @@ void dq_print_vert( const dq_t Q )
    printf( "   % 3.3f    % 3.3f\n",  Q[0], Q[7] );
 }
 
+void dq_version( int *major, int *minor )
+{
+   *major = DQ_VERSION_MAJOR;
+   *minor = DQ_VERSION_MINOR;
+}
 

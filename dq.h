@@ -87,6 +87,9 @@
  *
  * @section Changelog
  *
+ * - Version 2.1 (unreleased)
+ *    - Added defines for getting version
+ *    - Added dq_version
  * - Version 2.0, April 2011
  *    - Lua bindings
  * - Version 1.5, April 2011
@@ -152,6 +155,8 @@
  * @file dq.h
  * @brief The include for the libdq dual quaternion library.
  */
+#define DQ_VERSION_MAJOR   2 /**< Major version of the libdq library. */
+#define DQ_VERSION_MINOR   0 /**< Minor version of the libdq library. */
 
 
 #define DQ_PRECISION    1e-10 /**< Precision to use when comparing doubles. */
@@ -614,6 +619,16 @@ void dq_print( const dq_t Q );
  * @sa dq_print
  */
 void dq_print_vert( const dq_t Q );
+/**
+ * @brief Gets the version of the library during runtime.
+ *
+ * This returns two values major and minor which can be used to form the version
+ * in the form of major.minor.
+ *
+ *    @param[out] major Major version of the library.
+ *    @param[out] minor Minor version of the library.
+ */
+void dq_version( int *major, int *minor );
 /** @} */
 
 
