@@ -58,7 +58,7 @@ $(ROCKNAME).src.rock:
 	rm -r $(ROCKNAME) $(ROCKNAME).tar.gz $(ROCKNAME).rockspec
 
 install: all
-	install -m 644 libdq.a $(PATH_INSTALL)
+	install -m 644 $(LIBNAME).a $(PATH_INSTALL)
 	test -d $(PATH_INCLUDE) || mkdir $(PATH_INCLUDE)
 	cp dq.h      $(PATH_INCLUDE)/dq.h
 	cp dq_vec3.h $(PATH_INCLUDE)/vec3.h
@@ -75,6 +75,7 @@ uninstall:
 	$(RM) $(PATH_INCLUDE)/homo.h
 	$(RM) $(PATH_INSTALL)/$(LIBNAME).so.$(VERSION)
 	$(RM) $(PATH_INSTALL)/$(LIBNAME).so
+	$(RM) $(PATH_INSTALL)/$(LIBNAME).a
 
 docs:
 	doxygen
