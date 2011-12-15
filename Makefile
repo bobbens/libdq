@@ -79,7 +79,7 @@ uninstall:
 docs:
 	doxygen
 	$(MAKE) -C docs/latex
-	cp docs/latex/refman.pdf libdq.pdf
+	cp docs/latex/refman.pdf $(LIBNAME).pdf
 
 clean:
 	$(RM) $(OBJS) $(LIBNAME).a $(LIBNAME).so $(LIBNAME).so.$(VERSION)
