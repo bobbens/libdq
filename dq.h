@@ -16,7 +16,7 @@
     Copyright 2010, 2011 Edgar Simo-Serra
 
     This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
+    it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
@@ -88,6 +88,7 @@
  * @section Changelog
  *
  * - Version 2.1 (unreleased)
+ *    - Made it more clear license is LGPL
  *    - Added defines for getting version
  *    - Added dq_version
  * - Version 2.0, April 2011
