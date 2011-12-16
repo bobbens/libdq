@@ -54,7 +54,7 @@ void vec3_sign( double v[3] )
 
 double vec3_norm( const double v[3] )
 {
-   return sqrt( v[0]*v[0] + v[1]*v[1] + v[2]*v[2] );
+   return sqrt( vec3_dot( v, v ) );
 }
 
 
@@ -63,7 +63,7 @@ void vec3_normalize( double v[3] )
    double n = vec3_norm( v );
 
 #ifdef DQ_CHECK
-   assert( fabs(vec3_norm(v)) > DQ_PRECISION );
+   assert( fabs(n) > DQ_PRECISION );
 #endif /* DQ_CHECK */
 
    v[0] /= n;
