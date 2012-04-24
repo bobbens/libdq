@@ -1,7 +1,7 @@
 package = "luadq"
-version = "2.0-0"
+version = "2.1-0"
 source = {
-   url = "luadq-2.0-0.tar.gz"
+   url = "luadq-2.1-0.tar.gz"
 }
 description = {
    homepage = "http://github.com/bobbens/libdq",

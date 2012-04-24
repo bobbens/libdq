@@ -1,6 +1,6 @@
 LICENSE
 
-   Copyright 2010, 2011 Edgar Simo-Serra
+   Copyright 2010, 2011, 2012 Edgar Simo-Serra
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU Lesser General Public License as published by
@@ -39,6 +39,12 @@ Docs are located in the docs folder that will be created when you run make docs.
 
 CHANGELOG
 
+ - Version 2.1, April 2012
+   - Made it more clear license is LGPL
+   - Fixed bug in Lua handling of matrices
+   - Added defines for getting version
+   - Added dq_version, dq_ch_plane_point, dq_cr_plane
+   - Minor correctness fixes
  - Version 2.0, April 2011
    - Lua bindings
  - Version 1.5, April 2011

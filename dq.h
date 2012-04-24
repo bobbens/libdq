@@ -87,10 +87,12 @@
  *
  * @section Changelog
  *
- * - Version 2.1 (unreleased)
+ * - Version 2.1, April 2012
  *    - Made it more clear license is LGPL
+ *    - Fixed bug in Lua handling of matrices
  *    - Added defines for getting version
- *    - Added dq_version
+ *    - Added dq_version, dq_ch_plane_point, dq_cr_plane
+ *    - Minor correctness fixes
  * - Version 2.0, April 2011
  *    - Lua bindings
  * - Version 1.5, April 2011
