@@ -12,7 +12,7 @@ LDFLAGS	:= -lm
 all: dq_test
 
 dq_test: $(SRC)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(SRC)
+	$(CC) $(CFLAGS) -o $@ $(SRC) $(LDFLAGS)
 
 clean:
 	$(RM) dq_test
