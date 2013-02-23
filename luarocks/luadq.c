@@ -16,7 +16,7 @@
 /*
  * Generic.
  */
-static int lua_reg_metatable( lua_State *L, const luaL_reg *reg, const char *name );
+static int lua_reg_metatable( lua_State *L, const luaL_Reg *reg, const char *name );
 static int lua_is_foo( lua_State *L, int ind, const char *foo );
 
 
@@ -75,9 +75,10 @@ DQL( ch_unit );
 DQL( ch_cmp );
 /* Misc functions. */
 DQL( print );
+DQL( version );
 /* Metatable. */
 #undef DQL
-static const luaL_reg dqL_methods[] = {
+static const luaL_Reg dqL_methods[] = {
    /* Creation. */
    { "raw", dqL_cr_raw },
    { "rotation", dqL_cr_rotation },
@@ -117,6 +118,21 @@ static const luaL_reg dqL_methods[] = {
 };
 
 
+/*
+ * Compatibility with Lua 5.2.
+ */
+#if LUA_VERSION_NUM >= 502
+static int luaA_typerror( lua_State *L, int narg, const char *tname )
+{
+    const char *msg = lua_pushfstring(L, "%s expected, got %s",
+                                      tname, luaL_typename(L, narg));
+    return luaL_argerror(L, narg, msg);
+}
+#else
+#   define luaA_typerror   luaL_typerror
+#endif
+
+
 int luaopen_luadq( lua_State *L )
 {
    lua_loaddq( L );
@@ -127,13 +143,22 @@ int luaopen_luadq( lua_State *L )
 /*
  * Generic.
  */
-static int lua_reg_metatable( lua_State *L, const luaL_reg *reg, const char *name )
+static int lua_reg_metatable( lua_State *L, const luaL_Reg *reg, const char *name )
 {
+#if LUA_VERSION_NUM >= 502
+   lua_createtable(     L, 0, 0 );
+   luaL_newmetatable(   L, name );
+   luaL_setfuncs(       L, reg, 0 );
+   luaL_newlib(         L, reg );
+   lua_setfield(        L, -2, "__index" );
+   lua_setmetatable(    L, -2 );
+#else /* LUA_VERSION_NUM >= 502 */
    luaL_newmetatable(   L, name );
    lua_pushvalue(       L, -1 );
    lua_setfield(        L, -2,   "__index" );
    luaL_register(       L, NULL, reg );
-   lua_setfield(        L,       LUA_GLOBALSINDEX, name );
+#endif /* LUA_VERSION_NUM >= 502 */
+   lua_setglobal(       L, name );
    return 0;
 }
 static int lua_is_foo( lua_State *L, int ind, const char *foo )
@@ -240,7 +265,7 @@ static dqL_t* luaL_checkdq( lua_State *L, int ind )
 {
    if (lua_isdq( L, ind ))
       return lua_todq( L, ind );
-   luaL_typerror( L, ind, DQ_METATABLE );
+   luaA_typerror( L, ind, DQ_METATABLE );
    return NULL;
 }
 static dqL_t* lua_pushdq( lua_State *L, dqL_t dq )
