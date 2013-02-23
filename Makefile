@@ -3,7 +3,7 @@ PATH_INCLUDE	:= /usr/include/dq
 PATH_INSTALL	:= /usr/lib
 
 LIBNAME	:= libdq
-VERSION  := 2.1
+VERSION  := 2.2
 
 OBJS		:= dq.o dq_vec3.o dq_mat3.o dq_homo.o
 
@@ -11,7 +11,7 @@ CFLAGS	:= -O3 -fPIC -W -Wall -Wextra -Werror -pedantic -ansi -Wconversion -Wunus
 #CFLAGS	:= -g -DDQ_CHECK -fPIC -W -Wall -Wextra -Werror -pedantic -ansi
 LDFLAGS	:= -lm
 
-ROCKNAME := luadq-2.1-0
+ROCKNAME := luadq-2.2-0
 
 
 .PHONY: all lib test rock install uninstall clean docs help

@@ -7,13 +7,13 @@
 /**
  * @mainpage libdq doxygen documentation
  * @author Edgar Simo-Serra <bobbens@gmail.com>
- * @version 2.0
- * @date February 2011
+ * @version 2.2
+ * @date February 2013
  *
  * @section License
  *
  @verbatim
-    Copyright 2010, 2011 Edgar Simo-Serra
+    Copyright 2010-2013 Edgar Simo-Serra
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by
@@ -87,6 +87,10 @@
  *
  * @section Changelog
  *
+ * - Version 2.2, February 2013
+ *    - Fixed build on newest Ubuntu
+ *    - Added version command to Lua API
+ *    - Compatibility with Lua 5.2
  * - Version 2.1, April 2012
  *    - Made it more clear license is LGPL
  *    - Fixed bug in Lua handling of matrices
@@ -159,7 +163,7 @@
  * @brief The include for the libdq dual quaternion library.
  */
 #define DQ_VERSION_MAJOR   2 /**< Major version of the libdq library. */
-#define DQ_VERSION_MINOR   0 /**< Minor version of the libdq library. */
+#define DQ_VERSION_MINOR   2 /**< Minor version of the libdq library. */
 
 
 #define DQ_PRECISION    1e-10 /**< Precision to use when comparing doubles. */
