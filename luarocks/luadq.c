@@ -112,6 +112,7 @@ static const luaL_reg dqL_methods[] = {
    { "cmp", dqL_ch_cmp },
    /* Misc. */
    { "print", dqL_print },
+   { "version", dqL_version },
    { 0, 0 }
 };
 
@@ -415,6 +416,14 @@ static int dqL_print( lua_State *L )
    else
       dq_print( Q->dq );
    return 0;
+}
+static int dqL_version( lua_State *L )
+{
+   int major, minor;
+   dq_version( &major, &minor );
+   lua_pushinteger( L, major );
+   lua_pushinteger( L, minor );
+   return 2;
 }
 
 
