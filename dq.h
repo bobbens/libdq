@@ -353,7 +353,7 @@ void dq_cr_conj( dq_t O, const dq_t Q );
  * \widehat{O} = \widehat{Q}^{-1} = \frac{ \widehat{Q}^* }{ \| \widehat{Q} \|^2 }
  * \f]
  *
- * First we multiply the dual quaternion by it's conjugate:
+ * First we multiply the dual quaternion by its conjugate:
  *
  * \f[
  * \widehat{Q} \widehat{Q}^* = \| \widehat{Q} \| = \\
@@ -378,9 +378,9 @@ void dq_cr_conj( dq_t O, const dq_t Q );
  * Therefore with the multiplications we've done we have gotten what we wanted. If we analyze the multiplication we did we see it was:
  *
  * \f{align}{
- * & \widehat{Q}^* ((q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3) - \epsilon 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6)) = \nonumber \\
- * &   (q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3 )((q_0 - q_1 i - q_2 j - q_3 k) + \epsilon( q_7 - q_4 i - q_5 j - q_7 k)) \nonumber \\
- * & - 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6)(q_7 + q_4 i - q_5 j - q_6 k) \nonumber
+ * & \widehat{Q}^* (1 - \epsilon 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6)) = \nonumber \\
+ * &   (q_0 - q_1 i - q_2 j - q_3 k)\, + \\
+ * &   \epsilon ((q_7 - q_4 i - q_5 j - q_6 k) - 2 (q_0 q_7 + q_1 q_4 + q_2 q_5 + q_3 q_6) (q_0 - q_1 i - q_2 j - q_3 k)) \nonumber
  * \f}
  *
  *    @param[out] O Dual quaternion created (inverted).
