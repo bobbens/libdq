@@ -225,20 +225,23 @@ void dq_cr_conj( dq_t O, const dq_t Q )
 void dq_cr_inv( dq_t O, const dq_t Q )
 {
    double real, dual;
-
    /* Get the dual number of t he norm. */
    dq_op_norm2( &real, &dual, Q );
-  
-   /* Set the values. */
-   O[0] =  Q[0] * real;
-   O[1] = -Q[1] * real;
-   O[2] = -Q[2] * real;
-   O[3] = -Q[3] * real;
-   O[4] =  Q[4] * (dual-real);
-   O[5] =  Q[5] * (dual-real);
-   O[6] =  Q[6] * (dual-real);
-   O[7] =  Q[7] * (real-dual);
+   /* we suppose that Q is a rotation so real = 1 */
+   O[0] =  Q[0];                    /* general case O[0] =  Q[0] / real  */
+   O[1] = -Q[1];                    /* general case O[1] = -Q[1] / real  */
+   O[2] = -Q[2];                    /* general case O[2] = -Q[2] / real  */
+   O[3] = -Q[3];                    /* general case O[3] = -Q[3] / real  */
+   /* general case O[4] =  (- real * Q[4] + dual * Q[1]) / real^2 */
+   O[4] =  dual * Q[1] - Q[4];
+   /* general case O[5] =  (- real * Q[5] + dual * Q[2]) / real^2 */
+   O[5] =  dual * Q[2] - Q[5];
+   /* general case O[6] =  (- real * Q[6] + dual * Q[3]) / real^2 */
+   O[6] =  dual * Q[3] - Q[6];
+   /* general case O[7] =  (  real * Q[7] - dual * Q[0]) / real^2 */
+   O[7] = Q[7]  - dual * Q[0];
 }
+
 
 
 void dq_op_norm2( double *real, double *dual, const dq_t Q )
