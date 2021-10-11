@@ -3,7 +3,7 @@ PATH_INCLUDE	:= /usr/include/dq
 PATH_INSTALL	:= /usr/lib
 
 LIBNAME	:= libdq
-VERSION  := 2.2
+VERSION  := 2.3
 
 OBJS		:= dq.o dq_vec3.o dq_mat3.o dq_homo.o
 

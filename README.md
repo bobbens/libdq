@@ -1,44 +1,49 @@
-LICENSE
+### LICENSE
 
-   Copyright 2010-2013 Edgar Simo-Serra
+> Copyright 2010-2021 Edgar Simo-Serra
+>
+> This program is free software: you can redistribute it and/or modify
+> it under the terms of the GNU Lesser General Public License as published by
+> the Free Software Foundation, either version 3 of the License, or
+> (at your option) any later version.
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU Lesser General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
+> This program is distributed in the hope that it will be useful,
+> but WITHOUT ANY WARRANTY; without even the implied warranty of
+> MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> GNU General Public License for more details.
 
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+> You should have received a copy of the GNU General Public License
+> along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-OVERVIEW
+### OVERVIEW
 
-This is a library for using and manipulating dual quaternions. Dual quaternions
- are useful for describing rigid body movements using screw theory.
+This is a library for using and manipulating dual quaternions. Dual quaternions  are useful for describing rigid body movements using screw theory.
 
 If you use this library please reference it.
 
 
-USAGE
+### USAGE
 
 To install type:
 
+```sh
 $ make install
+```
 
 To make documentation (recommended) type:
 
+```sh
 $ make docs
+```
 
-Docs are located in the docs folder that will be created when you run make docs.
+Docs are located in the `docs/` folder that will be created when you run `make docs`.
 
 
-CHANGELOG
+### CHANGELOG
 
+ - Version 2.3, October 2021
+   - Fixed dq_cr_inv (patch by @thery, thanks!)
  - Version 2.2, February 2013
    - Fixed build on newest Ubuntu
    - Added version command to Lua API
@@ -75,8 +80,7 @@ CHANGELOG
    - Initial Revision
 
 
-ACKNOWLEDGEMENTS
+### ACKNOWLEDGEMENTS
 
-A big thanks to Alba Perez for having the patience to deal with my repetitive
-boring dual quaternion questions and for lending me her notes.
+A big thanks to Alba Perez for having the patience to deal with my repetitive boring dual quaternion questions and for lending me her notes.
 

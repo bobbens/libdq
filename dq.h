@@ -7,8 +7,8 @@
 /**
  * @mainpage libdq doxygen documentation
  * @author Edgar Simo-Serra <bobbens@gmail.com>
- * @version 2.2
- * @date February 2013
+ * @version 2.3
+ * @date October 2021
  *
  * @section License
  *
@@ -87,6 +87,8 @@
  *
  * @section Changelog
  *
+ * - Version 2.3, October 2021
+ *    - Fixed dq_cr_inv (patch by @thery, thanks!)
  * - Version 2.2, February 2013
  *    - Fixed build on newest Ubuntu
  *    - Added version command to Lua API
@@ -136,10 +138,10 @@
  * There is no real convention for citing software, the following is a proposal.
  *
  * @code
- * @MISC{esimolibdq,
- *    author = {Edgar Simo-serra},
+ * @MISC{esslibdq,
+ *    author = {Edgar Simo-Serra},
  *    title = {libdq: {D}ual {Q}uaternion {L}ibrary},
- *    year = {2011},
+ *    year = {2021},
  *    howpublished = {\url{https://github.com/bobbens/libdq}},
  * }
  * @endcode
@@ -163,7 +165,7 @@
  * @brief The include for the libdq dual quaternion library.
  */
 #define DQ_VERSION_MAJOR   2 /**< Major version of the libdq library. */
-#define DQ_VERSION_MINOR   2 /**< Minor version of the libdq library. */
+#define DQ_VERSION_MINOR   3 /**< Minor version of the libdq library. */
 
 
 #define DQ_PRECISION    1e-10 /**< Precision to use when comparing doubles. */
@@ -371,7 +373,7 @@ void dq_cr_conj( dq_t O, const dq_t Q );
  * Due to the fact that the first quaternion represents the rotation, it can be proven that it's equal to the identity:
  *
  * \f{align}{
- * \| \widehat{q} \| &= \| ( \cos \left ( \frac{\theta}{2} \right ) + \sin \left ( \frac{\theta}{2} \right ) s) \| \nonumber \\
+ * \| \widehat{q} \| &= \| ( \cos \left ( \frac{\theta}{2} \right ) + \sin \left ( \frac{\theta}{2} \right ) ) \| \nonumber \\
  *    &= ( \sin^2 \left ( \frac{\theta}{2} \right ) + \cos^2 \left ( \frac{\theta}{2} \right ) ) = 1 = q_0 q_0 + q_1 q_1 + q_2 q_2 + q_3 q_3 \nonumber
  * \f}
  *
