@@ -1,11 +1,11 @@
 package = "luadq"
-version = "2.2-0"
+version = "2.3-0"
 source = {
-   url = "luadq-2.2-0.tar.gz"
+   url = "luadq-2.3-0.tar.gz"
 }
 description = {
    homepage = "http://github.com/bobbens/libdq",
-   maintainer = "Edgar Simo Serra",
+   maintainer = "Edgar Simo-Serra",
    license = "LGPLv3",
    summary = "Bindings to libdq, a library for manipulation dual quaternions.",
    detailed = [[

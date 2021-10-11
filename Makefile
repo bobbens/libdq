@@ -11,7 +11,7 @@ CFLAGS	:= -O3 -fPIC -W -Wall -Wextra -Werror -pedantic -ansi -Wconversion -Wunus
 #CFLAGS	:= -g -DDQ_CHECK -fPIC -W -Wall -Wextra -Werror -pedantic -ansi
 LDFLAGS	:= -lm
 
-ROCKNAME := luadq-2.2-0
+ROCKNAME := luadq-2.3-0
 
 
 .PHONY: all lib test rock install uninstall clean docs help
