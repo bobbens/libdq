@@ -1,8 +1,5 @@
-
-
 #ifndef _DQ_H
 #  define _DQ_H
-
 
 /**
  * @mainpage libdq doxygen documentation
@@ -129,7 +126,7 @@
  *
  * - E. Simo-Serra, Chapter 4 of Kinematic Model of the Hand using Computer Vision (Degree Thesis). BarcelonaTECH (UPC), April 2011.
  * - J. M. Selig. Geometric Fundamentals of Robotics (Monographs in Computer Science). Springer, 2nd edition, November 2004.
- * - J. M. McCarthy, Introduction to theoretical kinematics, MIT Press, Cambridge, MA, 1990 
+ * - J. M. McCarthy, Introduction to theoretical kinematics, MIT Press, Cambridge, MA, 1990
  * - A. Perez, Kinematics of Robots (unpublished as of this writing)
  *
  *
@@ -173,7 +170,7 @@
 
 /**
  * @brief A representation of a dual quaternion.
- * 
+ *
  * Dual quaternions are elements of the Clifford even subalgebra
  * \f$C^{+}_{0,3,1}\f$. There are many notations for dual quaternions. This
  * library uses the basis used by McArthy which is the same as Selig with minor
@@ -434,7 +431,7 @@ void dq_op_norm2( double *real, double *dual, const dq_t Q );
  * \f[
  * \widehat{O} = \widehat{P} - \widehat{Q}
  * \f]
- * 
+ *
  *    @param[out] O The result of the addition.
  *    @param[in] P First quaternion to add.
  *    @param[in] Q Second quaternion to add.
@@ -447,7 +444,7 @@ void dq_op_add( dq_t O, const dq_t P, const dq_t Q );
  * \f[
  * \widehat{O} = \widehat{P} - \widehat{Q}
  * \f]
- * 
+ *
  *    @param[out] O The result of the subtraction.
  *    @param[in] P Dual quaternion to subtract from.
  *    @param[in] Q Dual quaternion to subtract.
@@ -616,14 +613,14 @@ int dq_ch_cmpV( const dq_t P, const dq_t Q, double precision );
 /** @{ */
 /**
  * @brief Prints a quaternion on a single line.
- * 
+ *
  *    @param[in] Q Dual quaternion to print.
  * @sa dq_printVert
  */
 void dq_print( const dq_t Q );
 /**
  * @brief Prints a dual quaternion vertically.
- * 
+ *
  *    @param[in] Q Dual quaternion to print.
  * @sa dq_print
  */
@@ -640,7 +637,4 @@ void dq_print_vert( const dq_t Q );
 void dq_version( int *major, int *minor );
 /** @} */
 
-
 #endif /* _DQ_H */
-
-

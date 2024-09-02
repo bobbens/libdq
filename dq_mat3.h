@@ -1,8 +1,5 @@
-
-
 #ifndef _MAT3_H
 #  define _MAT3_H
-
 
 /**
  * @file dq_mat3.h
@@ -142,6 +139,4 @@ int mat3_cmpV( double A[3][3], double B[3][3], double precision );
 void mat3_print( double M[3][3] );
 /** @} */
 
-
 #endif /* _MAT3_H */
-

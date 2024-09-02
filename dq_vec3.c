@@ -1,5 +1,3 @@
-
-
 #include "dq_vec3.h"
 
 #include <stdio.h>
@@ -101,5 +99,3 @@ void vec3_print( const double v[3] )
 {
    printf( "   %.3f, %.3f, %.3f\n", v[0], v[1], v[2] );
 }
-
-

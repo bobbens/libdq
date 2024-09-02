@@ -1,8 +1,5 @@
-
-
 #ifndef _DQ_VEC3_H
 #  define _DQ_VEC3_H
-
 
 /**
  * @file dq_vec3.h
@@ -131,6 +128,4 @@ int vec3_cmpV( const double u[3], const double v[3], double precision );
 void vec3_print( const double v[3] );
 /** @} */
 
-
 #endif /* _DQ_VEC3_H */
-

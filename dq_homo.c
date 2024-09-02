@@ -1,5 +1,3 @@
-
-
 #include "dq_homo.h"
 
 #include <stdio.h>
@@ -10,7 +8,6 @@
 #endif /* DQ_CHECK */
 
 #include "dq.h"
-#include "dq_mat3.h"
 
 
 void homo_cr_join( double H[3][4], double R[3][3], double d[3] )
@@ -91,5 +88,3 @@ void homo_print( double H[3][4] )
            H[1][0], H[1][1], H[1][2], H[1][3],
            H[2][0], H[2][1], H[2][2], H[2][3] );
 }
-
-

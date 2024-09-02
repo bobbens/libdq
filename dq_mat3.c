@@ -1,5 +1,3 @@
-
-
 #include "dq_mat3.h"
 
 #include <stdio.h>
@@ -154,5 +152,3 @@ void mat3_print( double M[3][3] )
            M[1][0], M[1][1], M[1][2],
            M[2][0], M[2][1], M[2][2] );
 }
-
-

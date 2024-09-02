@@ -1,6 +1,3 @@
-
-
-
 #include "dq.h"
 
 #include <stdio.h>
@@ -12,7 +9,6 @@
 
 #include "dq_vec3.h"
 #include "dq_mat3.h"
-#include "dq_homo.h"
 
 
 #define MIN(a,b)     (((a)<(b))?(a):(b))
@@ -466,4 +462,3 @@ void dq_version( int *major, int *minor )
    *major = DQ_VERSION_MAJOR;
    *minor = DQ_VERSION_MINOR;
 }
-

@@ -1,9 +1,5 @@
-
-
 #ifndef _DQ_HOMO_H
 #  define _DQ_HOMO_H
-
-
 /**
  * @file dq_homo.h
  *
@@ -114,6 +110,4 @@ int homo_ch_cmp( double A[3][4], double B[3][4] );
 void homo_print( double H[3][4] );
 /** @} */
 
-
 #endif /* _DQ_HOMO_H */
-
